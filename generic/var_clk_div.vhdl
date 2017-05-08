@@ -7,13 +7,13 @@ entity var_clk_div is
     );
     port( 
         clk: in std_logic;
-        clk_div: out std_logic_vector(size downto 0) := (others => '0')
+        clk_div: out std_logic_vector(size-1 downto 0) := (others => '0')
     );
 end entity;
 
 architecture behavior of var_clk_div is
-    signal tff_nq: std_logic_vector(size downto 0) := (others => '1');
-    component TFF
+    signal tff_nq: std_logic_vector(size-1 downto 0) := (others => '1');
+    component T_FF
         port(
             T: in std_logic;
             Q: out std_logic;
@@ -21,9 +21,9 @@ architecture behavior of var_clk_div is
         );
     end component;
 begin
-    Toggle: for i in 0 to size generate
+    Toggle: for i in 0 to size-1 generate
         Toggle_Init: if i = 0 generate
-            T0: TFF port map(
+            T0: T_FF port map(
                 clk,
                 clk_div(0),
                 tff_nq(0)
@@ -31,7 +31,7 @@ begin
         end generate;
 
         Toggle_Seq: if i > 0 generate
-            TX: TFF port map (
+            TX: T_FF port map (
                 tff_nq(i-1), 
                 clk_div(i), 
                 tff_nq(i)

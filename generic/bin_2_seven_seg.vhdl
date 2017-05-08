@@ -4,14 +4,14 @@ USE ieee.std_logic_1164.all;
 -- Inputs: 		b 		(binary input)
 -- Outputs: 	s 		(seven segment output)
 
-ENTITY binary2sevenseg is
+ENTITY bin_2_seven_seg is
   port( b : in	STD_LOGIC_VECTOR (3 downto 0);
         s : out STD_LOGIC_VECTOR (7 downto 0)
   );
-END binary2sevenseg;
+END bin_2_seven_seg;
 
 -- This describes the functionality of the binary converter.
-architecture converter of binary2sevenseg is
+architecture converter of bin_2_seven_seg is
   begin
     -- Map truth table
     with b select
@@ -32,4 +32,4 @@ architecture converter of binary2sevenseg is
            "10000110" when "1110",
            "10001110" when "1111",
            "11111111" when others;
-end converter;
+end architecture;

@@ -1,15 +1,15 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity TFF is
+entity T_FF is
     port( 
         T: in std_logic;
         Q: out std_logic := '0';
         NQ: out std_logic := '1'
     );
-end TFF;
+end T_FF;
 
-architecture behavior of TFF is
+architecture behavior of T_FF is
 begin
     process(T)
         variable value: std_logic := '0';
