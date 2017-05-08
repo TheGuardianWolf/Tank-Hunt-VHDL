@@ -17,7 +17,7 @@ architecture behavior of var_clk_div is
         port(
             T: in std_logic;
             Q: out std_logic;
-            NQ: out std_logic;
+            NQ: out std_logic
         );
     end component;
 begin
@@ -34,7 +34,7 @@ begin
             TX: TFF port map (
                 tff_nq(i-1), 
                 clk_div(i), 
-                tff_nq(i), 
+                tff_nq(i)
             );
         end generate;
     end generate;

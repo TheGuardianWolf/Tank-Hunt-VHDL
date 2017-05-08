@@ -7,7 +7,7 @@ end entity test_var_clk_div;
 
 architecture test of test_var_clk_div is
     signal t_clk: std_logic := '0';
-    signal t_clk_div: unsigned(2 downto 0) := "00";
+    signal t_clk_div: std_logic_vector(2 downto 0) := "000";
 
     component var_clk_div
         generic(
