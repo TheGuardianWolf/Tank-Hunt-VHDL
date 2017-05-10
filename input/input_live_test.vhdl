@@ -93,13 +93,13 @@ begin
     process(clk)
         variable toggle_led: std_logic_vector(1 downto 0) := (others => '0');
     begin
-        if(rising_edge(clk)) then
+  --      if(rising_edge(clk)) then
             for i in 0 to 1 loop
                 if(rising_edge(sig_btn(i))) then
                     toggle_led(i) := not toggle_led(i);
                 end if;
             end loop;
-        end if;
+ --       end if;
 
         led_1 <= toggle_led(0);
         led_2 <= toggle_led(1);
