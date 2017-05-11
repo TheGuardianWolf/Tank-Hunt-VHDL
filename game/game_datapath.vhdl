@@ -18,3 +18,8 @@ entity game_datapath is
         kills_reached: out std_logic;
     );
 end entity;
+
+architecture behavior of game_datapath is
+    
+    begin
+end architecture;
