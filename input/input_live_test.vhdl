@@ -23,7 +23,7 @@ end entity;
 architecture behavior of input_live_test is
     signal sig_x: std_logic_vector(9 downto 0);
     signal sig_btn: std_logic_vector(1 downto 0);
-    signal sig_clk_div: std_logic_vector(1 downto 0);
+    signal sig_clk_div: std_logic_vector(0 downto 0);
     signal sig_seg_in: std_logic_vector(15 downto 0);
 
     component input
@@ -77,7 +77,7 @@ begin
     );
     div: var_clk_div 
     generic map(
-        2
+        1
     )
     port map(
         clk, sig_clk_div
