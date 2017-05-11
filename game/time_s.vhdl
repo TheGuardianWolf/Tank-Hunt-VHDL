@@ -23,14 +23,15 @@ architecture behaviour of time_s is
             C: out std_logic_vector(size-1 downto 0)
         );
     end component;
-    signal clk_time_c: std_logic_vector(25 downto 0) := (others => '0');
-    signal clk_50_period: std_logic_vector(25 downto 0) := "10111110101111000010000000";
+    signal clk_time_c: std_logic_vector(24 downto 0) := (others => '0');
+    signal clk_50_period: std_logic_vector(24 downto 0) := "1011111010111100001000000";
+    signal clk_s: std_logic := '1';
     signal tick: std_logic := '0';
-    begin;
+    begin
     
     clk_time: counter 
     generic map (
-        26
+        25
     )    
     port map(
         clk_50,
@@ -42,22 +43,22 @@ architecture behaviour of time_s is
 
     time: counter 
     generic map (
-        5
+        6
     )    
     port map(
-        clk_50,
+        clk_s,
         reset,
-        tick,
-        ,
+        enable,
+        (others => '1'),
         T
     );
 
-    tick <= '1' when (rising_edge(clk) and (clk_time_c = clk_50_period)) else '0';
-
-        
+    process(clk_50)
+    begin
+        if rising_edge(clk_50) then
+            if (clk_50_period = clk_time_c) then
+                clk_s <= not clk_s;
+            end if;
+        end if;
     end process;
-    
-
-
-
 end architecture;
