@@ -141,6 +141,9 @@ architecture behaviour of game_controller is
           -- state <= "001";
           if (start = '1') then
             midgame <= '1';
+            if (game_mode = '1') then
+              next_level <= '1';
+            end if;
           else
             pregame <= '1';
           end if;
