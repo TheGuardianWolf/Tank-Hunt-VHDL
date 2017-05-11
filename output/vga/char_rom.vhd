@@ -2,8 +2,7 @@
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
-USE IEEE.STD_LOGIC_ARITH.all;
-USE IEEE.STD_LOGIC_UNSIGNED.all;
+USE IEEE.NUMERIC_STD.all;
 
 LIBRARY altera_mf;
 USE altera_mf.all;
@@ -11,7 +10,8 @@ USE altera_mf.all;
 ENTITY char_rom IS
 	PORT
 	(
-		--address			: 	IN STD_LOGIC_VECTOR (8 DOWNTO 0)
+		vga_row			: 	IN STD_LOGIC_VECTOR (9 DOWNTO 0);
+		vga_col			: 	IN STD_LOGIC_VECTOR (9 DOWNTO 0);
 		character_address	:	IN STD_LOGIC_VECTOR (5 DOWNTO 0);
 		font_row, font_col	:	IN STD_LOGIC_VECTOR (2 DOWNTO 0);
 		clock				: 	IN STD_LOGIC ;
@@ -75,8 +75,15 @@ BEGIN
 		address_a => rom_address,
 		q_a => rom_data
 	);
-
-	rom_address <= character_address & font_row;
-	rom_mux_output <= rom_data (CONV_INTEGER(NOT font_col(2 DOWNTO 0)));
+	
+	process(clock)
+	begin
+	IF (("0111001100" < vga_row(9 downto 0)) and (vga_row(9 downto 0) < "0111010100") and ("0100111011" < vga_col(9 downto 0)) and (vga_col(9 downto 0) < "0101000100")) THEN
+		rom_address <= "111111" & std_logic_vector(unsigned(vga_row(2 downto 0))-5);
+		rom_mux_output <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(2 DOWNTO 0))-4))));
+	ELSE
+		rom_mux_output <= '0';
+	END IF;
+	end process;
 
 END SYN;
