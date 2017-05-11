@@ -7,15 +7,15 @@ entity comparator_u is
         size: integer := 1
     );
     port (
-        a: in unsigned(size-1 downto 0);
-        b: in unsigned(size-1 downto 0);
+        a: in std_logic_vector(size-1 downto 0);
+        b: in std_logic_vector(size-1 downto 0);
         lt: out std_logic := '0';
         eq: out std_logic := '0';
         gt: out std_logic := '0'
     );
 end entity;
 
-architecture behavior of comparator is
+architecture behavior of comparator_u is
 begin
     lt <= '1' when a < b else '0';
     eq <= '1' when a = b else '0';

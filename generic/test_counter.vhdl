@@ -3,30 +3,34 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity test_counter is
-end entity test_counter;
+end entity;
 
 architecture test of test_counter is
-    signal t_clk: std_logic := '0';
-    signal t_clk_div: std_logic_vector(2 downto 0) := "000";
-
     component counter
         generic(
             size: integer
         );
         port( 
-            clk: in std_logic;
-            clk_div: out std_logic_vector(size downto 0)
+            Clk: in std_logic;
+            Reset: in std_logic;
+            Enable: in std_logic;
+            Limit: in std_logic_vector(size-1 downto 0);
+            C: out std_logic_vector(size-1 downto 0)
         );
     end component;
-
+    signal t_clk: std_logic := '0';
+    signal t_C: std_logic_vector(1 downto 0) := "00";
 begin
-    div: var_clk_div 
+    div: counter
     generic map(
         2
     )
     port map(
         t_clk,
-        t_clk_div
+        '0',
+        '1',
+        "10",
+        t_C
     );
 
     -- clock generation
