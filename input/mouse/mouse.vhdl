@@ -4,6 +4,10 @@ USE  IEEE.STD_LOGIC_ARITH.all;
 USE  IEEE.STD_LOGIC_UNSIGNED.all;
 
 ENTITY MOUSE IS
+   GENERIC(
+      constrain_x : integer := 640;
+	  constrain_y : integer := 480
+   );
    PORT( clock_25Mhz, reset 			: IN std_logic;
         SIGNAL mouse_data				: INOUT std_logic;
         SIGNAL mouse_clk 				: INOUT std_logic;
@@ -182,7 +186,7 @@ END IF;
 END IF;
 END PROCESS SEND_UART;
 
-RECV_UART: PROCESS(reset, mouse_clk_filter)
+RECV_UART: PROCESS(reset, reset_pos, mouse_clk_filter)
 BEGIN
 IF RESET='1' THEN
 	INCNT <= "0000";
@@ -191,6 +195,12 @@ IF RESET='1' THEN
     LEFT_BUTTON <= '0';
     RIGHT_BUTTON <= '0';
 	CHARIN <= "00000000";
+ELSIF RESET_POS='1' then
+	-- Set Cursor to middle of screen
+	cursor_column <= CONV_STD_LOGIC_VECTOR(320,10);
+	cursor_row <= CONV_STD_LOGIC_VECTOR(240,10);
+	NEW_cursor_column <= CONV_STD_LOGIC_VECTOR(320,10);
+	NEW_cursor_row <= CONV_STD_LOGIC_VECTOR(240,10);
 ELSIF MOUSE_CLK_FILTER'event and MOUSE_CLK_FILTER='1' THEN
 	IF MOUSE_DATA_DIR='0' THEN
  		IF MOUSE_DATA='0' AND READ_CHAR='0' THEN
@@ -226,8 +236,8 @@ ELSIF MOUSE_CLK_FILTER'event and MOUSE_CLK_FILTER='1' THEN
 						(NEW_cursor_row < 2)) THEN
 						cursor_row <= CONV_STD_LOGIC_VECTOR(0,10);
 			-- Check for right screen limit
-					ELSIF NEW_cursor_row > 480 THEN
-						cursor_row <= CONV_STD_LOGIC_VECTOR(480,10);
+					ELSIF NEW_cursor_row > constrain_y THEN
+						cursor_row <= CONV_STD_LOGIC_VECTOR(constrain_y,10);
 					ELSE
 						cursor_row <= NEW_cursor_row;
 					END IF;
@@ -236,8 +246,8 @@ ELSIF MOUSE_CLK_FILTER'event and MOUSE_CLK_FILTER='1' THEN
 						(NEW_cursor_column < 2)) THEN
 						cursor_column <= CONV_STD_LOGIC_VECTOR(0,10);
 			-- Check for bottom screen limit
-					ELSIF NEW_cursor_column > 640 THEN
-						cursor_column <= CONV_STD_LOGIC_VECTOR(640,10);
+					ELSIF NEW_cursor_column > constrain_x THEN
+						cursor_column <= CONV_STD_LOGIC_VECTOR(constrain_x,10);
 					ELSE
 						cursor_column <= NEW_cursor_column;
 					END IF;
