@@ -17,12 +17,12 @@ end entity;
 
 architecture behavior of D_FF is
 begin
-    process(clk)
+    process(clk, Reset)
     begin
-        if(rising_edge(clk)) then
-            if (Reset = '1') then
+        if (Reset = '1') then
                 Q <= (others => '0');
-            elsif (Enable = '1') then
+        elsif(rising_edge(clk)) then
+            if (Enable = '1') then
                 Q <= D;
             end if;
         end if;

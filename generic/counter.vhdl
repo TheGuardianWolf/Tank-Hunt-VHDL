@@ -17,16 +17,18 @@ end entity;
 
 architecture behavior of counter is
 begin
-    process(clk)
+    process(clk, Reset)
         variable count: std_logic_vector(size-1 downto 0) := (others => '0');
     begin
-        if(rising_edge(clk)) then
+        if (Reset='1') then
+            count := (others => '0');
+        elsif(rising_edge(clk)) then
             if (count = Limit) then
                 count := (others => '0');
             else
                 count := std_logic_vector(unsigned(count) + 1);
-            end if;
-            C <= count;
+            end if; 
         end if;
+        C <= count;
     end process;
 end architecture;

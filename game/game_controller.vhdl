@@ -5,13 +5,14 @@ use ieee.std_logic_1164.all;
 
 entity game_controller is
   port(
-    clk: in std_logic := '0';
+    clk_50M: in std_logic := '0';
 
     ready: in std_logic := '0';
     game_start: in std_logic := '0';
     game_mode: in std_logic := '0';
+    game_reset: in std_logic := '0';
+    game_pause: in std_logic := '0';
     timeout: in std_logic := '0';
-    pause: in std_logic := '0';
     max_level: in std_logic := '0';
     kills_reached: in std_logic := '0';
 
@@ -19,7 +20,8 @@ entity game_controller is
     midgame: out std_logic := '0';
     endgame: out std_logic := '0';
     win: out std_logic := '0';
-    next_level: out std_logic := '0';
+    next_level: out std_logic := '0'
+    state_debug: out std_logic_vector(2 downto 0) := (others => '0');
     --reset_level: out std_logic := '0';
     --reset_time: out std_logic := '0';
     --reset_kills: out std_logic := '0';
@@ -40,9 +42,9 @@ architecture behaviour of game_controller is
 
   begin
     -- Changes the state to NextState
-    StateProcess: process(clk)
+    StateProcess: process(clk_50M)
     begin
-      if rising_edge(clk) then
+      if rising_edge(clk_50M) then
         CurrentState <= NextState;
       end if;
     end process;
@@ -53,9 +55,10 @@ architecture behaviour of game_controller is
       ready,
       game_start,
       game_mode,
+      game_reset,
       kills_reached,
       timeout,
-      pause,
+      game_pause,
       max_level
     )
     begin
@@ -68,7 +71,7 @@ architecture behaviour of game_controller is
           end if;
 
         when menu =>
-          if (start = '1') then
+          if (game_start = '1') then
             if (game_mode = '1') then
               NextState <= hunt;
             else
@@ -79,8 +82,8 @@ architecture behaviour of game_controller is
           end if;
 
         when train =>
-          if (reset = '1') then
-            if ((pause = '0') and (timeout = '1')) then
+          if (game_reset = '1') then
+            if ((game_pause = '0') and (timeout = '1')) then
               NextState <= ended;
             else
               NextState <= train;
@@ -90,8 +93,8 @@ architecture behaviour of game_controller is
           end if;
 
         when hunt =>
-        if (reset = '1') then
-          if ((pause = '0') and ((timeout = '1') and ((max_level = '1') or (kills_reached = '0')))) then
+        if (game_reset = '1') then
+          if ((game_pause = '0') and ((timeout = '1') and ((max_level = '1') or (kills_reached = '0')))) then
             NextState <= ended;
           else
             NextState <= hunt;
@@ -101,7 +104,7 @@ architecture behaviour of game_controller is
         end if;
 
         when ended =>
-          if (reset = '1') then
+          if (game_reset = '1') then
             NextState <= menu;
           else
             NextState <= ended;
@@ -114,10 +117,11 @@ architecture behaviour of game_controller is
         CurrentState,
         ready,
         game_start,
+        game_reset,
         game_mode,
         kills_reached,
         timeout,
-        pause,
+        game_pause,
         max_level
     )
     begin
@@ -132,14 +136,14 @@ architecture behaviour of game_controller is
       -- State conditional outputs
       case CurrentState is
         when init =>
-          -- state <= "000";
+          state_debug <= "000";
           if (ready = '1') then
             pregame <= '1';
           end if;
 
         when menu =>
-          -- state <= "001";
-          if (start = '1') then
+          state_debug <= "001";
+          if (game_start = '1') then
             midgame <= '1';
             if (game_mode = '1') then
               next_level <= '1';
@@ -149,11 +153,11 @@ architecture behaviour of game_controller is
           end if;
 
         when train =>
-        -- state <= "010";
-        if (reset = '1') then
+        state_debug <= "010";
+        if (game_reset = '1') then
           pregame <= '1';
         else
-          if (pause = '0') then
+          if (game_pause = '0') then
             if (timeout = '0') then
               midgame <= '1';
             else
@@ -163,8 +167,8 @@ architecture behaviour of game_controller is
         end if;
 
         when hunt =>
-        -- state <= "011";
-        if (pause = '0') then
+        state_debug <= "011";
+        if (game_pause = '0') then
           if (timeout = '1') then
             if (kills_reached = '1') then
               if (max_level = '1') then
@@ -183,8 +187,8 @@ architecture behaviour of game_controller is
         end if;
 
         when ended =>
-        -- state <= "100";
-        if (reset = '1')
+        state_debug <= "100";
+        if (game_reset = '1') then
           pregame <= '1';
         else
           endgame <= '1';
