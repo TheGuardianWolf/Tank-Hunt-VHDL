@@ -149,7 +149,7 @@ applicable agreement for further details.
 )
 (pin
 	(output)
-	(rect 1176 632 1352 648)
+	(rect 1176 640 1352 656)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "m_x[9..0]" (rect 90 0 137 12)(font "Arial" ))
 	(pt 0 8)
@@ -165,7 +165,7 @@ applicable agreement for further details.
 )
 (pin
 	(output)
-	(rect 1016 512 1192 528)
+	(rect 1496 424 1672 440)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "m_btn_l" (rect 90 0 128 12)(font "Arial" ))
 	(pt 0 8)
@@ -181,7 +181,7 @@ applicable agreement for further details.
 )
 (pin
 	(output)
-	(rect 1016 528 1192 544)
+	(rect 1496 552 1672 568)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "m_btn_r" (rect 90 0 130 12)(font "Arial" ))
 	(pt 0 8)
@@ -197,7 +197,7 @@ applicable agreement for further details.
 )
 (pin
 	(bidir)
-	(rect 1016 480 1192 496)
+	(rect 1008 392 1184 408)
 	(text "BIDIR" (rect 1 0 25 10)(font "Arial" (font_size 6)))
 	(text "m_data" (rect 90 0 126 12)(font "Arial" ))
 	(pt 0 8)
@@ -214,7 +214,7 @@ applicable agreement for further details.
 )
 (pin
 	(bidir)
-	(rect 1016 496 1192 512)
+	(rect 1008 408 1184 424)
 	(text "BIDIR" (rect 1 0 25 10)(font "Arial" (font_size 6)))
 	(text "m_clk" (rect 90 0 119 12)(font "Arial" ))
 	(pt 0 8)
@@ -251,7 +251,7 @@ applicable agreement for further details.
 		(pt 144 32)
 		(output)
 		(text "result" (rect 0 0 27 12)(font "Arial" ))
-		(text "result" (rect 101 27 123 39)(font "Arial" ))
+		(text "result" (rect 101 27 128 39)(font "Arial" ))
 		(line (pt 144 32)(pt 128 32))
 	)
 	(parameter
@@ -286,7 +286,7 @@ applicable agreement for further details.
 		(pt 144 32)
 		(output)
 		(text "result" (rect 0 0 27 12)(font "Arial" ))
-		(text "result" (rect 101 27 123 39)(font "Arial" ))
+		(text "result" (rect 101 27 128 39)(font "Arial" ))
 		(line (pt 144 32)(pt 128 32))
 	)
 	(parameter
@@ -321,28 +321,28 @@ applicable agreement for further details.
 		(pt 264 64)
 		(output)
 		(text "left_button" (rect 0 0 53 12)(font "Arial" ))
-		(text "left_button" (rect 199 59 243 71)(font "Arial" ))
+		(text "left_button" (rect 199 59 252 71)(font "Arial" ))
 		(line (pt 264 64)(pt 248 64))
 	)
 	(port
 		(pt 264 80)
 		(output)
 		(text "right_button" (rect 0 0 57 12)(font "Arial" ))
-		(text "right_button" (rect 195 75 243 87)(font "Arial" ))
+		(text "right_button" (rect 195 75 252 87)(font "Arial" ))
 		(line (pt 264 80)(pt 248 80))
 	)
 	(port
 		(pt 264 96)
 		(output)
 		(text "mouse_cursor_row[9..0]" (rect 0 0 118 12)(font "Arial" ))
-		(text "mouse_cursor_row[9..0]" (rect 144 91 243 103)(font "Arial" ))
+		(text "mouse_cursor_row[9..0]" (rect 144 91 262 103)(font "Arial" ))
 		(line (pt 264 96)(pt 248 96)(line_width 3))
 	)
 	(port
 		(pt 264 112)
 		(output)
 		(text "mouse_cursor_column[9..0]" (rect 0 0 136 12)(font "Arial" ))
-		(text "mouse_cursor_column[9..0]" (rect 128 107 243 119)(font "Arial" ))
+		(text "mouse_cursor_column[9..0]" (rect 128 107 264 119)(font "Arial" ))
 		(line (pt 264 112)(pt 248 112)(line_width 3))
 	)
 	(port
@@ -385,7 +385,7 @@ applicable agreement for further details.
 		(pt 184 32)
 		(output)
 		(text "Q[size-1..0]" (rect 0 0 56 12)(font "Arial" ))
-		(text "Q[size-1..0]" (rect 116 27 163 39)(font "Arial" ))
+		(text "Q[size-1..0]" (rect 116 27 172 39)(font "Arial" ))
 		(line (pt 184 32)(pt 168 32)(line_width 3))
 	)
 	(parameter
@@ -399,7 +399,7 @@ applicable agreement for further details.
 	(annotation_block (parameter)(rect 784 -48 960 -8))
 )
 (symbol
-	(rect 936 608 1120 688)
+	(rect 936 616 1120 696)
 	(text "input_buffer" (rect 5 0 65 12)(font "Arial" ))
 	(text "inst" (rect 8 64 25 76)(font "Arial" ))
 	(port
@@ -420,7 +420,7 @@ applicable agreement for further details.
 		(pt 184 32)
 		(output)
 		(text "Q[size-1..0]" (rect 0 0 56 12)(font "Arial" ))
-		(text "Q[size-1..0]" (rect 116 27 163 39)(font "Arial" ))
+		(text "Q[size-1..0]" (rect 116 27 172 39)(font "Arial" ))
 		(line (pt 184 32)(pt 168 32)(line_width 3))
 	)
 	(parameter
@@ -431,7 +431,77 @@ applicable agreement for further details.
 	(drawing
 		(rectangle (rect 16 16 168 64))
 	)
-	(annotation_block (parameter)(rect 936 576 1118 604))
+	(annotation_block (parameter)(rect 936 584 1118 612))
+)
+(symbol
+	(rect 1256 400 1400 480)
+	(text "debounce" (rect 5 0 52 12)(font "Arial" ))
+	(text "inst1" (rect 8 64 31 76)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "button" (rect 0 0 30 12)(font "Arial" ))
+		(text "button" (rect 21 43 51 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 144 32)
+		(output)
+		(text "result" (rect 0 0 27 12)(font "Arial" ))
+		(text "result" (rect 101 27 128 39)(font "Arial" ))
+		(line (pt 144 32)(pt 128 32))
+	)
+	(parameter
+		"counter_size"
+		"19"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 128 64))
+	)
+	(annotation_block (parameter)(rect 1256 368 1456 400))
+)
+(symbol
+	(rect 1256 528 1400 608)
+	(text "debounce" (rect 5 0 52 12)(font "Arial" ))
+	(text "inst2" (rect 8 64 31 76)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "button" (rect 0 0 30 12)(font "Arial" ))
+		(text "button" (rect 21 43 51 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 144 32)
+		(output)
+		(text "result" (rect 0 0 27 12)(font "Arial" ))
+		(text "result" (rect 101 27 128 39)(font "Arial" ))
+		(line (pt 144 32)(pt 128 32))
+	)
+	(parameter
+		"counter_size"
+		"19"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 128 64))
+	)
+	(annotation_block (parameter)(rect 1256 496 1456 528))
 )
 (connector
 	(pt 608 360)
@@ -440,22 +510,6 @@ applicable agreement for further details.
 (connector
 	(pt 368 184)
 	(pt 608 184)
-)
-(connector
-	(pt 872 488)
-	(pt 1016 488)
-)
-(connector
-	(pt 1016 504)
-	(pt 872 504)
-)
-(connector
-	(pt 872 520)
-	(pt 1016 520)
-)
-(connector
-	(pt 872 536)
-	(pt 1016 536)
 )
 (connector
 	(pt 368 24)
@@ -528,31 +582,8 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 912 568)
-	(pt 912 656)
-	(bus)
-)
-(connector
-	(pt 912 656)
-	(pt 936 656)
-	(bus)
-)
-(connector
-	(pt 1120 640)
-	(pt 1176 640)
-	(bus)
-)
-(connector
-	(pt 936 640)
-	(pt 368 640)
-)
-(connector
 	(pt 368 184)
 	(pt 368 360)
-)
-(connector
-	(pt 368 360)
-	(pt 368 640)
 )
 (connector
 	(pt 312 40)
@@ -594,6 +625,117 @@ applicable agreement for further details.
 	(pt 320 72)
 	(pt 472 72)
 )
+(connector
+	(pt 880 488)
+	(pt 880 400)
+)
+(connector
+	(pt 872 488)
+	(pt 880 488)
+)
+(connector
+	(pt 880 400)
+	(pt 1008 400)
+)
+(connector
+	(pt 872 504)
+	(pt 896 504)
+)
+(connector
+	(pt 896 504)
+	(pt 896 416)
+)
+(connector
+	(pt 1008 416)
+	(pt 896 416)
+)
+(connector
+	(pt 1256 560)
+	(pt 1216 560)
+)
+(connector
+	(pt 1256 432)
+	(pt 1216 432)
+)
+(connector
+	(pt 1216 384)
+	(pt 816 384)
+)
+(connector
+	(pt 1216 384)
+	(pt 1216 432)
+)
+(connector
+	(pt 1216 432)
+	(pt 1216 560)
+)
+(connector
+	(pt 816 440)
+	(pt 816 384)
+)
+(connector
+	(pt 816 440)
+	(pt 368 440)
+)
+(connector
+	(pt 872 520)
+	(pt 1056 520)
+)
+(connector
+	(pt 1056 520)
+	(pt 1056 448)
+)
+(connector
+	(pt 1056 448)
+	(pt 1256 448)
+)
+(connector
+	(pt 872 536)
+	(pt 1056 536)
+)
+(connector
+	(pt 1056 576)
+	(pt 1056 536)
+)
+(connector
+	(pt 1056 576)
+	(pt 1256 576)
+)
+(connector
+	(pt 912 568)
+	(pt 912 664)
+	(bus)
+)
+(connector
+	(pt 912 664)
+	(pt 936 664)
+	(bus)
+)
+(connector
+	(pt 368 648)
+	(pt 936 648)
+)
+(connector
+	(pt 368 360)
+	(pt 368 440)
+)
+(connector
+	(pt 368 440)
+	(pt 368 648)
+)
+(connector
+	(pt 1120 648)
+	(pt 1176 648)
+	(bus)
+)
+(connector
+	(pt 1400 432)
+	(pt 1496 432)
+)
+(connector
+	(pt 1496 560)
+	(pt 1400 560)
+)
 (junction (pt 368 184))
 (junction (pt 368 88))
 (junction (pt 368 360))
@@ -602,3 +744,5 @@ applicable agreement for further details.
 (junction (pt 320 88))
 (junction (pt 320 104))
 (junction (pt 320 40))
+(junction (pt 1216 432))
+(junction (pt 368 440))
