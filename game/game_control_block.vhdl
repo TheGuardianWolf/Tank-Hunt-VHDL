@@ -5,6 +5,7 @@ entity game_control_block is
     port(
         clk_50M: in std_logic;
         clk_s: in std_logic;
+        btn0: in std_logic;
         btn1: in std_logic;
         btn2: in std_logic;
         switch: in std_logic;
@@ -14,13 +15,23 @@ entity game_control_block is
         win: in std_logic;
         next_level: in std_logic;
         game_mode: out std_logic;
-        pause: out std_logic;
+        game_start: out std_logic;
+        game_reset: out std_logic;
+        game_pause: out std_logic;
         timeout: out std_logic;
         kills_reached: out std_logic;
     );
 end entity;
 
 architecture behavior of game_control_block is
+    component T_FF is
+        port (
+            T: in std_logic;
+            Q: out std_logic;
+            NQ: out std_logic
+        );
+    end component;
+
     component D_FF is
         generic(
             size: integer := 1
@@ -144,6 +155,42 @@ begin
         pregame,
         switch,
         game_mode
+    );
+
+    g_start: D_FF generic map(
+        1
+    ) port map(
+        clk_50M,
+        '0',
+        '1',
+        btn0,
+        game_start
+    );
+
+    g_start: D_FF generic map(
+        1
+    ) port map(
+        clk_50M,
+        '0',
+        '1',
+        btn0,
+        game_start
+    );
+
+    g_pause: T_FF port map(
+        btn1,
+        game_pause,
+        open,
+    );
+    
+    g_reset: D_FF generic map(
+        1
+    ) port map(
+        clk_50M,
+        '0',
+        '1',
+        btn2,
+        game_reset
     );
 
     t_out: D_FF generic map(
