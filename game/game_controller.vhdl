@@ -19,6 +19,7 @@ entity game_controller is
     pregame: out std_logic := '0';
     midgame: out std_logic := '0';
     endgame: out std_logic := '0';
+    mouse_pos_reset: out std_logic := '0';
     win: out std_logic := '0';
     next_level: out std_logic := '0'
     state_debug: out std_logic_vector(2 downto 0) := (others => '0');
@@ -145,6 +146,7 @@ architecture behaviour of game_controller is
           state_debug <= "001";
           if (game_start = '1') then
             midgame <= '1';
+            mouse_pos_reset <= '1';
             if (game_mode = '1') then
               next_level <= '1';
             end if;
