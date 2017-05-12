@@ -1,26 +1,31 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 entity game_ai_block is
     port(
         clk_50M: in std_logic;
-        clk_47s7: in std_logic;
-        btn1: in std_logic;
-        btn2: in std_logic;
-        switch: in std_logic;
+        clk_48: in std_logic;
         pregame: in std_logic;
         midgame: in std_logic;
         endgame: in std_logic;
-        win: in std_logic;
         next_level: in std_logic;
-        game_mode: out std_logic;
-        pause: out std_logic;
-        timeout: out std_logic;
-        kills_reached: out std_logic;
+        collision: in std_logic;
+        ai_x: out std_logic_vector(9 downto 0) := (others => '0');
+        ai_y: out std_logic_vector(9 downto 0) := (others => '0');
+        ai_hidden: out std_logic;
     );
 end entity;
 
 architecture behavior of game_ai_block is
+    component T_FF is
+        port (
+            T: in std_logic;
+            Q: out std_logic;
+            NQ: out std_logic
+        );
+    end component;
+
     component D_FF is
         generic(
             size: integer := 1
@@ -60,104 +65,116 @@ architecture behavior of game_ai_block is
         );
     end component;
 
-    signal level_count: std_logic_vector(1 downto 0) := (others => '0');
-    
-    signal time_comp_a: std_logic_vector(5 downto 0) := (others => '0');
-    signal time_comp_b: std_logic_vector(5 downto 0) := (others => '0');
-    signal time_comp_r: std_logic_vector(2 downto 0) := (others => '0');
+    signal destroyed: std_logic := '0';
+    signal reset_ai: std_logic := '0';
+    signal reset_spawn: std_logic := '0';
 
-    signal kill_comp_a: std_logic_vector(7 downto 0) := (others => '0');
-    signal kill_comp_b: std_logic_vector(7 downto 0) := (others => '0');
-    signal kill_comp_r: std_logic_vector(2 downto 0) := (others => '0');
+    signal mux_ai_x_sel: std_logic := '1';
+    signal mux_ai_x_a: std_logic_vector(9 downto 0) := (others => '0');
+    signal mux_ai_x_b: std_logic_vector(9 downto 0) := (others => '0');
+    signal mux_ai_x_r: std_logic_vector(9 downto 0) := (others => '0');
 
-    signal sel_time_limit: std_logic := '0';
-    signal sel_kill_thresh: std_logic_vector(1 downto 0) := (others => '0');
+    signal sig_ai_x: std_logic_vector(9 downto 0) := (others => '0');
+    signal is_ai_x_max: std_logic := '0';
+    signal is_ai_x_min: std_logic := '0';
 
-    signal buffer_timeout: std_logic := '0';
-    signal buffer_kills_reached: std_logic := '0';
+    -- signal mux_ai_y_b: std_logic_vector(9 downto 0) := (others => '0');
+    -- signal mux_ai_y_r: std_logic_vector(9 downto 0) := (others => '0');
+    signal sig_ai_y: std_logic_vector(9 downto 0) := (others => '0');
+
+    signal sig_spawn: std_logic_vector(2 downto 0) := (others => '0');
 begin
-    timer: time_s port map(
-        clk_50M,
-        midgame,
-        pregame or next_level,
-        time_comp_a
-    );
+    reset_ai <= (pregame='1') or (next_level='1') or (not (sig_spawn="11"));
+    reset_spawn <= (pregame='1') or (next_level='1') or (collision='1');
 
-    l_count: counter generic map(
-        2
-    ) port map(
-        clk_50M,
-        pregame,
-        next_level,
-        (others => '1'),
-        level_count
-    );
-
-    k_count: counter generic map(
-        8
-    ) port map(
-        clk_50M,
-        pregame,
+    ai_x: D_FF generic map(
+        10
+    )
+    port map(
+        clk48,
         '0',
-        (others => '1'),
-        kill_comp_a
+        pregame or midgame,
+        mux_ai_x_r,
+        sig_ai_x
     );
+    mux_ai_x_b <= std_logic_vector(unsigned(sig_ai_x) + 1) when mux_ai_x_sel='1' else
+                    std_logic_vector(unsigned(sig_ai_x) - 1);
+    mux_ai_x_r <= mux_ai_x_b when reset_ai='1' else
+                    mux_ai_x_a;
     
-    time_comp: comparator_u generic map(
-        6
-    ) port map(
-        time_comp_a,
-        time_comp_b,
-        time_comp_r(0),
-        time_comp_r(1),
-        time_comp_r(2)
+    comp_ai_x_max: comparator_u generic map(
+        10
+    )
+    port map(
+        sig_ai_x,
+        "1001001111", --639-48
+        open,
+        is_ai_x_max,
+        open
     );
-    time_comp_b <= "111100" when level_count="00" else "011110";
-    temp_timeout <= time_comp_r(2) or time_comp_r(1);
 
-    kill_comp: comparator_u generic map(
-        8
-    ) port map(
-        kill_comp_a,
-        kill_comp_b,
-        kill_comp_r(0),
-        kill_comp_r(1),
-        kill_comp_r(2)
+    comp_ai_x_min: comparator_u generic map(
+        10
+    )
+    port map(
+        sig_ai_x,
+        (others => '0'),
+        open,
+        is_ai_x_min,
+        open
     );
-    with level_count select kill_comp_b <=
-        (others => '1') when "00",
-        "00000101" when "01",
-        "00001100" when "10",
-        "00010100" when "11";
-    temp_kills_reached <= kill_comp_r(2) or kill_comp_r(1);
 
-    g_mode: D_FF generic map(
+    ai_x_dir: T_FF port map(
+        is_ai_x_max or is_ai_x_min,
+        mux_ai_x_sel,
+        open
+    );
+
+    ai_y: D_FF generic map(
+        10
+    )
+    port map(
+        clk48,
+        reset_ai,
+        is_ai_x_max or is_ai_x_min,
+        std_logic_vector(unsigned(sig_ai_y) + 48),
+        -- mux_ai_y_r,
+        sig_ai_y
+    );
+    -- mux_ai_y_b <= std_logic_vector(unsigned(sig_ai_y) - 48);
+    -- mux_ai_y_r <= (others => '1') when reset_ai='1' else
+    --                 mux_ai_x_b;
+
+    ai_x <= sig_ai_x;
+    ai_y <= sig_ai_y;
+
+    -- destroyed: D_FF generic map(
+    --     1
+    -- )
+    -- port map(
+    --     clk_50M,
+    --     '0',
+
+    -- ); 
+
+    spawn: counter generic map(
+        2
+    )
+    port map(
+        clk_s,
+        reset_spawn,
+        reset_ai,
+        (others => '1'),
+        sig_spawn
+    )
+
+    ai_h: D_FF genetic map(
         1
     ) port map(
         clk_50M,
         '0',
-        pregame,
-        switch,
-        game_mode
-    );
-
-    t_out: D_FF generic map(
-        1
-    ) port map(
-        clk_50M,
-        pregame,
-        midgame,
-        buffer_timeout,
-        timeout
-    );
-
-    k_reached: D_FF generic map(
-        1
-    ) port map(
-        clk_50M,
-        pregame,
-        midgame,
-        buffer_kills_reached,
-        kills_reached
+        '1',
+        reset_ai,
+        ai_hidden
     );
 end architecture;

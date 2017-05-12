@@ -1,5 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 entity game_player_block is
     port(
@@ -52,7 +53,7 @@ begin
         player_x
     );
 
-    player_y <= "000110000";
+    player_y <= "0110101111";
 
     -- Bullet X position
     b_x: D_FF generic map(
