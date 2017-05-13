@@ -15,6 +15,7 @@ ENTITY char_rom IS
 		character_address	:	IN STD_LOGIC_VECTOR (5 DOWNTO 0);
 		font_row, font_col	:	IN STD_LOGIC_VECTOR (2 DOWNTO 0);
 		clock				: 	IN STD_LOGIC ;
+		mouse_hor : IN STD_LOGIC_VECTOR (9 downto 0);
 		--q					: 	OUT STD_LOGIC_VECTOR (7 DOWNTO 0)
 		rom_mux_output		:	OUT STD_LOGIC
 	);
@@ -78,9 +79,42 @@ BEGIN
 	
 	process(clock)
 	begin
-	IF (("0111001100" < vga_row(9 downto 0)) and (vga_row(9 downto 0) < "0111010100") and ("0100111011" < vga_col(9 downto 0)) and (vga_col(9 downto 0) < "0101000100")) THEN
-		rom_address <= "111111" & std_logic_vector(unsigned(vga_row(2 downto 0))-5);
-		rom_mux_output <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(2 DOWNTO 0))-4))));
+	IF (("0110011" < vga_row(9 downto 3)) and (vga_row(9 downto 3) <= "0111011")) THEN
+		IF ((mouse_hor(9 downto 0) < vga_col(9 downto 0)) and (vga_col(9 downto 0) <= std_logic_vector(unsigned(mouse_hor(9 downto 0))+64))) THEN
+			rom_address <= "111111" & std_logic_vector(unsigned(vga_row(5 downto 3))-4);
+			rom_mux_output <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-unsigned(mouse_hor(5 downto 3))))));
+		ELSE 
+			rom_mux_output <= '0';
+		END IF;
+	ELSIF (("0001000" < vga_row(9 downto 3)) and (vga_row(9 downto 3) <= "0010000")) THEN
+		IF(("0000100" < vga_col(9 downto 3)) and (vga_col(9 downto 3) <= "0001100")) THEN 
+			rom_address <= "010100" & std_logic_vector(unsigned(vga_row(5 downto 3))-1);
+			rom_mux_output <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-5))));
+		ELSIF(("0001100" < vga_col(9 downto 3)) and (vga_col(9 downto 3) <= "0010100")) THEN
+			rom_address <= "000001" & std_logic_vector(unsigned(vga_row(5 downto 3))-1);
+			rom_mux_output <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-5))));
+		ELSIF(("0010100" < vga_col(9 downto 3)) and (vga_col(9 downto 3) <= "0011100")) THEN
+			rom_address <= "001110" & std_logic_vector(unsigned(vga_row(5 downto 3))-1);
+			rom_mux_output <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-5))));
+		ELSIF(("0011100" < vga_col(9 downto 3)) and (vga_col(9 downto 3) <= "0100100")) THEN
+			rom_address <= "001011" & std_logic_vector(unsigned(vga_row(5 downto 3))-1);
+			rom_mux_output <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-5))));
+
+		ELSIF(("0101100" < vga_col(9 downto 3)) and (vga_col(9 downto 3) <= "0110100")) THEN 
+			rom_address <= "000111" & std_logic_vector(unsigned(vga_row(5 downto 3))-1);
+			rom_mux_output <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-5))));
+		ELSIF(("0110100" < vga_col(9 downto 3)) and (vga_col(9 downto 3) <= "0111100")) THEN
+			rom_address <= "000001" & std_logic_vector(unsigned(vga_row(5 downto 3))-1);
+			rom_mux_output <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-5))));
+		ELSIF(("0111100" < vga_col(9 downto 3)) and (vga_col(9 downto 3) <= "1000100")) THEN
+			rom_address <= "001101" & std_logic_vector(unsigned(vga_row(5 downto 3))-1);
+			rom_mux_output <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-5))));
+		ELSIF(("1000100" < vga_col(9 downto 3)) and (vga_col(9 downto 3) <= "1001100")) THEN
+			rom_address <= "000101" & std_logic_vector(unsigned(vga_row(5 downto 3))-1);
+			rom_mux_output <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-5))));
+		ELSE
+			rom_mux_output <= '0';
+		END IF;
 	ELSE
 		rom_mux_output <= '0';
 	END IF;

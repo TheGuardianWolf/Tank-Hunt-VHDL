@@ -30,13 +30,11 @@ BEGIN
 --  Horiz_sync  ------------------------------------__________--------
 --  H_count       0                640             659       755    799
 --
-	IF (h_count >= 799) THEN
+	IF (h_count = 799) THEN
    		h_count <= "0000000000";
 	ELSE
    		h_count <= h_count + 1;
 	END IF;
-			h_count(8 downto 0) <= h_count(9 downto 1);
-			h_count(0) <= '0';
 
 --Generate Horizontal Sync Signal using H_count
 	IF (h_count <= 755) AND (h_count >= 659) THEN
@@ -52,12 +50,10 @@ BEGIN
 --
 	IF (v_count >= 524) AND (h_count >= 699) THEN
    		v_count <= "0000000000";
-	ELSIF (h_count >= 699) THEN
+	ELSIF (h_count = 699) THEN
    		v_count <= v_count + 1;
 	END IF;
 
-	v_count(8 downto 0) <= v_count(9 downto 1);
-	v_count(0) <= '0';
 -- Generate Vertical Sync Signal using V_count
 	IF (v_count <= 494) AND (v_count >= 493) THEN
    		vert_sync <= '0';
@@ -79,18 +75,7 @@ BEGIN
 	ELSE
    		video_on_v <= '0';
 	END IF;
-	
-	--generate a tank at the bottom of the screen
---	IF ((461 < v_count) and (v_count < 470) and (315 < h_count) and (h_count < 324)) THEN
---   		green_out <= green AND video_on;
---			red_out <= red AND video_on;
---			blue_out <= blue AND video_on;
---	ELSE
---  		green_out <= '0' AND video_on;
---			red_out <= '0' AND video_on;
---			blue_out <= '0' AND video_on;
---	END IF;
-	
+
 -- Put all video signals through DFFs to elminate any delays that cause a blurry image
 		red_out <= red AND video_on;
 		green_out <= green AND video_on;
