@@ -16,6 +16,7 @@ architecture behavior of var_clk_div is
     component T_FF
         port(
             T: in std_logic;
+            Reset: in std_logic;
             Q: out std_logic;
             NQ: out std_logic
         );
@@ -25,6 +26,7 @@ begin
         Toggle_Init: if i = 0 generate
             T0: T_FF port map(
                 clk,
+                open,
                 clk_div(0),
                 tff_nq(0)
             );
@@ -32,7 +34,8 @@ begin
 
         Toggle_Seq: if i > 0 generate
             TX: T_FF port map (
-                tff_nq(i-1), 
+                tff_nq(i-1),
+                open,
                 clk_div(i), 
                 tff_nq(i)
             );
