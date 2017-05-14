@@ -23,11 +23,13 @@ begin
         if (Reset='1') then
             count := (others => '0');
         elsif(rising_edge(clk)) then
-            if (count = Limit) then
-                count := (others => '0');
-            else
-                count := std_logic_vector(unsigned(count) + 1);
-            end if; 
+            if (Enable = '1') then
+                if (count = Limit) then
+                    count := (others => '0');
+                else
+                    count := std_logic_vector(unsigned(count) + 1);
+                end if; 
+            end if;
         end if;
         C <= count;
     end process;

@@ -21,8 +21,8 @@ entity game_controller is
     endgame: out std_logic := '0';
     mouse_pos_reset: out std_logic := '0';
     win: out std_logic := '0';
-    next_level: out std_logic := '0'
-    state_debug: out std_logic_vector(2 downto 0) := (others => '0');
+    next_level: out std_logic := '0';
+    state_debug: out std_logic_vector(2 downto 0) := (others => '0')
     --reset_level: out std_logic := '0';
     --reset_time: out std_logic := '0';
     --reset_kills: out std_logic := '0';
@@ -84,24 +84,24 @@ architecture behaviour of game_controller is
 
         when train =>
           if (game_reset = '1') then
+            NextState <= menu;
+          else
             if ((game_pause = '0') and (timeout = '1')) then
               NextState <= ended;
             else
               NextState <= train;
             end if;
-          else
-            NextState <= menu;
           end if;
 
         when hunt =>
         if (game_reset = '1') then
+          NextState <= menu;
+        else
           if ((game_pause = '0') and ((timeout = '1') and ((max_level = '1') or (kills_reached = '0')))) then
             NextState <= ended;
           else
             NextState <= hunt;
           end if;
-        else
-          NextState <= menu;
         end if;
 
         when ended =>
@@ -133,6 +133,7 @@ architecture behaviour of game_controller is
       endgame <= '0';
       win <= '0';
       next_level <= '0';
+      mouse_pos_reset <= '0';
 
       -- State conditional outputs
       case CurrentState is
