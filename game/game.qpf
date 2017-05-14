@@ -18,13 +18,13 @@
 #
 # Quartus II 64-Bit
 # Version 13.1.0 Build 162 10/23/2013 SJ Web Edition
-# Date created = 16:15:01  May 11, 2017
+# Date created = 12:25:04  May 11, 2017
 #
 # -------------------------------------------------------------------------- #
 
 QUARTUS_VERSION = "13.1"
-DATE = "16:15:01  May 11, 2017"
+DATE = "12:25:04  May 11, 2017"
 
 # Revisions
 
-PROJECT_REVISION = "input"
+PROJECT_REVISION = "game"
