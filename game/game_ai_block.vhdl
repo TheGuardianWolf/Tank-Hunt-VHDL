@@ -21,6 +21,7 @@ architecture behavior of game_ai_block is
     component T_FF is
         port (
             T: in std_logic;
+            Reset: in std_logic;
             Q: out std_logic;
             NQ: out std_logic
         );
@@ -126,6 +127,7 @@ begin
 
     ai_x_dir: T_FF port map(
         is_ai_x_max or is_ai_x_min,
+        open,
         mux_ai_x_sel,
         open
     );

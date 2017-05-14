@@ -10,13 +10,14 @@ entity game_control_block is
         switch: in std_logic;
         pregame: in std_logic;
         midgame: in std_logic;
-        endgame: in std_logic;
         win: in std_logic;
-        next_level: in std_logic;
-        game_mode: out std_logic;
-        game_pause: out std_logic;
-        timeout: out std_logic;
-        kills_reached: out std_logic;
+        next_level: in std_logic := '0';
+        game_won: out std_logic := '0';
+        game_mode: out std_logic := '0';
+        game_pause: out std_logic := '0';
+        max_level: out std_logic := '0';
+        timeout: out std_logic := '0';
+        kills_reached: out std_logic := '0'
     );
 end entity;
 
@@ -24,6 +25,7 @@ architecture behavior of game_control_block is
     component T_FF is
         port (
             T: in std_logic;
+            Reset: in std_logic;
             Q: out std_logic;
             NQ: out std_logic
         );
@@ -90,8 +92,8 @@ begin
     )    
     port map(
         clk_s,
+        pregame or next_level,
         midgame,
-        pregame or next_level,,
         (others => '1'),
         time_comp_a
     );
@@ -115,6 +117,16 @@ begin
         (others => '1'),
         kill_comp_a
     );
+
+    max_level_comp: comparator_u generic map(
+        2
+    ) port map(
+        level_count,
+        "11",
+        open,
+        max_level,
+        open
+    );
     
     time_comp: comparator_u generic map(
         6
@@ -126,7 +138,7 @@ begin
         time_comp_r(2)
     );
     time_comp_b <= "111100" when level_count="00" else "011110";
-    temp_timeout <= time_comp_r(2) or time_comp_r(1);
+    buffer_timeout <= time_comp_r(2) or time_comp_r(1);
 
     kill_comp: comparator_u generic map(
         8
@@ -142,7 +154,7 @@ begin
         "00000101" when "01",
         "00001100" when "10",
         "00010100" when "11";
-    temp_kills_reached <= kill_comp_r(2) or kill_comp_r(1);
+    buffer_kills_reached <= kill_comp_r(2) or kill_comp_r(1);
 
     g_mode: D_FF generic map(
         1
@@ -150,14 +162,22 @@ begin
         clk_50M,
         '0',
         pregame,
-        switch,
-        game_mode
+        D(0) => switch,
+        Q(0) => game_mode
     );
-
+    
     g_pause: T_FF port map(
         btn1,
+        pregame,
         game_pause,
-        open,
+        open
+    );
+
+    g_won: T_FF port map(
+        win,
+        pregame,
+        game_won,
+        open
     );
 
     t_out: D_FF generic map(
@@ -166,8 +186,8 @@ begin
         clk_50M,
         pregame,
         midgame,
-        buffer_timeout,
-        timeout
+        D(0) => buffer_timeout,
+        Q(0) => timeout
     );
 
     k_reached: D_FF generic map(
@@ -176,7 +196,7 @@ begin
         clk_50M,
         pregame,
         midgame,
-        buffer_kills_reached,
-        kills_reached
+        D(0) => buffer_kills_reached,
+        Q(0) => kills_reached
     );
 end architecture;
