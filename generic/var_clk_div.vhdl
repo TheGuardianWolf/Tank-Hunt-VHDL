@@ -13,6 +13,7 @@ end entity;
 
 architecture behavior of var_clk_div is
     signal tff_nq: std_logic_vector(size-1 downto 0) := (others => '1');
+    signal tff_q: std_logic_vector(size-1 downto 0) := (others => '0');
     component T_FF
         port(
             T: in std_logic;
@@ -27,7 +28,7 @@ begin
             T0: T_FF port map(
                 clk,
                 '0',
-                clk_div(0),
+                tff_q(0),
                 tff_nq(0)
             );
         end generate;
@@ -36,9 +37,11 @@ begin
             TX: T_FF port map (
                 tff_nq(i-1),
                 '0',
-                clk_div(i), 
+                tff_q(i), 
                 tff_nq(i)
             );
         end generate;
     end generate;
+
+    clk_div <= tff_q;
 end architecture;
