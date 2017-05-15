@@ -103,7 +103,7 @@ applicable agreement for further details.
 	(input)
 	(rect 152 72 320 88)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "button0" (rect 5 0 42 12)(font "Arial" ))
+	(text "button0" (rect 5 0 41 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -114,6 +114,22 @@ applicable agreement for further details.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect 136 152 320 168)
+	(text "INPUT" (rect 141 0 169 10)(font "Arial" (font_size 6)))
+	(text "mouse_pos_reset" (rect 5 0 93 12)(font "Arial" ))
+	(pt 184 8)
+	(drawing
+		(line (pt 100 12)(pt 125 12))
+		(line (pt 100 4)(pt 125 4))
+		(line (pt 129 8)(pt 184 8))
+		(line (pt 100 12)(pt 100 4))
+		(line (pt 125 4)(pt 129 8))
+		(line (pt 125 12)(pt 129 8))
+	)
+	(text "VCC" (rect 144 7 164 17)(font "Arial" (font_size 6)))
 )
 (pin
 	(output)
@@ -852,6 +868,14 @@ applicable agreement for further details.
 (connector
 	(pt 864 40)
 	(pt 1056 40)
+)
+(connector
+	(pt 320 160)
+	(pt 320 552)
+)
+(connector
+	(pt 608 552)
+	(pt 320 552)
 )
 (junction (pt 320 40))
 (junction (pt 368 128))
