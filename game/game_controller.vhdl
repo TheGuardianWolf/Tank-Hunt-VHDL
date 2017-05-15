@@ -171,21 +171,25 @@ architecture behaviour of game_controller is
 
         when hunt =>
         state_debug <= "011";
-        if (game_pause = '0') then
-          if (timeout = '1') then
-            if (kills_reached = '1') then
-              if (max_level = '1') then
-                win <= '1';
-                endgame <= '1';
+        if (game_reset = '1') then
+          pregame <= '1';
+        else
+          if (game_pause = '0') then
+            if (timeout = '1') then
+              if (kills_reached = '1') then
+                if (max_level = '1') then
+                  win <= '1';
+                  endgame <= '1';
+                else
+                  next_level <= '1';
+                  midgame <= '1';
+                end if;
               else
-                next_level <= '1';
-                midgame <= '1';
+                endgame <= '1';
               end if;
             else
-              endgame <= '1';
+              midgame <= '1';
             end if;
-          else
-            midgame <= '1';
           end if;
         end if;
 
