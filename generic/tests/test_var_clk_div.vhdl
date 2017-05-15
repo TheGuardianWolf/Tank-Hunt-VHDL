@@ -7,7 +7,7 @@ end entity test_var_clk_div;
 
 architecture test of test_var_clk_div is
     signal t_clk: std_logic := '0';
-    signal t_clk_div: std_logic_vector(2 downto 0) := "000";
+    signal t_clk_div: std_logic_vector(19 downto 0) := (others => '0');
 
     component var_clk_div
         generic(
@@ -22,7 +22,7 @@ architecture test of test_var_clk_div is
 begin
     div: var_clk_div 
     generic map(
-        2
+        20
     )
     port map(
         t_clk,
