@@ -17,7 +17,8 @@ entity game_control_block is
         game_pause: out std_logic := '0';
         max_level: out std_logic := '0';
         timeout: out std_logic := '0';
-        kills_reached: out std_logic := '0'
+        kills_reached: out std_logic := '0';
+		  time_s: out std_logic_vector(5 downto 0) := (others => '0')
     );
 end entity;
 
@@ -97,6 +98,7 @@ begin
         (others => '1'),
         time_comp_a
     );
+	 time_s <= time_comp_a;
 
     l_count: counter generic map(
         2

@@ -23,7 +23,7 @@ TYPE STATE_TYPE IS (INHIBIT_TRANS, LOAD_COMMAND,LOAD_COMMAND2, WAIT_OUTPUT_READY
 -- Signals for Mouse
 SIGNAL mouse_state							: state_type;
 SIGNAL inhibit_wait_count					: std_logic_vector(10 DOWNTO 0);
-SIGNAL CHARIN, CHAROUT						: std_logic_vector(7 DOWNTO 0);
+SIGNAL CHAROUT						 : std_logic_vector(7 DOWNTO 0);
 SIGNAL new_cursor_row, new_cursor_column 	: std_logic_vector(9 DOWNTO 0);
 SIGNAL cursor_row, cursor_column 			: std_logic_vector(9 DOWNTO 0);
 SIGNAL INCNT, OUTCNT, mSB_OUT 				: std_logic_vector(3 DOWNTO 0);
@@ -142,7 +142,7 @@ BEGIN
 END PROCESS;
 
 	--This process sends serial data going to the mouse
-SEND_UART: PROCESS (send_data, Mouse_clK_filter)
+SEND_UART: PROCESS (send_data, Mouse_clK_filter, CHAROUT)
 BEGIN
 IF SEND_DATA = '1' THEN
 	OUTCNT <= "0000";
@@ -194,7 +194,7 @@ IF RESET='1' THEN
 	PACKET_COUNT <= "00";
     LEFT_BUTTON <= '0';
     RIGHT_BUTTON <= '0';
-	CHARIN <= "00000000";
+	-- CHARIN <= "00000000";
 ELSIF RESET_POS='1' then
 	-- Set Cursor to middle of screen
 	cursor_column <= CONV_STD_LOGIC_VECTOR(320,10);
@@ -216,7 +216,7 @@ ELSIF MOUSE_CLK_FILTER'event and MOUSE_CLK_FILTER='1' THEN
 	 			IREADY_SET <= '0';
 		-- END OF CHARACTER
 	 		ELSE
-	 			CHARIN <= SHIFTIN(7 DOWNTO 0);
+	 			-- CHARIN <= SHIFTIN(7 DOWNTO 0);
      			READ_CHAR <= '0';
 	 			IREADY_SET <= '1';
   	 			PACKET_COUNT <= PACKET_COUNT + 1;
