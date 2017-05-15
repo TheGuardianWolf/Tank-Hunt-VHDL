@@ -31,7 +31,7 @@ architecture behavior of game_control_block is
         );
     end component;
 
-    component D_FF is
+    component register_d is
         generic(
             size: integer := 1
         );
@@ -156,7 +156,7 @@ begin
         "00010100" when "11";
     buffer_kills_reached <= kill_comp_r(2) or kill_comp_r(1);
 
-    g_mode: D_FF generic map(
+    g_mode: register_d generic map(
         1
     ) port map(
         clk_50M,
@@ -180,7 +180,7 @@ begin
         open
     );
 
-    t_out: D_FF generic map(
+    t_out: register_d generic map(
         1
     ) port map(
         clk_50M,
@@ -190,7 +190,7 @@ begin
         Q(0) => timeout
     );
 
-    k_reached: D_FF generic map(
+    k_reached: register_d generic map(
         1
     ) port map(
         clk_50M,

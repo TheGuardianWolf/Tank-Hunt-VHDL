@@ -10,12 +10,12 @@ entity game_player_block is
         m_x: in std_logic_vector(9 downto 0);
         midgame: in std_logic;
         player_x: out std_logic_vector(9 downto 0) := (others => '0');
-        player_y: out std_logic_vector(9 downto 0) := (others => '0');
+        player_y: out std_logic_vector(9 downto 0) := (others => '0')
     );
 end entity;
 
 architecture behavior of game_player_block is
-    component D_FF is
+    component register_d is
         generic(
             size: integer := 1
         );
@@ -40,10 +40,8 @@ architecture behavior of game_player_block is
             gt: out std_logic := '0'
         );
     end component;
-
-    signal p_x: std_logic_vector(9 downto 0) := (others => '0');
 begin
-    p_x: D_FF generic map(
+    p_x: register_d generic map(
         10
     ) port map(
         clk_50M,
@@ -55,25 +53,25 @@ begin
 
     player_y <= "0110101111";
 
-    -- Bullet X position
-    b_x: D_FF generic map(
-        10
-    ) port map(
-        clk_50M,
-        '0',
-        open,
-        open,
-        open
-    );
+    -- -- Bullet X position
+    -- b_x: register_d generic map(
+    --     10
+    -- ) port map(
+    --     clk_50M,
+    --     '0',
+    --     open,
+    --     open,
+    --     open
+    -- );
 
-    -- Bullet Y position
-    b_y: D_FF generic map(
-        10
-    ) port map(
-        clk_50M,
-        '0',
-        open,
-        open,
-        open
-    );
+    -- -- Bullet Y position
+    -- b_y: register_d generic map(
+    --     10
+    -- ) port map(
+    --     clk_50M,
+    --     '0',
+    --     open,
+    --     open,
+    --     open
+    -- );
 end architecture;

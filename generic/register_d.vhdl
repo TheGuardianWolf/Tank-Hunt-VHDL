@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity D_FF is
+entity register_d is
     generic(
         size: integer := 1
     );
@@ -15,7 +15,7 @@ entity D_FF is
     );
 end entity;
 
-architecture behavior of D_FF is
+architecture behavior of register_d is
 begin
     process(clk, Reset)
     begin

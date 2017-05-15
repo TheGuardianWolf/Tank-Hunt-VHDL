@@ -8,7 +8,7 @@ ENTITY MOUSE IS
       constrain_x : integer := 640;
 	  constrain_y : integer := 480
    );
-   PORT( clock_25Mhz, reset 			: IN std_logic;
+   PORT( clock_25Mhz, reset_pos, reset 			: IN std_logic;
         SIGNAL mouse_data				: INOUT std_logic;
         SIGNAL mouse_clk 				: INOUT std_logic;
         SIGNAL left_button, right_button: OUT std_logic;

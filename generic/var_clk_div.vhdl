@@ -26,7 +26,7 @@ begin
         Toggle_Init: if i = 0 generate
             T0: T_FF port map(
                 clk,
-                open,
+                '0',
                 clk_div(0),
                 tff_nq(0)
             );
@@ -35,7 +35,7 @@ begin
         Toggle_Seq: if i > 0 generate
             TX: T_FF port map (
                 tff_nq(i-1),
-                open,
+                '0',
                 clk_div(i), 
                 tff_nq(i)
             );
