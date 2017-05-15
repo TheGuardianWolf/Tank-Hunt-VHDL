@@ -1,3 +1,5 @@
+-- Register made with D flip flops
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -20,7 +22,7 @@ begin
     process(clk, Reset)
     begin
         if (Reset = '1') then
-                Q <= (others => '0');
+            Q <= (others => '0');
         elsif(rising_edge(clk)) then
             if (Enable = '1') then
                 Q <= D;

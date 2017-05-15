@@ -1,3 +1,5 @@
+-- Converts binary to seven segment display
+
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
@@ -14,6 +16,7 @@ END bin_2_seven_seg;
 architecture converter of bin_2_seven_seg is
   begin
     -- Map truth table
+    -- First bit is the decimal point
     with b select
       s <= "11000000" when "0000",
            "11111001" when "0001",

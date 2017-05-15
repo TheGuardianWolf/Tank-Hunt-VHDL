@@ -1,3 +1,5 @@
+-- Counter for keeping track of increasing values
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;

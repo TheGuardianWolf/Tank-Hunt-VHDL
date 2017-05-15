@@ -1,3 +1,5 @@
+-- Compares two numbers as unsigned integers
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -17,7 +19,7 @@ end entity;
 
 architecture behavior of comparator_u is
 begin
-    lt <= '1' when a < b else '0';
-    eq <= '1' when a = b else '0';
-    gt <= '1' when a > b else '0';
+    lt <= '1' when a < b else '0'; -- A lesser than B
+    eq <= '1' when a = b else '0'; -- A equals B
+    gt <= '1' when a > b else '0'; -- A greater than B
 end architecture;

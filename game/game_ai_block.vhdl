@@ -1,3 +1,6 @@
+-- AI tank systems
+-- Responds to game controller outputs
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -85,9 +88,12 @@ architecture behavior of game_ai_block is
     signal spawn_timer: std_logic_vector(1 downto 0) := (others => '0');
     signal spawned: std_logic := '0';
 begin
+    -- Signal to reset ai
     reset_ai <= (pregame) or (next_level) or (not spawned);
+    -- Signal to reset the spawn counter
     reset_spawn <= (pregame) or (next_level) or (collision);
 
+    -- AI x position
     reg_ai_x: register_d generic map(
         10
     )
@@ -98,11 +104,15 @@ begin
         mux_ai_x_r,
         sig_ai_x
     );
+
+    -- Use either an adder or subtractor based on the direction the AI tank is going
+    -- to calculate next x position
     mux_ai_x_b <= std_logic_vector(unsigned(sig_ai_x) + 1) when mux_ai_x_sel='1' else
                     std_logic_vector(unsigned(sig_ai_x) - 1);
     mux_ai_x_r <= mux_ai_x_b when reset_ai='1' else
                     mux_ai_x_a;
     
+    -- Comparator to signal when ai reaches max X position
     comp_ai_x_max: comparator_u generic map(
         10
     )
@@ -114,6 +124,7 @@ begin
         open
     );
 
+    -- Comparator to signal when ai reaches min X position
     comp_ai_x_min: comparator_u generic map(
         10
     )
@@ -125,6 +136,7 @@ begin
         open
     );
 
+    -- Toggles directions when max or min signals for x are asserted
     ai_x_dir: T_FF port map(
         is_ai_x_max or is_ai_x_min,
         '0',
@@ -132,6 +144,7 @@ begin
         open
     );
 
+    -- Stores AI Y position
     reg_ai_y: register_d generic map(
         10
     )
@@ -155,6 +168,7 @@ begin
 
     -- ); 
 
+    -- Counter to track AI tank spawn time
     spawn: counter generic map(
         2
     )
@@ -166,6 +180,7 @@ begin
         spawn_timer
     );
     
+    -- Comparator to signal when spawn counter is finished
     comp_spawned: comparator_u generic map(
         2
     )
@@ -177,6 +192,7 @@ begin
         open
     );
 
+    -- Clocked signal for hiding the ai tank (i.e. during spawn)
     ai_h: register_d generic map(
         1
     ) port map(

@@ -1,3 +1,5 @@
+-- Provides logic components for the controller
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -18,7 +20,7 @@ entity game_control_block is
         max_level: out std_logic := '0';
         timeout: out std_logic := '0';
         kills_reached: out std_logic := '0';
-		  time_s: out std_logic_vector(5 downto 0) := (others => '0')
+        time_s: out std_logic_vector(5 downto 0) := (others => '0')
     );
 end entity;
 
@@ -87,6 +89,7 @@ architecture behavior of game_control_block is
     signal buffer_timeout: std_logic := '0';
     signal buffer_kills_reached: std_logic := '0';
 begin
+    -- Main timer to count seconds from the seconds clock input
     timer: counter 
     generic map (
         6
@@ -98,8 +101,11 @@ begin
         (others => '1'),
         time_comp_a
     );
-	 time_s <= time_comp_a;
+	time_s <= time_comp_a;
 
+    -- Counter to store current level
+    -- 0 is a training level
+    -- Others are game levels
     l_count: counter generic map(
         2
     ) port map(
@@ -110,6 +116,7 @@ begin
         level_count
     );
 
+    -- Counter to store current kills
     k_count: counter generic map(
         8
     ) port map(
@@ -120,6 +127,7 @@ begin
         kill_comp_a
     );
 
+    -- Comparator to generate max level signal
     max_level_comp: comparator_u generic map(
         2
     ) port map(
@@ -130,6 +138,7 @@ begin
         open
     );
     
+    -- Comparator to generate timeout signal
     time_comp: comparator_u generic map(
         6
     ) port map(
@@ -139,9 +148,11 @@ begin
         time_comp_r(1),
         time_comp_r(2)
     );
+    -- Timeout differs depending on the current level
     time_comp_b <= "111100" when level_count="00" else "011110";
     buffer_timeout <= time_comp_r(2) or time_comp_r(1);
 
+    -- Comparator to check if kill threshold is reached
     kill_comp: comparator_u generic map(
         8
     ) port map(
@@ -151,13 +162,15 @@ begin
         kill_comp_r(1),
         kill_comp_r(2)
     );
+    -- Kill threshold increases based on current level
     with level_count select kill_comp_b <=
-        (others => '1') when "00",
+        (others => '1') when "00", -- Set to max for training
         "00000101" when "01",
         "00001100" when "10",
         "00010100" when "11";
     buffer_kills_reached <= kill_comp_r(2) or kill_comp_r(1);
 
+    -- Register stores game mode independant from sw0 input
     g_mode: register_d generic map(
         1
     ) port map(
@@ -168,6 +181,7 @@ begin
         Q(0) => game_mode
     );
     
+    -- Toggles pause mode on button press
     g_pause: T_FF port map(
         btn1,
         pregame,
@@ -175,6 +189,7 @@ begin
         open
     );
 
+    -- Toggles game victory on signal from FSM
     g_won: T_FF port map(
         win,
         pregame,
@@ -182,6 +197,7 @@ begin
         open
     );
 
+    -- Clock syncs the timeout signal
     t_out: register_d generic map(
         1
     ) port map(
@@ -192,6 +208,7 @@ begin
         Q(0) => timeout
     );
 
+    -- Clock syncs the kills reached signal
     k_reached: register_d generic map(
         1
     ) port map(

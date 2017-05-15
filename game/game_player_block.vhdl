@@ -1,3 +1,6 @@
+-- Player tank systems
+-- Responds to game controller outputs
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -41,6 +44,7 @@ architecture behavior of game_player_block is
         );
     end component;
 begin
+    -- Store player X position
     p_x: register_d generic map(
         10
     ) port map(

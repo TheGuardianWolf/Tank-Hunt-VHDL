@@ -1,3 +1,5 @@
+-- Variable clock divider made from T flip flops
+
 library ieee;
 use ieee.std_logic_1164.all;
 

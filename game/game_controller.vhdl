@@ -1,4 +1,4 @@
--- Finite state machine design
+-- Finite state machine to control game progression.
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -23,21 +23,16 @@ entity game_controller is
     win: out std_logic := '0';
     next_level: out std_logic := '0';
     state_debug: out std_logic_vector(2 downto 0) := (others => '0')
-    --reset_level: out std_logic := '0';
-    --reset_time: out std_logic := '0';
-    --reset_kills: out std_logic := '0';
-    --reset_win: out std_logic := '0';
-    --reset_pause: out std_logic := '0';
   );
 end entity;
 
 architecture behaviour of game_controller is
   type states is (
-    init,
-    menu,
-    train,
-    hunt,
-    ended
+    init, -- Initialise any peripherals
+    menu, -- In main menu
+    train, -- In training mode
+    hunt, -- In tank hunt game mode
+    ended -- In game end screen
   );
   signal CurrentState, NextState : states:= init;
 
@@ -66,48 +61,61 @@ architecture behaviour of game_controller is
       case CurrentState is
         when init =>
           if (ready = '1') then
+            -- If initialised, go to menu
             NextState <= menu;
           else
+            -- Otherwise continue as before
             NextState <= init;
           end if;
 
         when menu =>
           if (game_start = '1') then
             if (game_mode = '1') then
+              -- If start button pressed, and game mode is set to 1
               NextState <= hunt;
             else
+              -- If start button pressed, and game mode is 0
               NextState <= train;
             end if;
           else
+            -- Nothing of significance happened
             NextState <= menu;
           end if;
 
         when train =>
           if (game_reset = '1') then
+            -- Go back to menu if reset is pressed
             NextState <= menu;
           else
             if ((game_pause = '0') and (timeout = '1')) then
+              -- End game after timeout
               NextState <= ended;
             else
+              -- Otherwise continue in current state
               NextState <= train;
             end if;
           end if;
 
         when hunt =>
         if (game_reset = '1') then
+          -- If reset is pressed, go back to menu
           NextState <= menu;
         else
           if ((game_pause = '0') and ((timeout = '1') and ((max_level = '1') or (kills_reached = '0')))) then
+            -- If game is not paused and has timed out, and it's max level or kills have not been reached, end game
             NextState <= ended;
           else
+            -- Otherwise stay in hunt state
             NextState <= hunt;
           end if;
         end if;
 
         when ended =>
           if (game_reset = '1') then
+            -- If reset is pressed, go to menu
             NextState <= menu;
           else
+            -- Otherwise stay in game end screen
             NextState <= ended;
           end if;
       end case;

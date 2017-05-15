@@ -1,3 +1,5 @@
+-- Outputs a clock signal that can be used to count seconds
+
 library ieee;
 use ieee.std_logic_1164.all;
 
