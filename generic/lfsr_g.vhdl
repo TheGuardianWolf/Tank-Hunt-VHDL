@@ -14,19 +14,25 @@ entity lfsr_g is
     );
 end entity;
 
-architecture behavior of register_d is
-    signal sig_q := std_logic_vector(15 downto 0) := (others => '0');
+architecture behavior of lfsr_g is
+    signal sig_q: std_logic_vector(15 downto 0) := (others => '0');
 begin
     process(clk, Reset)
-        variable seeded := std_logic := '0';
+        variable seeded: std_logic := '0';
     begin
         if (Reset = '1') then
             seeded := '0';
         elsif(rising_edge(clk)) then
             if (Enable = '1') then
                 if (seeded = '0') then
-                    sig_q <= Seed;
                     seeded := '1';
+                    sig_q(15) <= Seed(0);
+                    sig_q(9 downto 0) <= Seed(10 downto 1);
+                    sig_q(10) <= Seed(0) xor Seed(11);
+                    sig_q(11) <= Seed(12);
+                    sig_q(12) <= Seed(0) xor Seed(13);
+                    sig_q(13) <= Seed(0) xor Seed(14);
+                    sig_q(14) <= Seed(15);
                 else
                     sig_q(15) <= sig_q(0);
                     sig_q(9 downto 0) <= sig_q(10 downto 1);
@@ -39,4 +45,6 @@ begin
             end if;
         end if;
     end process;
+
+    Q <= sig_q;
 end architecture;
