@@ -4,10 +4,10 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP3C16F484) Path("C:/Users/user/Desktop/tank-hunt-vhdl/output_files/") File("tank-hunt.sof") MfrSpec(OpMask(1));
+		Device PartName(EPCS4) Path("C:/Users/user/Desktop/tank/tank-hunt-vhdl/") File("useme.pof") MfrSpec(OpMask(1) Child_OpMask(1 1));
 
 ChainEnd;
 
 AlteraBegin;
-	ChainType(JTAG);
+	ChainType(asc);
 AlteraEnd;

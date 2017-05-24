@@ -81,12 +81,12 @@ BEGIN
 	begin
 	if (rising_edge(clock)) then
 		--tank display, with mouse x position as input for reference
-		IF (("0110011" < vga_row(9 downto 3)) and (vga_row(9 downto 3) <= "0111011")) THEN
-			IF ((mouse_hor(9 downto 0) < vga_col(9 downto 0)) and (vga_col(9 downto 0) <= std_logic_vector(unsigned(mouse_hor(9 downto 0))+64))) THEN
+		IF (("0110011" <= vga_row(9 downto 3)) and (vga_row(9 downto 3) <= "0111011")) THEN
+			IF ((mouse_hor(9 downto 3) < vga_col(9 downto 3)) and (vga_col(9 downto 3) <= std_logic_vector(unsigned(mouse_hor(9 downto 3))+ 8))) THEN
 				--concatenate character address and font row address into a 9 bit address
-				rom_address <= "111111" & std_logic_vector(unsigned(vga_row(5 downto 3))-4);
+				rom_address <= "111111" & std_logic_vector(unsigned(vga_row(5 downto 3))-3);
 				--select of the mux for which column in the row the pixel data is chosen from
-				rom_mux_output <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-unsigned(mouse_hor(5 downto 3))))));
+				rom_mux_output <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-(unsigned(mouse_hor(5 downto 3))+1)))));
 			ELSE 
 				rom_mux_output <= '0';
 			END IF;
