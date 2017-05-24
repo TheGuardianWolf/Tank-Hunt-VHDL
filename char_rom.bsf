@@ -20,9 +20,9 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 280 192)
+	(rect 16 16 280 256)
 	(text "char_rom" (rect 5 0 45 12)(font "Arial" ))
-	(text "inst" (rect 8 160 20 172)(font "Arial" ))
+	(text "inst" (rect 8 224 20 236)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -68,9 +68,37 @@ applicable agreement for further details.
 	(port
 		(pt 0 128)
 		(input)
+		(text "pregame" (rect 0 0 35 12)(font "Arial" ))
+		(text "pregame" (rect 21 123 56 135)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128)(line_width 1))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "midgame" (rect 0 0 36 12)(font "Arial" ))
+		(text "midgame" (rect 21 139 57 151)(font "Arial" ))
+		(line (pt 0 144)(pt 16 144)(line_width 1))
+	)
+	(port
+		(pt 0 160)
+		(input)
+		(text "endgame" (rect 0 0 36 12)(font "Arial" ))
+		(text "endgame" (rect 21 155 57 167)(font "Arial" ))
+		(line (pt 0 160)(pt 16 160)(line_width 1))
+	)
+	(port
+		(pt 0 176)
+		(input)
+		(text "game_mode" (rect 0 0 50 12)(font "Arial" ))
+		(text "game_mode" (rect 21 171 71 183)(font "Arial" ))
+		(line (pt 0 176)(pt 16 176)(line_width 1))
+	)
+	(port
+		(pt 0 192)
+		(input)
 		(text "mouse_hor[9..0]" (rect 0 0 66 12)(font "Arial" ))
-		(text "mouse_hor[9..0]" (rect 21 123 87 135)(font "Arial" ))
-		(line (pt 0 128)(pt 16 128)(line_width 3))
+		(text "mouse_hor[9..0]" (rect 21 187 87 199)(font "Arial" ))
+		(line (pt 0 192)(pt 16 192)(line_width 3))
 	)
 	(port
 		(pt 264 32)
@@ -80,6 +108,6 @@ applicable agreement for further details.
 		(line (pt 264 32)(pt 248 32)(line_width 1))
 	)
 	(drawing
-		(rectangle (rect 16 16 248 160)(line_width 1))
+		(rectangle (rect 16 16 248 224)(line_width 1))
 	)
 )

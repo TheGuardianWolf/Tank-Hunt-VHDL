@@ -38,7 +38,7 @@ applicable agreement for further details.
 )
 (pin
 	(input)
-	(rect -72 320 104 336)
+	(rect -80 384 96 400)
 	(text "INPUT" (rect 133 0 161 10)(font "Arial" (font_size 6)))
 	(text "player_x[9..0]" (rect 5 0 73 12)(font "Arial" ))
 	(pt 176 8)
@@ -67,6 +67,70 @@ applicable agreement for further details.
 		(line (pt 141 12)(pt 145 8))
 	)
 	(text "VCC" (rect 160 7 180 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect -24 320 144 336)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "pregame" (rect 5 0 47 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect -24 336 144 352)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "midgame" (rect 5 0 49 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect -24 352 144 368)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "endgame" (rect 5 0 49 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect -24 368 144 384)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "game_mode" (rect 5 0 65 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
 )
 (pin
 	(output)
@@ -395,9 +459,9 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 192 200 456 376)
+	(rect 192 200 456 440)
 	(text "char_rom" (rect 5 0 51 12)(font "Arial" ))
-	(text "inst" (rect 8 160 25 172)(font "Arial" ))
+	(text "inst" (rect 8 224 25 236)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -443,9 +507,37 @@ applicable agreement for further details.
 	(port
 		(pt 0 128)
 		(input)
+		(text "pregame" (rect 0 0 42 12)(font "Arial" ))
+		(text "pregame" (rect 21 123 63 135)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "midgame" (rect 0 0 44 12)(font "Arial" ))
+		(text "midgame" (rect 21 139 65 151)(font "Arial" ))
+		(line (pt 0 144)(pt 16 144))
+	)
+	(port
+		(pt 0 160)
+		(input)
+		(text "endgame" (rect 0 0 44 12)(font "Arial" ))
+		(text "endgame" (rect 21 155 65 167)(font "Arial" ))
+		(line (pt 0 160)(pt 16 160))
+	)
+	(port
+		(pt 0 176)
+		(input)
+		(text "game_mode" (rect 0 0 60 12)(font "Arial" ))
+		(text "game_mode" (rect 21 171 81 183)(font "Arial" ))
+		(line (pt 0 176)(pt 16 176))
+	)
+	(port
+		(pt 0 192)
+		(input)
 		(text "mouse_hor[9..0]" (rect 0 0 80 12)(font "Arial" ))
-		(text "mouse_hor[9..0]" (rect 21 123 101 135)(font "Arial" ))
-		(line (pt 0 128)(pt 16 128)(line_width 3))
+		(text "mouse_hor[9..0]" (rect 21 187 101 199)(font "Arial" ))
+		(line (pt 0 192)(pt 16 192)(line_width 3))
 	)
 	(port
 		(pt 264 32)
@@ -455,56 +547,8 @@ applicable agreement for further details.
 		(line (pt 264 32)(pt 248 32))
 	)
 	(drawing
-		(rectangle (rect 16 16 248 160))
+		(rectangle (rect 16 16 248 224))
 	)
-)
-(connector
-	(text "p_col[9..0]" (rect 786 216 837 228)(font "Arial" ))
-	(pt 776 232)
-	(pt 832 232)
-	(bus)
-)
-(connector
-	(text "p_row[9..0]" (rect 786 200 840 212)(font "Arial" ))
-	(pt 776 216)
-	(pt 832 216)
-	(bus)
-)
-(connector
-	(pt 504 168)
-	(pt 552 168)
-)
-(connector
-	(pt 504 184)
-	(pt 552 184)
-)
-(connector
-	(pt 776 136)
-	(pt 872 136)
-)
-(connector
-	(pt 776 152)
-	(pt 872 152)
-)
-(connector
-	(pt 776 168)
-	(pt 872 168)
-)
-(connector
-	(pt 776 200)
-	(pt 872 200)
-)
-(connector
-	(pt 776 184)
-	(pt 872 184)
-)
-(connector
-	(pt 504 152)
-	(pt 504 168)
-)
-(connector
-	(pt 504 152)
-	(pt 552 152)
 )
 (connector
 	(text "7_in[15..0]" (rect 210 -40 261 -28)(font "Arial" ))
@@ -557,9 +601,57 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
+	(text "p_col[9..0]" (rect 786 216 837 228)(font "Arial" ))
+	(pt 776 232)
+	(pt 832 232)
+	(bus)
+)
+(connector
+	(text "p_row[9..0]" (rect 786 200 840 212)(font "Arial" ))
+	(pt 776 216)
+	(pt 832 216)
+	(bus)
+)
+(connector
+	(pt 872 136)
+	(pt 776 136)
+)
+(connector
+	(pt 872 152)
+	(pt 776 152)
+)
+(connector
+	(pt 504 168)
+	(pt 552 168)
+)
+(connector
+	(pt 872 168)
+	(pt 776 168)
+)
+(connector
+	(pt 504 184)
+	(pt 552 184)
+)
+(connector
+	(pt 872 184)
+	(pt 776 184)
+)
+(connector
+	(pt 872 200)
+	(pt 776 200)
+)
+(connector
+	(pt 504 152)
+	(pt 552 152)
+)
+(connector
 	(text "clk" (rect 106 120 120 132)(font "Arial" ))
-	(pt 552 136)
 	(pt 96 136)
+	(pt 552 136)
+)
+(connector
+	(pt 504 152)
+	(pt 504 168)
 )
 (connector
 	(pt 504 232)
@@ -601,8 +693,24 @@ applicable agreement for further details.
 	(pt 128 312)
 )
 (connector
-	(pt 104 328)
+	(pt 144 328)
 	(pt 192 328)
+)
+(connector
+	(pt 144 344)
+	(pt 192 344)
+)
+(connector
+	(pt 144 360)
+	(pt 192 360)
+)
+(connector
+	(pt 144 376)
+	(pt 192 376)
+)
+(connector
+	(pt 96 392)
+	(pt 192 392)
 	(bus)
 )
 (connector
