@@ -21,7 +21,9 @@ entity game_control_block is
         timeout: out std_logic := '0';
         kills_reached: out std_logic := '0';
         game_time: out std_logic_vector(5 downto 0) := (others => '0');
-        current_level: out std_logic_vector(2 downto 0) := (others => '0')
+        current_level: out std_logic_vector(1 downto 0) := (others => '0');
+        current_kills: out std_logic_vector(7 downto 0) := (others => '0');
+        total_kills: out std_logic_vector(7 downto 0) := (others => '0')
     );
 end entity;
 
@@ -89,10 +91,9 @@ architecture behavior of game_control_block is
 
     signal buffer_timeout: std_logic := '0';
     signal buffer_kills_reached: std_logic := '0';
-begin
-    -- Expose signals as an output
-    current_level <= level_count;
 
+    signal previous_kills: std_logic_vector(7 downto 0) := (others => '0');
+begin
     -- Main timer to count seconds from the seconds clock input
     timer: counter 
     generic map (
@@ -119,16 +120,40 @@ begin
         (others => '1'),
         level_count
     );
+    current_level <= level_count;
 
     -- Counter to store current kills
     k_count: counter generic map(
         8
     ) port map(
         clk_50M,
-        pregame,
-        '0',
+        pregame or next_level,
+        '0', -- Connect this to the impact detection signal from the bullet
         (others => '1'),
         kill_comp_a
+    );
+    current_kills <= kill_comp_a;
+
+    -- Register to store previous kill count
+    k_previous: register_d generic map(
+        8
+    ) port map(
+        clk_50M,
+        pregame,
+        next_level,
+        std_logic_vector(unsigned(kill_comp_a) + unsigned(previous_kills)),
+        previous_kills
+    );
+
+    -- Register to store total kill count
+    k_total: register_d generic map(
+        8
+    ) port map(
+        clk_50M,
+        pregame,
+        midgame,
+        std_logic_vector(unsigned(kill_comp_a) + unsigned(previous_kills)),
+        total_kills
     );
 
     -- Comparator to generate max level signal

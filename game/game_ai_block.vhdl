@@ -14,14 +14,14 @@ entity game_ai_block is
         midgame: in std_logic;
         endgame: in std_logic;
         enable: in std_logic;
-        current_level: in std_logic_vector(2 downto 0) := (others => '0');
+        current_level: in std_logic_vector(1 downto 0) := (others => '0');
         next_level: in std_logic;
         collision: in std_logic;
         lfsr_seed: in std_logic_vector(15 downto 0);
         enable_next: out std_logic := '0';
         ai_x: out std_logic_vector(9 downto 0) := (others => '0');
         ai_y: out std_logic_vector(9 downto 0) := (others => '0');
-        ai_show: out std_logic
+        ai_show: out std_logic := '0'
     );
 end entity;
 
@@ -104,11 +104,16 @@ architecture behavior of game_ai_block is
     signal spawned: std_logic := '0';
 
     signal spawn_next: std_logic_vector(2 downto 0) := (others => '0');
+    signal sig_delayed_enable: std_logic := '0';
+	 
+    signal random_number: std_logic_vector(15 downto 0) := (others => '0');
 begin
     -- Signal to reset ai
     reset_ai <= (pregame) or (next_level) or (not spawned) or (not enable);
     -- Signal to reset the spawn counter
     reset_spawn <= (pregame) or (next_level) or (collision);
+    -- Signal to start next tank in chain
+    sig_delayed_enable <= spawn_next(1) or spawn_next(2);
 
     -- LFSR to randomise starting position
     random_start: lfsr_g port map(
@@ -116,9 +121,10 @@ begin
         reset_ai,
         enable,
         lfsr_seed,
-        mux_ai_x_a
+        random_number
     );
-
+    mux_ai_x_a <= random_number(15 downto 6);
+	 
     -- AI x position
     reg_ai_x: register_d generic map(
         10
@@ -228,10 +234,10 @@ begin
     );
 
     comp_spawn_next: comparator_u generic map(
-        8
+        10
     ) port map(
         sig_ai_y,
-        std_logic_vector(to_unsigned(48,8)),
+        std_logic_vector(to_unsigned(48,10)),
         spawn_next(0),
         spawn_next(1),
         spawn_next(2)
@@ -243,8 +249,8 @@ begin
     ) port map(
         clk_50M,
         reset_ai,
-        enable,
-        D(0) => spawn_next(1) or spawn_next(2),
+        sig_delayed_enable,
+        D(0) => sig_delayed_enable,
         Q(0) => enable_next
     );
 end architecture;

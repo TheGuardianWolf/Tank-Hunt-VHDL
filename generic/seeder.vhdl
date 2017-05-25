@@ -26,7 +26,6 @@ architecture behavior of seeder is
         );
     end component;
 
-    signal sig_time_seed: std_logic_vector(15 downto 0) := (others => '0');
 begin
     time_seed: counter generic map(
         16
@@ -35,6 +34,6 @@ begin
         '0',
         '1',
         (others => '1'),
-        sig_time_seed
+        lfsr_seed
     );
 end architecture;
