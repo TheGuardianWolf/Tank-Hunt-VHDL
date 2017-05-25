@@ -109,7 +109,7 @@ architecture behavior of game_ai_block is
     signal random_number: std_logic_vector(15 downto 0) := (others => '0');
 begin
     -- Signal to reset ai
-    reset_ai <= (pregame) or (next_level) or (not spawned) or (not enable);
+    reset_ai <= (pregame) or (next_level) or (not spawned);
     -- Signal to reset the spawn counter
     reset_spawn <= (pregame) or (next_level) or (collision);
     -- Signal to start next tank in chain
