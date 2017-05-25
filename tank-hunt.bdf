@@ -640,9 +640,9 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 1296 264 1552 456)
+	(rect 1296 264 1552 488)
 	(text "output" (rect 5 0 40 14)(font "Arial" (font_size 8)))
-	(text "inst1" (rect 8 176 31 188)(font "Arial" ))
+	(text "inst2" (rect 8 208 31 220)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -691,6 +691,27 @@ applicable agreement for further details.
 		(text "player_x[9..0]" (rect 0 0 77 14)(font "Arial" (font_size 8)))
 		(text "player_x[9..0]" (rect 21 123 98 137)(font "Arial" (font_size 8)))
 		(line (pt 0 128)(pt 16 128)(line_width 3))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "ai_x[9..0]" (rect 0 0 51 14)(font "Arial" (font_size 8)))
+		(text "ai_x[9..0]" (rect 21 139 72 153)(font "Arial" (font_size 8)))
+		(line (pt 0 144)(pt 16 144)(line_width 3))
+	)
+	(port
+		(pt 0 160)
+		(input)
+		(text "ai_hidden" (rect 0 0 54 14)(font "Arial" (font_size 8)))
+		(text "ai_hidden" (rect 21 155 75 169)(font "Arial" (font_size 8)))
+		(line (pt 0 160)(pt 16 160))
+	)
+	(port
+		(pt 0 176)
+		(input)
+		(text "time_in[5..0]" (rect 0 0 67 14)(font "Arial" (font_size 8)))
+		(text "time_in[5..0]" (rect 21 171 88 185)(font "Arial" (font_size 8)))
+		(line (pt 0 176)(pt 16 176)(line_width 3))
 	)
 	(port
 		(pt 256 32)
@@ -756,7 +777,7 @@ applicable agreement for further details.
 		(line (pt 256 160)(pt 240 160))
 	)
 	(drawing
-		(rectangle (rect 16 16 240 176))
+		(rectangle (rect 16 16 240 208))
 	)
 )
 (connector
@@ -939,18 +960,9 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 1032 432)
-	(pt 1080 432)
-	(bus)
-)
-(connector
 	(pt 1032 448)
 	(pt 1080 448)
 	(bus)
-)
-(connector
-	(pt 1032 464)
-	(pt 1080 464)
 )
 (connector
 	(text "game_mode" (rect 1071 368 1131 380)(font "Arial" ))
@@ -1051,4 +1063,32 @@ applicable agreement for further details.
 	(text "game_mode" (rect 1278 360 1338 372)(font "Arial" ))
 	(pt 1296 376)
 	(pt 1248 376)
+)
+(connector
+	(text "ai_hidden" (rect 1042 448 1088 460)(font "Arial" ))
+	(pt 1032 464)
+	(pt 1080 464)
+)
+(connector
+	(text "ai_x[9..0]" (rect 1250 392 1296 404)(font "Arial" ))
+	(pt 1296 408)
+	(pt 1240 408)
+	(bus)
+)
+(connector
+	(text "ai_hidden" (rect 1257 408 1303 420)(font "Arial" ))
+	(pt 1296 424)
+	(pt 1240 424)
+)
+(connector
+	(text "ai_x[9..0]" (rect 1042 416 1088 428)(font "Arial" ))
+	(pt 1032 432)
+	(pt 1080 432)
+	(bus)
+)
+(connector
+	(text "seven_seg_in[5..0]" (rect 1240 424 1334 436)(font "Arial" ))
+	(pt 1296 440)
+	(pt 1240 440)
+	(bus)
 )
