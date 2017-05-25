@@ -20,7 +20,8 @@ entity game_control_block is
         max_level: out std_logic := '0';
         timeout: out std_logic := '0';
         kills_reached: out std_logic := '0';
-        time_s: out std_logic_vector(5 downto 0) := (others => '0')
+        game_time: out std_logic_vector(5 downto 0) := (others => '0');
+        current_level: out std_logic_vector(2 downto 0) := (others => '0')
     );
 end entity;
 
@@ -89,6 +90,9 @@ architecture behavior of game_control_block is
     signal buffer_timeout: std_logic := '0';
     signal buffer_kills_reached: std_logic := '0';
 begin
+    -- Expose signals as an output
+    current_level <= level_count;
+
     -- Main timer to count seconds from the seconds clock input
     timer: counter 
     generic map (
@@ -101,7 +105,7 @@ begin
         (others => '1'),
         time_comp_a
     );
-	time_s <= time_comp_a;
+	game_time <= time_comp_a;
 
     -- Counter to store current level
     -- 0 is a training level

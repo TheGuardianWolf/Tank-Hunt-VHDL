@@ -13,11 +13,15 @@ entity game_ai_block is
         pregame: in std_logic;
         midgame: in std_logic;
         endgame: in std_logic;
+        enable: in std_logic;
+        current_level: in std_logic_vector(2 downto 0) := (others => '0');
         next_level: in std_logic;
         collision: in std_logic;
+        lfsr_seed: in std_logic_vector(15 downto 0);
+        enable_next: out std_logic := '0';
         ai_x: out std_logic_vector(9 downto 0) := (others => '0');
         ai_y: out std_logic_vector(9 downto 0) := (others => '0');
-        ai_hidden: out std_logic
+        ai_show: out std_logic
     );
 end entity;
 
@@ -70,6 +74,16 @@ architecture behavior of game_ai_block is
         );
     end component;
 
+    component lfsr_g is
+        port(
+            Clk: in std_logic;
+            Reset: in std_logic;
+            Enable: in std_logic;
+            Seed: in std_logic_vector(15 downto 0);
+            Q: out std_logic_vector(15 downto 0) := (others => '0')
+        );
+    end component;
+
     signal destroyed: std_logic := '0';
     signal reset_ai: std_logic := '0';
     signal reset_spawn: std_logic := '0';
@@ -78,6 +92,7 @@ architecture behavior of game_ai_block is
     signal mux_ai_x_a: std_logic_vector(9 downto 0) := (others => '0');
     signal mux_ai_x_b: std_logic_vector(9 downto 0) := (others => '0');
     signal mux_ai_x_r: std_logic_vector(9 downto 0) := (others => '0');
+    signal ai_x_speed: std_logic_vector(9 downto 0) := (others => '0');
 
     signal sig_ai_x: std_logic_vector(9 downto 0) := (others => '0');
     signal is_ai_x_max: std_logic := '0';
@@ -87,11 +102,22 @@ architecture behavior of game_ai_block is
 
     signal spawn_timer: std_logic_vector(1 downto 0) := (others => '0');
     signal spawned: std_logic := '0';
+
+    signal spawn_next: std_logic_vector(2 downto 0) := (others => '0');
 begin
     -- Signal to reset ai
-    reset_ai <= (pregame) or (next_level) or (not spawned);
+    reset_ai <= (pregame) or (next_level) or (not spawned) or (not enable);
     -- Signal to reset the spawn counter
     reset_spawn <= (pregame) or (next_level) or (collision);
+
+    -- LFSR to randomise starting position
+    random_start: lfsr_g port map(
+        clk_50M,
+        reset_ai,
+        enable,
+        lfsr_seed,
+        mux_ai_x_a
+    );
 
     -- AI x position
     reg_ai_x: register_d generic map(
@@ -99,18 +125,25 @@ begin
     )
     port map(
         clk_48,
-        '0',
-        pregame or midgame,
+        reset_ai,
+        enable,
         mux_ai_x_r,
         sig_ai_x
     );
 
+    -- Multiplexer to set AI's X movement speed based on level input
+    with current_level select ai_x_speed <=
+        std_logic_vector(to_unsigned(1,10)) when "00",
+        std_logic_vector(to_unsigned(1,10)) when "01",
+        std_logic_vector(to_unsigned(2,10)) when "10",
+        std_logic_vector(to_unsigned(3,10)) when "11";
+
     -- Use either an adder or subtractor based on the direction the AI tank is going
     -- to calculate next x position
-    mux_ai_x_b <= std_logic_vector(unsigned(sig_ai_x) + 1) when mux_ai_x_sel='1' else
-                    std_logic_vector(unsigned(sig_ai_x) - 1);
-    mux_ai_x_r <= mux_ai_x_b when reset_ai='1' else
-                    mux_ai_x_a;
+    mux_ai_x_b <= std_logic_vector(unsigned(sig_ai_x) + unsigned(ai_x_speed)) when mux_ai_x_sel='1' else
+                    std_logic_vector(unsigned(sig_ai_x) - unsigned(ai_x_speed));
+    mux_ai_x_r <= mux_ai_x_a when reset_ai='1' else
+                    mux_ai_x_b;
     
     -- Comparator to signal when ai reaches max X position
     comp_ai_x_max: comparator_u generic map(
@@ -118,7 +151,7 @@ begin
     )
     port map(
         sig_ai_x,
-        "1000111111", --639-64
+        std_logic_vector(to_unsigned(575,10)), --639-64
         open,
         is_ai_x_max,
         open
@@ -159,15 +192,6 @@ begin
     ai_x <= sig_ai_x;
     ai_y <= sig_ai_y;
 
-    -- destroyed: register_d generic map(
-    --     1
-    -- )
-    -- port map(
-    --     clk_50M,
-    --     '0',
-
-    -- ); 
-
     -- Counter to track AI tank spawn time
     spawn: counter generic map(
         2
@@ -192,14 +216,35 @@ begin
         open
     );
 
-    -- Clocked signal for hiding the ai tank (i.e. during spawn)
-    ai_h: register_d generic map(
+    -- Clocked signal for showing the ai tank (i.e. after spawn)
+    ai_s: register_d generic map(
         1
     ) port map(
         clk_50M,
         '0',
-        '1',
-        D(0) => reset_ai,
-        Q(0) => ai_hidden
+        enable,
+        D(0) => not reset_ai,
+        Q(0) => ai_show
+    );
+
+    comp_spawn_next: comparator_u generic map(
+        8
+    ) port map(
+        sig_ai_y,
+        std_logic_vector(to_unsigned(48,8)),
+        spawn_next(0),
+        spawn_next(1),
+        spawn_next(2)
+    );
+
+    -- Signal for next AI tank to start being active
+    delayed_enable: register_d generic map(
+        1
+    ) port map(
+        clk_50M,
+        reset_ai,
+        enable,
+        D(0) => spawn_next(1) or spawn_next(2),
+        Q(0) => enable_next
     );
 end architecture;

@@ -1,0 +1,316 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2017  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Intel and sold by Intel or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+*/
+(header "graphic" (version "1.4"))
+(symbol
+	(rect 808 240 1032 480)
+	(text "game_ai_block" (rect 5 0 78 12)(font "Arial" ))
+	(text "inst" (rect 8 224 25 236)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk_50M" (rect 0 0 40 12)(font "Arial" ))
+		(text "clk_50M" (rect 21 27 61 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "clk_48" (rect 0 0 31 12)(font "Arial" ))
+		(text "clk_48" (rect 21 43 52 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "clk_s" (rect 0 0 25 12)(font "Arial" ))
+		(text "clk_s" (rect 21 59 46 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "pregame" (rect 0 0 42 12)(font "Arial" ))
+		(text "pregame" (rect 21 75 63 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80))
+	)
+	(port
+		(pt 0 96)
+		(input)
+		(text "midgame" (rect 0 0 44 12)(font "Arial" ))
+		(text "midgame" (rect 21 91 65 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96))
+	)
+	(port
+		(pt 0 112)
+		(input)
+		(text "endgame" (rect 0 0 44 12)(font "Arial" ))
+		(text "endgame" (rect 21 107 65 119)(font "Arial" ))
+		(line (pt 0 112)(pt 16 112))
+	)
+	(port
+		(pt 0 128)
+		(input)
+		(text "enable" (rect 0 0 31 12)(font "Arial" ))
+		(text "enable" (rect 21 123 52 135)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "current_level[2..0]" (rect 0 0 89 12)(font "Arial" ))
+		(text "current_level[2..0]" (rect 21 139 110 151)(font "Arial" ))
+		(line (pt 0 144)(pt 16 144)(line_width 3))
+	)
+	(port
+		(pt 0 160)
+		(input)
+		(text "next_level" (rect 0 0 50 12)(font "Arial" ))
+		(text "next_level" (rect 21 155 71 167)(font "Arial" ))
+		(line (pt 0 160)(pt 16 160))
+	)
+	(port
+		(pt 0 176)
+		(input)
+		(text "collision" (rect 0 0 38 12)(font "Arial" ))
+		(text "collision" (rect 21 171 59 183)(font "Arial" ))
+		(line (pt 0 176)(pt 16 176))
+	)
+	(port
+		(pt 0 192)
+		(input)
+		(text "lfsr_seed[15..0]" (rect 0 0 77 12)(font "Arial" ))
+		(text "lfsr_seed[15..0]" (rect 21 187 98 199)(font "Arial" ))
+		(line (pt 0 192)(pt 16 192)(line_width 3))
+	)
+	(port
+		(pt 224 32)
+		(output)
+		(text "enable_next" (rect 0 0 59 12)(font "Arial" ))
+		(text "enable_next" (rect 154 27 213 39)(font "Arial" ))
+		(line (pt 224 32)(pt 208 32))
+	)
+	(port
+		(pt 224 48)
+		(output)
+		(text "ai_x[9..0]" (rect 0 0 46 12)(font "Arial" ))
+		(text "ai_x[9..0]" (rect 165 43 211 55)(font "Arial" ))
+		(line (pt 224 48)(pt 208 48)(line_width 3))
+	)
+	(port
+		(pt 224 64)
+		(output)
+		(text "ai_y[9..0]" (rect 0 0 47 12)(font "Arial" ))
+		(text "ai_y[9..0]" (rect 164 59 211 71)(font "Arial" ))
+		(line (pt 224 64)(pt 208 64)(line_width 3))
+	)
+	(port
+		(pt 224 80)
+		(output)
+		(text "ai_show" (rect 0 0 38 12)(font "Arial" ))
+		(text "ai_show" (rect 171 75 209 87)(font "Arial" ))
+		(line (pt 224 80)(pt 208 80))
+	)
+	(drawing
+		(rectangle (rect 16 16 208 224))
+	)
+)
+(symbol
+	(rect 424 456 624 536)
+	(text "seeder" (rect 5 0 38 12)(font "Arial" ))
+	(text "inst1" (rect 8 64 30 81)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk_50M" (rect 0 0 40 12)(font "Arial" ))
+		(text "clk_50M" (rect 21 27 61 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 200 32)
+		(output)
+		(text "lfsr_seed[15..0]" (rect 0 0 77 12)(font "Arial" ))
+		(text "lfsr_seed[15..0]" (rect 114 27 191 39)(font "Arial" ))
+		(line (pt 200 32)(pt 184 32)(line_width 3))
+	)
+	(drawing
+		(rectangle (rect 16 16 184 64))
+	)
+)
+(symbol
+	(rect 808 520 1032 760)
+	(text "game_ai_block" (rect 5 0 78 12)(font "Arial" ))
+	(text "inst2" (rect 8 224 30 241)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk_50M" (rect 0 0 40 12)(font "Arial" ))
+		(text "clk_50M" (rect 21 27 61 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "clk_48" (rect 0 0 31 12)(font "Arial" ))
+		(text "clk_48" (rect 21 43 52 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "clk_s" (rect 0 0 25 12)(font "Arial" ))
+		(text "clk_s" (rect 21 59 46 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "pregame" (rect 0 0 42 12)(font "Arial" ))
+		(text "pregame" (rect 21 75 63 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80))
+	)
+	(port
+		(pt 0 96)
+		(input)
+		(text "midgame" (rect 0 0 44 12)(font "Arial" ))
+		(text "midgame" (rect 21 91 65 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96))
+	)
+	(port
+		(pt 0 112)
+		(input)
+		(text "endgame" (rect 0 0 44 12)(font "Arial" ))
+		(text "endgame" (rect 21 107 65 119)(font "Arial" ))
+		(line (pt 0 112)(pt 16 112))
+	)
+	(port
+		(pt 0 128)
+		(input)
+		(text "enable" (rect 0 0 31 12)(font "Arial" ))
+		(text "enable" (rect 21 123 52 135)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "current_level[2..0]" (rect 0 0 89 12)(font "Arial" ))
+		(text "current_level[2..0]" (rect 21 139 110 151)(font "Arial" ))
+		(line (pt 0 144)(pt 16 144)(line_width 3))
+	)
+	(port
+		(pt 0 160)
+		(input)
+		(text "next_level" (rect 0 0 50 12)(font "Arial" ))
+		(text "next_level" (rect 21 155 71 167)(font "Arial" ))
+		(line (pt 0 160)(pt 16 160))
+	)
+	(port
+		(pt 0 176)
+		(input)
+		(text "collision" (rect 0 0 38 12)(font "Arial" ))
+		(text "collision" (rect 21 171 59 183)(font "Arial" ))
+		(line (pt 0 176)(pt 16 176))
+	)
+	(port
+		(pt 0 192)
+		(input)
+		(text "lfsr_seed[15..0]" (rect 0 0 77 12)(font "Arial" ))
+		(text "lfsr_seed[15..0]" (rect 21 187 98 199)(font "Arial" ))
+		(line (pt 0 192)(pt 16 192)(line_width 3))
+	)
+	(port
+		(pt 224 32)
+		(output)
+		(text "enable_next" (rect 0 0 59 12)(font "Arial" ))
+		(text "enable_next" (rect 154 27 213 39)(font "Arial" ))
+		(line (pt 224 32)(pt 208 32))
+	)
+	(port
+		(pt 224 48)
+		(output)
+		(text "ai_x[9..0]" (rect 0 0 46 12)(font "Arial" ))
+		(text "ai_x[9..0]" (rect 165 43 211 55)(font "Arial" ))
+		(line (pt 224 48)(pt 208 48)(line_width 3))
+	)
+	(port
+		(pt 224 64)
+		(output)
+		(text "ai_y[9..0]" (rect 0 0 47 12)(font "Arial" ))
+		(text "ai_y[9..0]" (rect 164 59 211 71)(font "Arial" ))
+		(line (pt 224 64)(pt 208 64)(line_width 3))
+	)
+	(port
+		(pt 224 80)
+		(output)
+		(text "ai_show" (rect 0 0 38 12)(font "Arial" ))
+		(text "ai_show" (rect 171 75 209 87)(font "Arial" ))
+		(line (pt 224 80)(pt 208 80))
+	)
+	(drawing
+		(rectangle (rect 16 16 208 224))
+	)
+)
+(connector
+	(pt 624 488)
+	(pt 720 488)
+	(bus)
+)
+(connector
+	(pt 720 432)
+	(pt 808 432)
+	(bus)
+)
+(connector
+	(pt 720 432)
+	(pt 720 488)
+	(bus)
+)
+(connector
+	(pt 720 488)
+	(pt 720 712)
+	(bus)
+)
+(connector
+	(pt 808 712)
+	(pt 720 712)
+	(bus)
+)
+(connector
+	(pt 808 648)
+	(pt 792 648)
+)
+(connector
+	(pt 792 496)
+	(pt 792 648)
+)
+(connector
+	(pt 792 496)
+	(pt 1056 496)
+)
+(connector
+	(pt 1056 496)
+	(pt 1056 272)
+)
+(connector
+	(pt 1056 272)
+	(pt 1032 272)
+)
+(junction (pt 720 488))
