@@ -8,32 +8,12 @@ use ieee.numeric_std.all;
 entity seeder is
     port(
         clk_50M: in std_logic;
-        lfsr_seed: out std_logic_vector(15 downto 0)
+        lfsr_seed: out std_logic_vector(15 downto 0) := "1010010110101000"
     );
 end entity;
 
 architecture behavior of seeder is
-    component counter is
-        generic(
-            size: integer := 1
-        );
-        port (
-            Clk: in std_logic;
-            Reset: in std_logic;
-            Enable: in std_logic;
-            Limit: in std_logic_vector(size-1 downto 0) := (others => '1');
-            C: out std_logic_vector(size-1 downto 0) := (others => '0')
-        );
-    end component;
 
 begin
-    time_seed: counter generic map(
-        16
-    ) port map (
-        clk_50M,
-        '0',
-        '1',
-        (others => '1'),
-        lfsr_seed
-    );
+
 end architecture;

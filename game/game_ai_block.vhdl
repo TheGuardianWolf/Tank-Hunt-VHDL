@@ -129,7 +129,9 @@ begin
         lfsr_seed,
         random_number
     );
-    mux_ai_x_a(8 downto 0) <= random_number(15 downto 7);
+    mux_ai_x_a(8 downto 0) <= std_logic_vector(
+        unsigned(random_number(15 downto 7)) + to_unsigned(32,9)
+    ); -- Centers the distribution on screen, does not spawn tank at edge.
 	 
     -- AI x position
     reg_ai_x: register_d generic map(

@@ -50,7 +50,6 @@ begin
     t_pregame <= '0';
     t_midgame <= '0', '1' after 3000 ps;
     t_current_level <= "00";
-    seed <= "1010010101000100";
 
     -- clock generation
     process
@@ -78,6 +77,12 @@ begin
         wait for 200 ps;
         t_clk_s <= '0';
     end process;
+
+    sd: seeder
+    port map(
+        t_clk_50M,
+        seed
+    );
 
     g_ai0: game_ai_block port map(
         t_clk_50M,
