@@ -129,7 +129,7 @@ begin
         lfsr_seed,
         random_number
     );
-    mux_ai_x_a <= random_number(15 downto 6);
+    mux_ai_x_a(8 downto 0) <= random_number(15 downto 7);
 	 
     -- AI x position
     reg_ai_x: register_d generic map(
@@ -192,7 +192,7 @@ begin
     );
 
     -- Stores AI Y position
-    sig_ai_y_d <= std_logic_vector(unsigned(sig_ai_y) + 48);
+    sig_ai_y_d <= std_logic_vector(unsigned(sig_ai_y) + 64);
     reg_ai_y: register_d generic map(
         10
     )
@@ -248,7 +248,7 @@ begin
         10
     ) port map(
         sig_ai_y,
-        std_logic_vector(to_unsigned(48,10)),
+        std_logic_vector(to_unsigned(64,10)),
         spawn_next(0),
         spawn_next(1),
         spawn_next(2)
