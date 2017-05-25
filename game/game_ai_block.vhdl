@@ -105,18 +105,19 @@ architecture behavior of game_ai_block is
 
     signal spawn_timer: std_logic_vector(1 downto 0) := (others => '0');
     signal spawned: std_logic := '0';
+    signal enable_spawn: std_logic := '0';
 
     signal spawn_next: std_logic_vector(2 downto 0) := (others => '0');
     signal sig_delayed_enable: std_logic := '0';
 	 
     signal random_number: std_logic_vector(15 downto 0) := (others => '0');
 begin
-    -- Signal to reset ai
+    -- Signal to reset ai components
     reset_ai <= (pregame) or (next_level) or (not spawned);
     -- Signal to reset the spawn counter
     reset_spawn <= (pregame) or (next_level) or (collision);
-    -- Signal to enable spawning
-    enable_spawn <= (enable) and (reset_ai);
+    -- Signal to enable the spawn timer
+    enable_spawn <= (midgame) and (not spawned);
     -- Signal to start next tank in chain
     sig_delayed_enable <= spawn_next(1) or spawn_next(2);
 
@@ -136,7 +137,7 @@ begin
     )
     port map(
         clk_48,
-        reset_ai,
+        '0',
         enable,
         mux_ai_x_r,
         sig_ai_x
@@ -213,7 +214,7 @@ begin
     port map(
         clk_s,
         reset_spawn,
-        enable,
+        enable_spawn,
         (others => '1'),
         spawn_timer
     );
