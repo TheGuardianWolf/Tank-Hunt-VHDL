@@ -17,11 +17,12 @@ end entity;
 architecture behavior of lfsr_g is
     signal sig_q: std_logic_vector(15 downto 0) := (others => '0');
 begin
-    process(clk, Reset)
+    process(clk, Reset, Seed)
         variable seeded: std_logic := '0';
     begin
         if (Reset = '1') then
             seeded := '0';
+            sig_q <= Seed;
         elsif(rising_edge(clk)) then
             if (Enable = '1') then
                 if (seeded = '0') then
