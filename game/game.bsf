@@ -240,6 +240,13 @@ applicable agreement for further details.
 		(text "state_debug[2..0]" (rect 88 331 187 345)(font "Arial" (font_size 8)))
 		(line (pt 208 336)(pt 192 336)(line_width 3))
 	)
+	(port
+		(pt 208 352)
+		(output)
+		(text "game_pause" (rect 0 0 73 14)(font "Arial" (font_size 8)))
+		(text "game_pause" (rect 114 347 187 361)(font "Arial" (font_size 8)))
+		(line (pt 208 352)(pt 192 352))
+	)
 	(drawing
 		(rectangle (rect 16 16 192 368))
 	)
