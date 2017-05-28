@@ -617,9 +617,9 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 824 256 1032 640)
+	(rect 824 256 1032 704)
 	(text "game" (rect 5 0 35 14)(font "Arial" (font_size 8)))
-	(text "inst" (rect 8 368 25 380)(font "Arial" ))
+	(text "inst" (rect 8 432 25 444)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -844,14 +844,35 @@ applicable agreement for further details.
 		(text "game_pause" (rect 114 347 187 361)(font "Arial" (font_size 8)))
 		(line (pt 208 352)(pt 192 352))
 	)
+	(port
+		(pt 208 368)
+		(output)
+		(text "bullet_x[9..0]" (rect 0 0 71 14)(font "Arial" (font_size 8)))
+		(text "bullet_x[9..0]" (rect 116 363 187 377)(font "Arial" (font_size 8)))
+		(line (pt 208 368)(pt 192 368)(line_width 3))
+	)
+	(port
+		(pt 208 384)
+		(output)
+		(text "bullet_y[9..0]" (rect 0 0 71 14)(font "Arial" (font_size 8)))
+		(text "bullet_y[9..0]" (rect 116 379 187 393)(font "Arial" (font_size 8)))
+		(line (pt 208 384)(pt 192 384)(line_width 3))
+	)
+	(port
+		(pt 208 400)
+		(output)
+		(text "show_bullet" (rect 0 0 69 14)(font "Arial" (font_size 8)))
+		(text "show_bullet" (rect 118 395 187 409)(font "Arial" (font_size 8)))
+		(line (pt 208 400)(pt 192 400))
+	)
 	(drawing
-		(rectangle (rect 16 16 192 368))
+		(rectangle (rect 16 16 192 432))
 	)
 )
 (symbol
-	(rect 1296 264 1552 616)
+	(rect 1312 264 1568 616)
 	(text "output" (rect 5 0 40 14)(font "Arial" (font_size 8)))
-	(text "inst4" (rect 8 336 31 348)(font "Arial" ))
+	(text "inst1" (rect 8 336 31 348)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -928,6 +949,55 @@ applicable agreement for further details.
 		(text "game_pause" (rect 0 0 73 14)(font "Arial" (font_size 8)))
 		(text "game_pause" (rect 21 187 94 201)(font "Arial" (font_size 8)))
 		(line (pt 0 192)(pt 16 192))
+	)
+	(port
+		(pt 0 208)
+		(input)
+		(text "current_kills[7..0]" (rect 0 0 96 14)(font "Arial" (font_size 8)))
+		(text "current_kills[7..0]" (rect 21 203 117 217)(font "Arial" (font_size 8)))
+		(line (pt 0 208)(pt 16 208)(line_width 3))
+	)
+	(port
+		(pt 0 224)
+		(input)
+		(text "total_kills[7..0]" (rect 0 0 79 14)(font "Arial" (font_size 8)))
+		(text "total_kills[7..0]" (rect 21 219 100 233)(font "Arial" (font_size 8)))
+		(line (pt 0 224)(pt 16 224)(line_width 3))
+	)
+	(port
+		(pt 0 240)
+		(input)
+		(text "current_level[1..0]" (rect 0 0 102 14)(font "Arial" (font_size 8)))
+		(text "current_level[1..0]" (rect 21 235 123 249)(font "Arial" (font_size 8)))
+		(line (pt 0 240)(pt 16 240)(line_width 3))
+	)
+	(port
+		(pt 0 256)
+		(input)
+		(text "ai_vert[9..0]" (rect 0 0 67 14)(font "Arial" (font_size 8)))
+		(text "ai_vert[9..0]" (rect 21 251 88 265)(font "Arial" (font_size 8)))
+		(line (pt 0 256)(pt 16 256)(line_width 3))
+	)
+	(port
+		(pt 0 272)
+		(input)
+		(text "bullet_x[9..0]" (rect 0 0 71 14)(font "Arial" (font_size 8)))
+		(text "bullet_x[9..0]" (rect 21 267 92 281)(font "Arial" (font_size 8)))
+		(line (pt 0 272)(pt 16 272)(line_width 3))
+	)
+	(port
+		(pt 0 288)
+		(input)
+		(text "bullet_y[9..0]" (rect 0 0 71 14)(font "Arial" (font_size 8)))
+		(text "bullet_y[9..0]" (rect 21 283 92 297)(font "Arial" (font_size 8)))
+		(line (pt 0 288)(pt 16 288)(line_width 3))
+	)
+	(port
+		(pt 0 304)
+		(input)
+		(text "bullet_show" (rect 0 0 69 14)(font "Arial" (font_size 8)))
+		(text "bullet_show" (rect 21 299 90 313)(font "Arial" (font_size 8)))
+		(line (pt 0 304)(pt 16 304))
 	)
 	(port
 		(pt 256 32)
@@ -1234,69 +1304,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "seven_seg_in[15..0]" (rect 1268 280 1368 292)(font "Arial" ))
-	(pt 1248 296)
-	(pt 1296 296)
-	(bus)
-)
-(connector
-	(text "clk_div[0]" (rect 1254 296 1302 308)(font "Arial" ))
-	(pt 1248 312)
-	(pt 1296 312)
-)
-(connector
-	(pt 1552 296)
-	(pt 1672 296)
-	(bus)
-)
-(connector
-	(pt 1552 312)
-	(pt 1672 312)
-	(bus)
-)
-(connector
-	(pt 1552 328)
-	(pt 1672 328)
-	(bus)
-)
-(connector
-	(pt 1552 344)
-	(pt 1672 344)
-	(bus)
-)
-(connector
-	(text "player_x[9..0]" (rect 1240 376 1308 388)(font "Arial" ))
-	(pt 1296 392)
-	(pt 1240 392)
-	(bus)
-)
-(connector
-	(text "pregame" (rect 1280 312 1322 324)(font "Arial" ))
-	(pt 1296 328)
-	(pt 1248 328)
-)
-(connector
-	(text "midgame" (rect 1275 328 1319 340)(font "Arial" ))
-	(pt 1296 344)
-	(pt 1248 344)
-)
-(connector
-	(text "endgame" (rect 1275 344 1319 356)(font "Arial" ))
-	(pt 1296 360)
-	(pt 1248 360)
-)
-(connector
-	(text "game_mode" (rect 1278 360 1338 372)(font "Arial" ))
-	(pt 1296 376)
-	(pt 1248 376)
-)
-(connector
-	(text "seven_seg_in[5..0]" (rect 1240 424 1334 436)(font "Arial" ))
-	(pt 1296 440)
-	(pt 1240 440)
-	(bus)
-)
-(connector
 	(text "seven_seg_in[14..12]" (rect 1032 576 1138 588)(font "Arial" ))
 	(pt 1032 592)
 	(pt 1088 592)
@@ -1331,12 +1338,6 @@ applicable agreement for further details.
 	(pt 1080 432)
 )
 (connector
-	(text "seven_seg_in[5..0]" (rect 1064 432 1158 444)(font "Arial" ))
-	(pt 1032 448)
-	(pt 1080 448)
-	(bus)
-)
-(connector
 	(text "player_x[9..0]" (rect 1073 448 1141 460)(font "Arial" ))
 	(pt 1032 464)
 	(pt 1080 464)
@@ -1347,23 +1348,6 @@ applicable agreement for further details.
 	(pt 1032 480)
 	(pt 1080 480)
 	(bus)
-)
-(connector
-	(text "ai_x0[9..0]" (rect 1059 480 1110 492)(font "Arial" ))
-	(pt 1032 496)
-	(pt 1080 496)
-	(bus)
-)
-(connector
-	(text "ai_y0[9..0]" (rect 1070 496 1123 508)(font "Arial" ))
-	(pt 1032 512)
-	(pt 1080 512)
-	(bus)
-)
-(connector
-	(text "ai_hidden0" (rect 1257 408 1308 420)(font "Arial" ))
-	(pt 1296 424)
-	(pt 1240 424)
 )
 (connector
 	(text "ai_hidden0" (rect 1071 512 1122 524)(font "Arial" ))
@@ -1388,74 +1372,218 @@ applicable agreement for further details.
 	(pt 1088 576)
 )
 (connector
-	(text "ai_x1[9..0]" (rect 1250 392 1301 404)(font "Arial" ))
-	(pt 1296 408)
-	(pt 1240 408)
-	(bus)
-)
-(connector
-	(pt 1552 424)
-	(pt 1672 424)
-)
-(connector
-	(pt 1672 360)
-	(pt 1552 360)
-)
-(connector
-	(pt 1672 376)
-	(pt 1552 376)
-)
-(connector
-	(pt 1672 408)
-	(pt 1552 408)
-)
-(connector
-	(pt 1672 392)
-	(pt 1552 392)
-)
-(connector
-	(pt 1552 488)
-	(pt 1672 488)
-)
-(connector
-	(pt 1552 552)
-	(pt 1672 552)
-)
-(connector
-	(pt 1552 568)
-	(pt 1672 568)
-)
-(connector
-	(pt 1672 504)
-	(pt 1552 504)
-)
-(connector
-	(pt 1672 520)
-	(pt 1552 520)
-)
-(connector
-	(pt 1672 536)
-	(pt 1552 536)
-)
-(connector
-	(pt 1672 472)
-	(pt 1552 472)
-)
-(connector
-	(pt 1672 456)
-	(pt 1552 456)
-)
-(connector
-	(pt 1672 440)
-	(pt 1552 440)
-)
-(connector
 	(text "game_pause" (rect 1071 592 1133 604)(font "Arial" ))
 	(pt 1088 608)
 	(pt 1032 608)
 )
 (connector
-	(text "game_pause" (rect 1250 440 1312 452)(font "Arial" ))
-	(pt 1296 456)
-	(pt 1240 456)
+	(pt 1672 296)
+	(pt 1568 296)
+	(bus)
+)
+(connector
+	(pt 1672 312)
+	(pt 1568 312)
+	(bus)
+)
+(connector
+	(pt 1672 328)
+	(pt 1568 328)
+	(bus)
+)
+(connector
+	(pt 1672 344)
+	(pt 1568 344)
+	(bus)
+)
+(connector
+	(pt 1672 360)
+	(pt 1568 360)
+)
+(connector
+	(pt 1672 376)
+	(pt 1568 376)
+)
+(connector
+	(pt 1672 392)
+	(pt 1568 392)
+)
+(connector
+	(pt 1672 408)
+	(pt 1568 408)
+)
+(connector
+	(pt 1672 424)
+	(pt 1568 424)
+)
+(connector
+	(pt 1672 440)
+	(pt 1568 440)
+)
+(connector
+	(pt 1672 456)
+	(pt 1568 456)
+)
+(connector
+	(pt 1672 472)
+	(pt 1568 472)
+)
+(connector
+	(pt 1672 488)
+	(pt 1568 488)
+)
+(connector
+	(pt 1672 504)
+	(pt 1568 504)
+)
+(connector
+	(pt 1672 520)
+	(pt 1568 520)
+)
+(connector
+	(pt 1672 536)
+	(pt 1568 536)
+)
+(connector
+	(pt 1672 552)
+	(pt 1568 552)
+)
+(connector
+	(pt 1672 568)
+	(pt 1568 568)
+)
+(connector
+	(text "seven_seg_in[15..0]" (rect 1284 280 1384 292)(font "Arial" ))
+	(pt 1264 296)
+	(pt 1312 296)
+	(bus)
+)
+(connector
+	(text "clk_div[0]" (rect 1270 296 1318 308)(font "Arial" ))
+	(pt 1264 312)
+	(pt 1312 312)
+)
+(connector
+	(text "pregame" (rect 1296 312 1338 324)(font "Arial" ))
+	(pt 1264 328)
+	(pt 1312 328)
+)
+(connector
+	(text "midgame" (rect 1291 328 1335 340)(font "Arial" ))
+	(pt 1264 344)
+	(pt 1312 344)
+)
+(connector
+	(text "endgame" (rect 1291 344 1335 356)(font "Arial" ))
+	(pt 1264 360)
+	(pt 1312 360)
+)
+(connector
+	(text "game_mode" (rect 1294 360 1354 372)(font "Arial" ))
+	(pt 1264 376)
+	(pt 1312 376)
+)
+(connector
+	(text "player_x[9..0]" (rect 1256 376 1324 388)(font "Arial" ))
+	(pt 1256 392)
+	(pt 1312 392)
+	(bus)
+)
+(connector
+	(text "ai_hidden0" (rect 1273 408 1324 420)(font "Arial" ))
+	(pt 1256 424)
+	(pt 1312 424)
+)
+(connector
+	(text "game_pause" (rect 1266 440 1328 452)(font "Arial" ))
+	(pt 1256 456)
+	(pt 1312 456)
+)
+(connector
+	(text "current_kills[7..0]" (rect 1279 456 1363 468)(font "Arial" ))
+	(pt 1256 472)
+	(pt 1312 472)
+	(bus)
+)
+(connector
+	(text "total_kills[7..0]" (rect 1295 472 1366 484)(font "Arial" ))
+	(pt 1256 488)
+	(pt 1312 488)
+	(bus)
+)
+(connector
+	(text "current_level[1..0]" (rect 1285 488 1374 500)(font "Arial" ))
+	(pt 1256 504)
+	(pt 1312 504)
+	(bus)
+)
+(connector
+	(text "time[5..0]" (rect 1064 432 1111 444)(font "Arial" ))
+	(pt 1032 448)
+	(pt 1080 448)
+	(bus)
+)
+(connector
+	(text "time[5..0]" (rect 1256 424 1303 436)(font "Arial" ))
+	(pt 1256 440)
+	(pt 1312 440)
+	(bus)
+)
+(connector
+	(text "ai_x0[9..0]" (rect 1059 480 1110 492)(font "Arial" ))
+	(pt 1032 496)
+	(pt 1080 496)
+	(bus)
+)
+(connector
+	(text "ai_x0[9..0]" (rect 1256 392 1307 404)(font "Arial" ))
+	(pt 1312 408)
+	(pt 1256 408)
+	(bus)
+)
+(connector
+	(text "bullet_x[9..0]" (rect 1046 608 1109 620)(font "Arial" ))
+	(pt 1032 624)
+	(pt 1088 624)
+	(bus)
+)
+(connector
+	(text "show_bullet" (rect 1075 640 1131 652)(font "Arial" ))
+	(pt 1032 656)
+	(pt 1088 656)
+)
+(connector
+	(text "bullet_x[9..0]" (rect 1288 520 1351 532)(font "Arial" ))
+	(pt 1312 536)
+	(pt 1256 536)
+	(bus)
+)
+(connector
+	(text "bullet_show" (rect 1279 552 1335 564)(font "Arial" ))
+	(pt 1312 568)
+	(pt 1256 568)
+)
+(connector
+	(text "ai_y0[9..0]" (rect 1070 496 1123 508)(font "Arial" ))
+	(pt 1032 512)
+	(pt 1080 512)
+	(bus)
+)
+(connector
+	(text "ai_y0[9..0]" (rect 1264 504 1317 516)(font "Arial" ))
+	(pt 1256 520)
+	(pt 1312 520)
+	(bus)
+)
+(connector
+	(text "seven_seg_in[9..0]" (rect 1056 624 1150 636)(font "Arial" ))
+	(pt 1032 640)
+	(pt 1088 640)
+	(bus)
+)
+(connector
+	(text "seven_seg_in[9..0]" (rect 1271 536 1365 548)(font "Arial" ))
+	(pt 1312 552)
+	(pt 1256 552)
+	(bus)
 )

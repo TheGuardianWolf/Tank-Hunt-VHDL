@@ -20,9 +20,9 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.2"))
 (symbol
-	(rect 16 16 224 400)
+	(rect 16 16 224 464)
 	(text "game" (rect 5 0 35 14)(font "Arial" (font_size 8)))
-	(text "inst" (rect 8 368 25 380)(font "Arial" ))
+	(text "inst" (rect 8 432 25 444)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -247,7 +247,28 @@ applicable agreement for further details.
 		(text "game_pause" (rect 114 347 187 361)(font "Arial" (font_size 8)))
 		(line (pt 208 352)(pt 192 352))
 	)
+	(port
+		(pt 208 368)
+		(output)
+		(text "bullet_x[9..0]" (rect 0 0 71 14)(font "Arial" (font_size 8)))
+		(text "bullet_x[9..0]" (rect 116 363 187 377)(font "Arial" (font_size 8)))
+		(line (pt 208 368)(pt 192 368)(line_width 3))
+	)
+	(port
+		(pt 208 384)
+		(output)
+		(text "bullet_y[9..0]" (rect 0 0 71 14)(font "Arial" (font_size 8)))
+		(text "bullet_y[9..0]" (rect 116 379 187 393)(font "Arial" (font_size 8)))
+		(line (pt 208 384)(pt 192 384)(line_width 3))
+	)
+	(port
+		(pt 208 400)
+		(output)
+		(text "show_bullet" (rect 0 0 69 14)(font "Arial" (font_size 8)))
+		(text "show_bullet" (rect 118 395 187 409)(font "Arial" (font_size 8)))
+		(line (pt 208 400)(pt 192 400))
+	)
 	(drawing
-		(rectangle (rect 16 16 192 368))
+		(rectangle (rect 16 16 192 432))
 	)
 )

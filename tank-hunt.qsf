@@ -95,29 +95,6 @@ set_location_assignment PIN_P21 -to m_data
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name VHDL_FILE generic/seeder.vhdl
-set_global_assignment -name VHDL_FILE generic/lfsr_g.vhdl
-set_global_assignment -name MIF_FILE output/vga/TCGROM.MIF
-set_global_assignment -name VHDL_FILE output/vga/vga_sync.vhd
-set_global_assignment -name VHDL_FILE output/vga/char_rom.vhd
-set_global_assignment -name BDF_FILE output/output.bdf
-set_global_assignment -name VHDL_FILE input/button/debounce.vhdl
-set_global_assignment -name VHDL_FILE input/generic/input_buffer.vhdl
-set_global_assignment -name VHDL_FILE input/mouse/mouse.vhdl
-set_global_assignment -name BDF_FILE input/input.bdf
-set_global_assignment -name VHDL_FILE game/game_player_block.vhdl
-set_global_assignment -name VHDL_FILE game/game_controller.vhdl
-set_global_assignment -name VHDL_FILE game/game_control_block.vhdl
-set_global_assignment -name VHDL_FILE game/game_ai_block.vhdl
-set_global_assignment -name BDF_FILE game/game.bdf
-set_global_assignment -name VHDL_FILE generic/var_clk_div.vhdl
-set_global_assignment -name VHDL_FILE generic/T_FF.vhdl
-set_global_assignment -name VHDL_FILE generic/register_d.vhdl
-set_global_assignment -name VHDL_FILE generic/counter.vhdl
-set_global_assignment -name VHDL_FILE generic/comparator_u.vhdl
-set_global_assignment -name VHDL_FILE generic/clk_s.vhdl
-set_global_assignment -name VHDL_FILE generic/bin_2_seven_seg.vhdl
-set_global_assignment -name BDF_FILE "tank-hunt.bdf"
 set_location_assignment PIN_H17 -to red_out0
 set_location_assignment PIN_H19 -to red_out1
 set_location_assignment PIN_H20 -to red_out2
@@ -142,4 +119,28 @@ set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
 set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
 set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
 set_global_assignment -name CYCLONEII_RESERVE_NCEO_AFTER_CONFIGURATION "USE AS REGULAR IO"
+set_global_assignment -name VHDL_FILE game/game_bullet.vhd
+set_global_assignment -name VHDL_FILE generic/seeder.vhdl
+set_global_assignment -name VHDL_FILE generic/lfsr_g.vhdl
+set_global_assignment -name MIF_FILE output/vga/TCGROM.MIF
+set_global_assignment -name VHDL_FILE output/vga/vga_sync.vhd
+set_global_assignment -name VHDL_FILE output/vga/char_rom.vhd
+set_global_assignment -name BDF_FILE output/output.bdf
+set_global_assignment -name VHDL_FILE input/button/debounce.vhdl
+set_global_assignment -name VHDL_FILE input/generic/input_buffer.vhdl
+set_global_assignment -name VHDL_FILE input/mouse/mouse.vhdl
+set_global_assignment -name BDF_FILE input/input.bdf
+set_global_assignment -name VHDL_FILE game/game_player_block.vhdl
+set_global_assignment -name VHDL_FILE game/game_controller.vhdl
+set_global_assignment -name VHDL_FILE game/game_control_block.vhdl
+set_global_assignment -name VHDL_FILE game/game_ai_block.vhdl
+set_global_assignment -name BDF_FILE game/game.bdf
+set_global_assignment -name VHDL_FILE generic/var_clk_div.vhdl
+set_global_assignment -name VHDL_FILE generic/T_FF.vhdl
+set_global_assignment -name VHDL_FILE generic/register_d.vhdl
+set_global_assignment -name VHDL_FILE generic/counter.vhdl
+set_global_assignment -name VHDL_FILE generic/comparator_u.vhdl
+set_global_assignment -name VHDL_FILE generic/clk_s.vhdl
+set_global_assignment -name VHDL_FILE generic/bin_2_seven_seg.vhdl
+set_global_assignment -name BDF_FILE "tank-hunt.bdf"
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
