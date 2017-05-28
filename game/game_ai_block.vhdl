@@ -95,7 +95,9 @@ architecture behavior of game_ai_block is
     signal mux_ai_x_r: std_logic_vector(9 downto 0) := (others => '0');
     signal ai_x_speed: std_logic_vector(9 downto 0) := (others => '0');
 
-    signal sig_ai_x_limit: std_logic := '0';
+    signal ai_x_limit: std_logic := '0';
+    signal rand_x_dir: std_logic := '0';
+    signal mux_ai_x_dir: std_logic := '0';
     signal sig_ai_x: std_logic_vector(9 downto 0) := (others => '0');
     signal is_ai_x_max: std_logic := '0';
     signal is_ai_x_min: std_logic := '0';
@@ -132,6 +134,7 @@ begin
     mux_ai_x_a(8 downto 0) <= std_logic_vector(
         unsigned(random_number(15 downto 7)) + to_unsigned(32,9)
     ); -- Centers the distribution on screen, does not spawn tank at edge.
+    -- Prevents edge glitching and removes need to re-roll if number is too big.
 	 
     -- AI x position
     reg_ai_x: register_d generic map(
@@ -184,10 +187,16 @@ begin
         open
     );
 
+    -- Multiplexer to switch directions randomly or based on X limits
+    ai_x_limit <= is_ai_x_max or is_ai_x_min;
+    rand_x_dir <= random_number(6);
+
+    mux_ai_x_dir <= rand_x_dir when reset_ai='1' else
+                    ai_x_limit;
+
     -- Toggles directions when max or min signals for x are asserted
-    sig_ai_x_limit <= is_ai_x_max or is_ai_x_min;
     ai_x_dir: T_FF port map(
-        sig_ai_x_limit,
+        mux_ai_x_dir,
         '0',
         mux_ai_x_sel,
         open
@@ -201,7 +210,7 @@ begin
     port map(
         clk_48,
         reset_ai,
-        sig_ai_x_limit,
+        ai_x_limit,
         sig_ai_y_d,
         sig_ai_y
     );
