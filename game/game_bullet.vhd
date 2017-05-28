@@ -13,7 +13,8 @@ entity game_bullet is
         game_paused: in std_logic;
 		  m_l : in std_logic;
 		  player_x: in std_logic_vector (9 downto 0);
-		  player_y: in std_logic_vector (9 downto 0);
+		  ai0_x: in std_logic_vector (9 downto 0);
+		  ai0_y: in std_logic_vector (9 downto 0);
 		  collide: out std_logic;
 		  show_bullet: out std_logic;
 		  x_out: out std_logic_vector (9 downto 0);
@@ -49,22 +50,24 @@ architecture behavior of game_bullet is
     end component;
 	 
 	 signal bullet_x, bullet_y : std_logic_vector(9 downto 0);
-	 signal fire : std_logic :='0';
 	 signal collide_temp : std_logic;
 	 signal show : std_logic;
-	 signal y_pos_mux_out : std_logic_vector(9 downto 0) := (others => '0');
-	 signal y_pos_mux_in : std_logic_vector(9 downto 0) := (others => '0');
+	 signal y_pos_mux_out : std_logic_vector(9 downto 0) := "0110011000";
+	 signal y_pos_mux_in : std_logic_vector(9 downto 0) := "0110011000";
 	 signal comp_max_eq, max_collide, comp_tank_left_gt, comp_tank_left_eq, tank_left_collide, comp_tank_right_lt,
 			  comp_tank_right_eq, tank_right_collide, comp_tank_bot_lt, comp_tank_bot_eq, tank_bot_collide,
 			  comp_tank_top_gt, comp_tank_top_eq, tank_top_collide: std_logic;
 begin
+--process(clk_50M)
+	--begin
+	--if(rising_edge(clk_50M)) then
     -- Store bullet X position
     b_x: register_d generic map(
         10
     ) port map(
-        clk_48,
+        clk_50M,
         collide_temp,
-        (midgame and show),
+        midgame,
         std_logic_vector(unsigned(player_x)+24),
         bullet_x
     );
@@ -74,8 +77,8 @@ begin
         10
     ) port map(
         clk_48,
-        collide_temp,
-        (midgame and show),
+        '0',
+        midgame,
         y_pos_mux_out,
         bullet_y
     );
@@ -94,7 +97,7 @@ begin
         10
     ) port map(
         bullet_y,
-        player_y,
+        ai0_y,
         open,
         comp_tank_top_eq,
         comp_tank_top_gt
@@ -104,7 +107,7 @@ begin
         10
     ) port map(
         bullet_y,
-        std_logic_vector(unsigned(player_y)+64),
+        std_logic_vector(unsigned(ai0_y)+64),
         comp_tank_bot_lt,
         comp_tank_bot_eq,
         open
@@ -114,7 +117,7 @@ begin
         10
     ) port map(
         bullet_x,
-        std_logic_vector(unsigned(player_x)+64),
+        std_logic_vector(unsigned(ai0_x)+64),
         comp_tank_right_lt,
         comp_tank_right_eq,
         open
@@ -124,7 +127,7 @@ begin
         10
     ) port map(
         bullet_x,
-        player_x,
+        ai0_x,
         open,
         comp_tank_left_eq,
         comp_tank_left_gt
@@ -135,7 +138,8 @@ begin
 		y_pos_mux_in when '1',
 		"0000000000" when others;
 
-	 y_pos_mux_in <= std_logic_vector((unsigned(bullet_y) + 1)) when show = '1';
+	 y_pos_mux_in <= std_logic_vector((unsigned(bullet_y) - 1)) when midgame = '1' 
+						  else "0110011000" when midgame = '0';
 	 
 	 max_collide <= comp_max_eq;
 	 tank_top_collide <= comp_tank_top_eq or comp_tank_top_gt;
@@ -143,13 +147,14 @@ begin
 	 tank_left_collide <= comp_tank_left_eq or comp_tank_left_gt;
 	 tank_right_collide <= comp_tank_right_eq or comp_tank_right_lt;
 	 collide_temp <= max_collide or ((tank_bot_collide and tank_top_collide) and tank_left_collide) or ((tank_bot_collide and tank_top_collide) or tank_right_collide);
-	 show <= '1' when ((midgame ='1' or game_paused = '1'));
+	 show <= '1' when ((midgame ='1' or game_paused = '1')) else '0';
 					
--- show <= '0' when rising_edge(collide_temp);
-					 
+-- show <= '0' when rising_edge(collide_temp);			 
 
 	 collide <= collide_temp;
 	 show_bullet <= show;
 	 y_out <= bullet_y;
 	 x_out <= bullet_x;
+	-- end if;
+	-- end process;
 end architecture;

@@ -99,7 +99,7 @@ BEGIN
 	rom_mux_output_red <= '0';
 	rom_mux_output_green <= '0';
 	rom_mux_output_blue <= '0';
-	IF(midgame = '1' or (game_pause = '1' and midgame ='1')) THEN
+	IF(midgame = '1' or game_pause = '1') THEN
 			--tank display, with mouse x position as input for reference
 			IF (("0110011" <= vga_row(9 downto 3)) and (vga_row(9 downto 3) <= "0111011")) THEN
 				IF ((mouse_hor(9 downto 3) < vga_col(9 downto 3)) and (vga_col(9 downto 3) <= std_logic_vector(unsigned(mouse_hor(9 downto 3))+ 8))) THEN
@@ -109,7 +109,7 @@ BEGIN
 					rom_mux_output_blue <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-(unsigned(mouse_hor(5 downto 3))+1)))));
 				END IF;
 			--ai tank display
-			ELSIF ((std_logic_vector(unsigned(ai_vert(9 downto 3))+ 4) <= vga_row(9 downto 3)) and (vga_row(9 downto 3) <= (std_logic_vector(unsigned(ai_vert(9 downto 3))+ 12)))) THEN
+			ELSIF (((std_logic_vector(unsigned(ai_vert(9 downto 3))+ 4) <= vga_row(9 downto 3)) and (vga_row(9 downto 3) <= (std_logic_vector(unsigned(ai_vert(9 downto 3))+ 12)))) and ai_hidden = '1') THEN
 				IF ((ai_hor(9 downto 3) < vga_col(9 downto 3)) and (vga_col(9 downto 3) <= std_logic_vector(unsigned(ai_hor(9 downto 3))+ 8))) THEN
 					--concatenate character address and font row address into a 9 bit address
 					rom_address <= "111110" & std_logic_vector(unsigned(vga_row(5 downto 3))-(unsigned(ai_vert(5 downto 3))+5));
@@ -118,8 +118,8 @@ BEGIN
 				END IF;
 				
 			--bullet display
-			ELSIF ((std_logic_vector(unsigned(bullet_y(9 downto 0))-0) <= vga_row(9 downto 0)) and (vga_row(9 downto 0) <= (std_logic_vector(unsigned(bullet_y(9 downto 0))+4)))) THEN
-				IF ((std_logic_vector(unsigned(bullet_x(9 downto 0))-0) < vga_col(9 downto 0)) and (vga_col(9 downto 0) <= std_logic_vector(unsigned(bullet_x(9 downto 0))+ 4))) THEN
+			ELSIF ((std_logic_vector(unsigned(bullet_y(9 downto 0))-0) <= vga_row(9 downto 0)) and (vga_row(9 downto 0) <= (std_logic_vector(unsigned(bullet_y(9 downto 0))+8)))) THEN
+				IF ((std_logic_vector(unsigned(bullet_x(9 downto 0))-0) < vga_col(9 downto 0)) and (vga_col(9 downto 0) <= std_logic_vector(unsigned(bullet_x(9 downto 0))+ 8))) THEN
 					--concatenate character address and font row address into a 9 bit address
 					rom_address <= "111101" & std_logic_vector(unsigned(vga_row(2 downto 0))-(unsigned(bullet_y(2 downto 0))+ 0));
 					--select of the mux for which column in the row the pixel data is chosen from

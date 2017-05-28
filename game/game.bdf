@@ -1139,9 +1139,9 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 1496 568 1696 744)
+	(rect 1496 568 1696 776)
 	(text "game_bullet" (rect 5 0 64 12)(font "Arial" ))
-	(text "inst2" (rect 8 160 31 172)(font "Arial" ))
+	(text "inst2" (rect 8 192 31 204)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -1194,9 +1194,16 @@ applicable agreement for further details.
 	(port
 		(pt 0 144)
 		(input)
-		(text "player_y[9..0]" (rect 0 0 69 12)(font "Arial" ))
-		(text "player_y[9..0]" (rect 21 139 90 151)(font "Arial" ))
+		(text "ai0_x[9..0]" (rect 0 0 51 12)(font "Arial" ))
+		(text "ai0_x[9..0]" (rect 21 139 72 151)(font "Arial" ))
 		(line (pt 0 144)(pt 16 144)(line_width 3))
+	)
+	(port
+		(pt 0 160)
+		(input)
+		(text "ai0_y[9..0]" (rect 0 0 53 12)(font "Arial" ))
+		(text "ai0_y[9..0]" (rect 21 155 74 167)(font "Arial" ))
+		(line (pt 0 160)(pt 16 160)(line_width 3))
 	)
 	(port
 		(pt 200 32)
@@ -1227,7 +1234,7 @@ applicable agreement for further details.
 		(line (pt 200 80)(pt 184 80)(line_width 3))
 	)
 	(drawing
-		(rectangle (rect 16 16 184 160))
+		(rectangle (rect 16 16 184 192))
 	)
 )
 (connector
@@ -1643,12 +1650,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "player_y[9..0]" (rect 1477 696 1546 708)(font "Arial" ))
-	(pt 1496 712)
-	(pt 1448 712)
-	(bus)
-)
-(connector
 	(text "bullet_x[9..0]" (rect 1752 616 1815 628)(font "Arial" ))
 	(pt 1696 632)
 	(pt 1792 632)
@@ -1669,4 +1670,16 @@ applicable agreement for further details.
 	(text "clk_s" (rect 1471 616 1496 628)(font "Arial" ))
 	(pt 1496 632)
 	(pt 1448 632)
+)
+(connector
+	(text "ai0_y[9..0]" (rect 1471 712 1524 724)(font "Arial" ))
+	(pt 1496 728)
+	(pt 1448 728)
+	(bus)
+)
+(connector
+	(text "ai0_x[9..0]" (rect 1477 696 1528 708)(font "Arial" ))
+	(pt 1496 712)
+	(pt 1448 712)
+	(bus)
 )

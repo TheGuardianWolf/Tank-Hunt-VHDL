@@ -264,7 +264,7 @@ applicable agreement for further details.
 	(input)
 	(rect -72 560 96 576)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "bullet_show" (rect 5 0 62 12)(font "Arial" ))
+	(text "bullet_show" (rect 5 0 61 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -280,7 +280,7 @@ applicable agreement for further details.
 	(input)
 	(rect -72 544 96 560)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "bullet_y[9..0]" (rect 5 0 70 12)(font "Arial" ))
+	(text "bullet_y[9..0]" (rect 5 0 69 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -296,7 +296,7 @@ applicable agreement for further details.
 	(input)
 	(rect -72 528 96 544)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "bullet_x[9..0]" (rect 5 0 69 12)(font "Arial" ))
+	(text "bullet_x[9..0]" (rect 5 0 68 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))

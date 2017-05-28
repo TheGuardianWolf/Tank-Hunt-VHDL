@@ -1,0 +1,109 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity test_bullet is
+end entity;
+
+architecture test of test_bullet is
+    component game_bullet is
+    	port(
+        clk_50M: in std_logic;
+        clk_48: in std_logic;
+        clk_s: in std_logic;
+        midgame: in std_logic;
+        game_paused: in std_logic;
+		  m_l : in std_logic;
+		  player_x: in std_logic_vector (9 downto 0);
+		  ai0_x: in std_logic_vector (9 downto 0);
+		  ai0_y: in std_logic_vector (9 downto 0);
+		  collide: out std_logic;
+		  show_bullet: out std_logic;
+		  x_out: out std_logic_vector (9 downto 0);
+		  y_out: out std_logic_vector (9 downto 0)
+    	);
+    end component;
+
+    component register_d is
+        generic(
+            size: integer := 1
+        );
+        port (
+            Clk: in std_logic;
+            Reset: in std_logic;
+            Enable: in std_logic;
+            D: in std_logic_vector(size-1 downto 0);
+            Q: out std_logic_vector(size-1 downto 0) := (others => '0')
+        );
+    end component;
+
+    component comparator_u is
+        generic(
+            size: integer := 1
+        );
+        port (
+            a: in std_logic_vector(size-1 downto 0);
+            b: in std_logic_vector(size-1 downto 0);
+            lt: out std_logic := '0';
+            eq: out std_logic := '0';
+            gt: out std_logic := '0'
+        );
+    end component;
+
+    signal t_clk_50M: std_logic := '0';
+    signal t_clk_48: std_logic := '0';
+    signal t_clk_s: std_logic := '0';
+    signal t_midgame: std_logic := '0';
+    signal t_game_paused : std_logic := '0';
+    signal t_m_l : std_logic := '0';
+    signal t_player_x, t_ai0_x, t_ai0_y : std_logic_vector(9 downto 0);
+begin
+    t_midgame <= '0', '1' after 3000 ps;
+    t_player_x <= "0000000000", "0101000000" after 4000 ps;
+    t_ai0_x <= "0000000000", "0110010000" after 4000 ps;
+    t_ai0_y <= "0000100100", "0110010000" after 4000 ps;
+    
+
+    -- clock generation
+    process
+    begin
+        wait for 50 ps;
+        t_clk_50M <= '1';
+        wait for 50 ps;
+        t_clk_50M <= '0';
+    end process;
+
+    -- clock generation
+    process
+    begin
+        wait for 100 ps;
+        t_clk_48 <= '1';
+        wait for 100 ps;
+        t_clk_48 <= '0';
+    end process;
+
+    -- clock generation
+    process
+    begin
+        wait for 200 ps;
+        t_clk_s <= '1';
+        wait for 200 ps;
+        t_clk_s <= '0';
+    end process;
+
+    g_bullet: game_bullet port map(
+        t_clk_50M,
+        t_clk_48,
+        t_clk_s,
+        t_midgame,
+        t_game_paused,
+        t_m_l,
+        t_player_x,
+        t_ai0_x,
+	t_ai0_y,
+        open,
+       	open,
+        open,
+        open
+    );
+end architecture;
