@@ -25,6 +25,7 @@ entity game_ai_block is
         ai_x: out std_logic_vector(9 downto 0) := (others => '0');
         ai_y: out std_logic_vector(9 downto 0) := (others => '0');
         ai_show: out std_logic := '0';
+        bullet_collision: out std_logic := '0';
         player_collision: out std_logic := '0'
     );
 end entity;
@@ -104,7 +105,6 @@ architecture behavior of game_ai_block is
         );
     end component;
 
-    signal bullet_collision: std_logic := '0';
     signal reset_ai: std_logic := '0';
     signal reset_spawn: std_logic := '0';
     signal inv_reset_ai: std_logic := '1';
@@ -132,6 +132,7 @@ architecture behavior of game_ai_block is
     signal spawn_next: std_logic_vector(2 downto 0) := (others => '0');
     signal sig_delayed_enable: std_logic := '0';
 
+    signal sig_bullet_collision: std_logic := '0';
     signal sig_player_collision: std_logic := '0';
 	 
     signal random_number: std_logic_vector(15 downto 0) := (others => '0');
@@ -251,7 +252,18 @@ begin
         sig_ai_y,
         bullet_x,
         bullet_y
-        bullet_collision
+        sig_bullet_collision
+    );
+
+    -- Clocked signal for bullet collision detection output
+    sig_bullet_collide: register_d generic map(
+        1
+    ) port map(
+        clk_50M,
+        reset_ai,
+        enable,
+        D(0) => sig_bullet_collision,
+        Q(0) => bullet_collision
     );
 
     -- Detect collision with player
