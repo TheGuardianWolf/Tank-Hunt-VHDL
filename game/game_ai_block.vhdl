@@ -16,12 +16,16 @@ entity game_ai_block is
         enable: in std_logic;
         current_level: in std_logic_vector(1 downto 0) := (others => '0');
         next_level: in std_logic;
-        collision: in std_logic;
         lfsr_seed: in std_logic_vector(15 downto 0);
+        bullet_x: in std_logic_vector(9 downto 0);
+        bullet_y: in std_logic_vector(9 downto 0);
+        player_x: in std_logic_vector(9 downto 0);
+        player_y: in std_logic_vector(9 downto 0);
         enable_next: out std_logic := '0';
         ai_x: out std_logic_vector(9 downto 0) := (others => '0');
         ai_y: out std_logic_vector(9 downto 0) := (others => '0');
-        ai_show: out std_logic := '0'
+        ai_show: out std_logic := '0';
+        player_collision: out std_logic := '0'
     );
 end entity;
 
@@ -84,7 +88,23 @@ architecture behavior of game_ai_block is
         );
     end component;
 
-    signal destroyed: std_logic := '0';
+    component collision_detect_u is
+        generic(
+            size: integer := 10;
+            a_length: integer := 64;
+            b_length: integer := 64
+        );
+        port(
+            clk_50M: in std_logic;
+            a_x: in std_logic_vector(size-1 downto 0);
+            a_y: in std_logic_vector(size-1 downto 0);
+            b_x: in std_logic_vector(size-1 downto 0);
+            b_y: in std_logic_vector(size-1 downto 0);
+            collision: out std_logic := '0'
+        );
+    end component;
+
+    signal bullet_collision: std_logic := '0';
     signal reset_ai: std_logic := '0';
     signal reset_spawn: std_logic := '0';
     signal inv_reset_ai: std_logic := '1';
@@ -111,13 +131,15 @@ architecture behavior of game_ai_block is
 
     signal spawn_next: std_logic_vector(2 downto 0) := (others => '0');
     signal sig_delayed_enable: std_logic := '0';
+
+    signal sig_player_collision: std_logic := '0';
 	 
     signal random_number: std_logic_vector(15 downto 0) := (others => '0');
 begin
     -- Signal to reset ai components
     reset_ai <= (pregame) or (next_level) or (not spawned);
     -- Signal to reset the spawn counter
-    reset_spawn <= (pregame) or (next_level) or (collision);
+    reset_spawn <= (pregame) or (next_level) or (bullet_collision);
     -- Signal to enable the spawn timer
     enable_spawn <= (midgame) and (not spawned);
     -- Signal to start next tank in chain
@@ -217,6 +239,45 @@ begin
 
     ai_x <= sig_ai_x;
     ai_y <= sig_ai_y;
+
+    -- Detect collision with bullet
+    bullet_collide: collision_detect_u 
+    generic map(
+        10, 64, 64
+    );
+    port map(
+        clk_50M,
+        sig_ai_x,
+        sig_ai_y,
+        bullet_x,
+        bullet_y
+        bullet_collision
+    );
+
+    -- Detect collision with player
+    player_collide: collision_detect_u 
+    generic map(
+        10, 64, 64
+    );
+    port map(
+        clk_50M,
+        sig_ai_x,
+        sig_ai_y,
+        player_x,
+        player_y
+        sig_player_collision
+    );
+
+    -- Clocked signal for player collision detection output
+    sig_player_collide: register_d generic map(
+        1
+    ) port map(
+        clk_50M,
+        reset_ai,
+        enable,
+        D(0) => sig_player_collision,
+        Q(0) => player_collision
+    );
 
     -- Counter to track AI tank spawn time
     spawn: counter generic map(

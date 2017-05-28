@@ -15,6 +15,7 @@ entity game_controller is
     timeout: in std_logic := '0';
     max_level: in std_logic := '0';
     kills_reached: in std_logic := '0';
+    player_collision: in std_logic := '0';
 
     pregame: out std_logic := '0';
     midgame: out std_logic := '0';
@@ -87,7 +88,7 @@ architecture behaviour of game_controller is
             -- Go back to menu if reset is pressed
             NextState <= menu;
           else
-            if ((game_pause = '0') and (timeout = '1')) then
+            if ((game_pause = '0') and ((timeout = '1') or (player_collision = '1'))) then
               -- End game after timeout
               NextState <= ended;
             else
@@ -101,7 +102,7 @@ architecture behaviour of game_controller is
           -- If reset is pressed, go back to menu
           NextState <= menu;
         else
-          if ((game_pause = '0') and ((timeout = '1') and ((max_level = '1') or (kills_reached = '0')))) then
+          if ((game_pause = '0') and (((timeout = '1') or (player_collision='1')) and ((max_level = '1') or (kills_reached = '0')))) then
             -- If game is not paused and has timed out, and it's max level or kills have not been reached, end game
             NextState <= ended;
           else
@@ -169,7 +170,7 @@ architecture behaviour of game_controller is
           pregame <= '1';
         else
           if (game_pause = '0') then
-            if (timeout = '0') then
+            if ((timeout = '0') and (player_collision = '0')) then
               midgame <= '1';
             else
               endgame <= '1';
@@ -183,7 +184,9 @@ architecture behaviour of game_controller is
           pregame <= '1';
         else
           if (game_pause = '0') then
-            if (timeout = '1') then
+            if (player_collision = '1') then
+              endgame <= '1';
+            elsif (timeout = '1') then
               if (kills_reached = '1') then
                 if (max_level = '1') then
                   win <= '1';
