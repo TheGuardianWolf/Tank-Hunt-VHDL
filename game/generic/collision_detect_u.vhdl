@@ -31,7 +31,7 @@ begin
 
     process(clk_50M)
     begin
-        if (rising_edge(clk)) then
+        if (rising_edge(clk_50M)) then
             collision <= top_left and top_right and bottom_left and bottom_right;
         end if;
     end process;
