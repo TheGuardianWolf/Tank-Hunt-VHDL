@@ -105,9 +105,9 @@ architecture behavior of game_ai_block is
         );
     end component;
 
-    signal reset_ai: std_logic := '0';
+    signal ai_reset: std_logic := '0';
     signal reset_spawn: std_logic := '0';
-    signal inv_reset_ai: std_logic := '1';
+    signal inv_ai_reset: std_logic := '1';
     signal reset_delayed_enable: std_logic := '0';
 
     signal ai_move_clk: std_logic := '0';
@@ -142,7 +142,7 @@ architecture behavior of game_ai_block is
     signal random_number: std_logic_vector(15 downto 0) := (others => '0');
 begin
     -- Signal to reset ai components
-    reset_ai <= (pregame) or (next_level) or (not spawned);
+    ai_reset <= (pregame) or (next_level) or (not spawned);
     -- Signal to reset the spawn counter
     reset_spawn <= (pregame) or (next_level) or (out_bullet_collision and spawned);
     -- Signal to enable the spawn timer
@@ -155,7 +155,7 @@ begin
     -- LFSR to randomise starting position
     random_start: lfsr_g port map(
         clk_50M,
-        reset_ai,
+        ai_reset,
         enable,
         lfsr_seed,
         random_number
@@ -188,7 +188,7 @@ begin
     -- to calculate next x position
     mux_ai_x_b <= std_logic_vector(unsigned(sig_ai_x) + 1) when ai_x_sel='1' else
                     std_logic_vector(unsigned(sig_ai_x) - 1);
-    mux_ai_x_r <= mux_ai_x_a when reset_ai='1' else
+    mux_ai_x_r <= mux_ai_x_a when ai_reset='1' else
                     mux_ai_x_b;
     
     -- Comparator to signal when ai reaches max X position
@@ -219,7 +219,7 @@ begin
     ai_x_limit <= is_ai_x_max or is_ai_x_min;
     rand_x_dir <= random_number(6);
 
-    mux_ai_x_dir <= rand_x_dir when reset_ai='1' else
+    mux_ai_x_dir <= rand_x_dir when ai_reset='1' else
                     ai_x_limit;
 
     -- Toggles directions when max or min signals for x are asserted
@@ -325,7 +325,7 @@ begin
         open
     );
 
-    inv_reset_ai <= '0' when (reset_ai='1') else '1';
+    inv_ai_reset <= '0' when (ai_reset='1') else '1';
 
     -- Clocked signal for showing the ai tank (i.e. after spawn)
     ai_s: register_d generic map(
@@ -334,7 +334,7 @@ begin
         clk_50M,
         '0',
         enable,
-        D(0) => inv_reset_ai,
+        D(0) => inv_ai_reset,
         Q(0) => ai_show
     );
 

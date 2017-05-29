@@ -1919,7 +1919,7 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "bullet0_collision" (rect 491 496 567 508)(font "Arial" ))
+	(text "bullet_collision" (rect 491 496 561 508)(font "Arial" ))
 	(pt 512 512)
 	(pt 456 512)
 )

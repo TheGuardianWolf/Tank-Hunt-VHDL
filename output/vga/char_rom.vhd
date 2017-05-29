@@ -47,6 +47,7 @@ ARCHITECTURE SYN OF char_rom IS
 	SIGNAL rom_data		: STD_LOGIC_VECTOR (7 DOWNTO 0);
 	SIGNAL rom_address	: STD_LOGIC_VECTOR (8 DOWNTO 0);
 	SIGNAL temp,temp1    : STD_LOGIC_VECTOR (7 DOWNTO 0);
+	SIGNAL temp2 : STD_LOGIC_VECTOR (5 DOWNTO 0);
 
 	COMPONENT altsyncram
 	GENERIC (
@@ -197,6 +198,7 @@ BEGIN
 						rom_address <= std_logic_vector(48 +((60-unsigned(time_in(5 downto 0))) rem 10)) & std_logic_vector(unsigned(vga_row(4 downto 2))-1);
 					END IF;
 					rom_mux_output_red <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(4 DOWNTO 2))-1))));
+					
 				
 				ELSIF (game_mode = '0') THEN
 					IF (("00110000" < vga_col(9 downto 2)) and (vga_col(9 downto 2) <= "00111000")) THEN
@@ -214,16 +216,18 @@ BEGIN
 					ELSIF (("00111000" < vga_col(9 downto 2)) and (vga_col(9 downto 2) <= "01000000")) THEN
 						rom_address <= std_logic_vector(48 + (unsigned(current_kills(5 downto 0)) rem 10)) & std_logic_vector(unsigned(vga_row(4 downto 2))-1);
 						rom_mux_output_red <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(4 DOWNTO 2))-1))));
-					ELSIF (("01000000" < vga_col(9 downto 2)) and (vga_col(9 downto 2) <= "01001000")) THEN
-						rom_address <= "101111" & std_logic_vector(unsigned(vga_row(4 downto 2))-1);
-						rom_mux_output_red <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(4 DOWNTO 2))-1))));
+					--lvl
 					ELSIF (("01001000" < vga_col(9 downto 2)) and (vga_col(9 downto 2) <= "01010000")) THEN
 						rom_address <= "001100" & std_logic_vector(unsigned(vga_row(4 downto 2))-1);
 						rom_mux_output_red <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(4 DOWNTO 2))-1))));
 					ELSIF (("01010000" < vga_col(9 downto 2)) and (vga_col(9 downto 2) <= "01011000")) THEN
 						rom_address <= "010110" & std_logic_vector(unsigned(vga_row(4 downto 2))-1);
 						rom_mux_output_red <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(4 DOWNTO 2))-1))));
-					END IF;
+					ELSIF (("01011000" < vga_col(9 downto 2)) and (vga_col(9 downto 2) <= "01100000")) THEN
+						temp2 <= "0000" & std_logic_vector(48+unsigned(current_level));
+						rom_address <= temp2(5 downto 0) & std_logic_vector(unsigned(vga_row(4 downto 2))-1);
+						rom_mux_output_red <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(4 DOWNTO 2))-1))));
+						END IF;
 				END IF;
 			END IF;
 			
