@@ -263,17 +263,39 @@ begin
         sig_bullet_collision
     );
 
+    assert_bullet_collision: process(clk_50M)
+        variable asserted: std_logic := '0';
+    begin
+        if (rising_edge(clk)) then
+            out_bullet_collision <= '0';
+            if (reset_ai = '1') then
+                asserted := '0';
+            else
+                if (asserted = '1') then
+                    if (sig_bullet_collision = '0') then
+                        asserted := '0';
+                    end if;
+                else
+                    if (sig_bullet_collision = '1') then
+                        asserted := '1';
+                        out_bullet_collision <= '1';
+                    end if;
+                end if;
+            end if;
+        end if;
+    end process;
+
     -- Clocked signal for bullet collision detection output
-    sig_bullet_collide: register_d generic map(
-        1
-    ) port map(
-        clk_50M,
-        pregame,
-        enable,
-        D(0) => sig_bullet_collision,
-        Q(0) => out_bullet_collision
-    );
-    bullet_collision <= out_bullet_collision;
+    -- sig_bullet_collide: register_d generic map(
+    --     1
+    -- ) port map(
+    --     clk_50M,
+    --     pregame,
+    --     enable,
+    --     D(0) => sig_bullet_collision,
+    --     Q(0) => out_bullet_collision
+    -- );
+    -- bullet_collision <= out_bullet_collision;
 
     -- Detect collision with player
     player_collide: collision_detect_u 
