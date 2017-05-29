@@ -20,9 +20,9 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.2"))
 (symbol
-	(rect 16 16 272 400)
+	(rect 16 16 272 432)
 	(text "output" (rect 5 0 40 14)(font "Arial" (font_size 8)))
-	(text "inst" (rect 8 368 25 380)(font "Arial" ))
+	(text "inst" (rect 8 400 25 412)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -171,6 +171,13 @@ applicable agreement for further details.
 		(line (pt 0 352)(pt 16 352))
 	)
 	(port
+		(pt 0 368)
+		(input)
+		(text "win" (rect 0 0 21 14)(font "Arial" (font_size 8)))
+		(text "win" (rect 21 363 42 377)(font "Arial" (font_size 8)))
+		(line (pt 0 368)(pt 16 368))
+	)
+	(port
 		(pt 256 32)
 		(output)
 		(text "seg3[7..0]" (rect 0 0 56 14)(font "Arial" (font_size 8)))
@@ -297,6 +304,6 @@ applicable agreement for further details.
 		(line (pt 256 304)(pt 240 304))
 	)
 	(drawing
-		(rectangle (rect 16 16 240 368))
+		(rectangle (rect 16 16 240 400))
 	)
 )

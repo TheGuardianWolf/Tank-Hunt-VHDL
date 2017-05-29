@@ -100,7 +100,7 @@ architecture behavior of game_control_block is
 
     signal previous_kills: std_logic_vector(7 downto 0) := (others => '0');
 
-    signal collision_toggle: std_logic_vector := '0';
+    signal collision_toggle: std_logic := '0';
 begin
     reset_control <= pregame or next_level;
 
