@@ -13,7 +13,8 @@ entity game_control_block is
         pregame: in std_logic;
         midgame: in std_logic;
         win: in std_logic;
-        next_level: in std_logic := '0';
+        next_level: in std_logic;
+        bullet_collision: in std_logic;
         game_won: out std_logic := '0';
         game_mode: out std_logic := '0';
         game_pause: out std_logic := '0';
@@ -128,7 +129,7 @@ begin
     ) port map(
         clk_50M,
         pregame or next_level,
-        '0', -- Connect this to the impact detection signal from the bullet
+        bullet_collision, -- Connect this to the impact detection signal from the bullet
         (others => '1'),
         kill_comp_a
     );
