@@ -263,21 +263,19 @@ begin
         sig_bullet_collision
     );
 
-    assert_bullet_collision: process(clk_50M, sig_bullet_collision)
-        variable asserted: std_logic := '1';
+    assert_bullet_collision: process(clk_50M, sig_bullet_collision, ai_reset)
+        variable asserted: std_logic := '0';
     begin
-        if (sig_bullet_collision = '1') then
-            asserted := '1';
+        if ((sig_bullet_collision = '1') and (ai_reset = '0')) then
+            out_bullet_collision <= '1';
         elsif (rising_edge(clk_50M)) then
             out_bullet_collision <= '0';
-            if (reset_ai = '1') then
-                asserted := '0';
-            else
+            if (out_bullet_collision = '1') then
                 if (asserted = '1') then
-                    if (out_bullet_collision = '0') then
-                        out_bullet_collision <= '1';
-                    end if;
-                    asserted := '0'
+                    asserted := '0';
+                else
+                    out_bullet_collision <= '1';
+                    asserted := '1';
                 end if;
             end if;
         end if;
