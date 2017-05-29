@@ -14,7 +14,7 @@ entity game_ai_block is
         pregame: in std_logic;
         midgame: in std_logic;
         endgame: in std_logic;
-        enable: in std_logic;
+        enable: in std_logic := '0';
         current_level: in std_logic_vector(1 downto 0) := (others => '0');
         next_level: in std_logic;
         lfsr_seed: in std_logic_vector(15 downto 0);
@@ -110,7 +110,7 @@ architecture behavior of game_ai_block is
     signal reset_spawn: std_logic := '0';
     signal inv_reset_ai: std_logic := '1';
 
-    signal mux_ai_x_sel: std_logic := '1';
+    signal ai_x_sel: std_logic := '1';
     signal mux_ai_x_a: std_logic_vector(9 downto 0) := (others => '0');
     signal mux_ai_x_b: std_logic_vector(9 downto 0) := (others => '0');
     signal mux_ai_x_r: std_logic_vector(9 downto 0) := (others => '0');
@@ -184,7 +184,7 @@ begin
 
     -- Use either an adder or subtractor based on the direction the AI tank is going
     -- to calculate next x position
-    mux_ai_x_b <= std_logic_vector(unsigned(sig_ai_x) + unsigned(ai_x_speed)) when mux_ai_x_sel='1' else
+    mux_ai_x_b <= std_logic_vector(unsigned(sig_ai_x) + unsigned(ai_x_speed)) when ai_x_sel='1' else
                     std_logic_vector(unsigned(sig_ai_x) - unsigned(ai_x_speed));
     mux_ai_x_r <= mux_ai_x_a when reset_ai='1' else
                     mux_ai_x_b;
@@ -195,10 +195,10 @@ begin
     )
     port map(
         sig_ai_x,
-        std_logic_vector(to_unsigned(575,10)), --639-64
+        std_logic_vector(to_unsigned(574,10)), --639-64
         open,
         is_ai_x_max(0),
-        is_ai_x_max(1)
+        open
     );
 
     -- Comparator to signal when ai reaches min X position
@@ -207,8 +207,8 @@ begin
     )
     port map(
         sig_ai_x,
-        std_logic_vector(to_unsigned(0,10)),
-        is_ai_x_min(0),
+        std_logic_vector(to_unsigned(1,10)),
+        open,
         is_ai_x_min(1),
         open
     );
@@ -224,19 +224,21 @@ begin
     ai_x_dir: T_FF port map(
         mux_ai_x_dir,
         '0',
-        mux_ai_x_sel,
+        ai_x_sel,
         open
     );
 
     -- Stores AI Y position
-    sig_ai_y_d <= std_logic_vector(unsigned(sig_ai_y) + 64);
+    sig_ai_y_d <= std_logic_vector(unsigned(sig_ai_y) + 64) when ai_x_limit = '1' else
+                    sig_ai_y;
+    
     reg_ai_y: register_d generic map(
         10
     )
     port map(
         clk_48,
         reset_ai,
-        ai_x_limit,
+        enable,
         sig_ai_y_d,
         sig_ai_y
     );
@@ -348,7 +350,8 @@ begin
         1
     ) port map(
         clk_50M,
-        reset_ai,
+        -- reset_ai,
+        '1',
         sig_delayed_enable,
         D(0) => sig_delayed_enable,
         Q(0) => enable_next

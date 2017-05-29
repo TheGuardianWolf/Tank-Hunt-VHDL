@@ -1435,10 +1435,6 @@ applicable agreement for further details.
 	(pt 968 456)
 )
 (connector
-	(pt 928 344)
-	(pt 928 488)
-)
-(connector
 	(pt 928 488)
 	(pt 1024 488)
 )
@@ -1881,4 +1877,8 @@ applicable agreement for further details.
 	(text "player0_collision" (rect 1262 128 1343 140)(font "Arial" ))
 	(pt 1224 144)
 	(pt 1272 144)
+)
+(connector
+	(pt 928 344)
+	(pt 928 488)
 )
