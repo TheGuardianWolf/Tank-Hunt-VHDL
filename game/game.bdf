@@ -1251,7 +1251,7 @@ applicable agreement for further details.
 (symbol
 	(rect 512 352 736 560)
 	(text "game_control_block" (rect 5 0 102 12)(font "Arial" ))
-	(text "inst21" (rect 8 192 37 204)(font "Arial" ))
+	(text "inst1" (rect 8 192 31 204)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -1908,11 +1908,6 @@ applicable agreement for further details.
 	(pt 512 432)
 )
 (connector
-	(text "bullet_collision" (rect 491 496 561 508)(font "Arial" ))
-	(pt 512 512)
-	(pt 456 512)
-)
-(connector
 	(text "ai0_show" (rect 1245 96 1289 108)(font "Arial" ))
 	(pt 1224 112)
 	(pt 1272 112)
@@ -1922,4 +1917,9 @@ applicable agreement for further details.
 	(pt 736 480)
 	(pt 816 480)
 	(bus)
+)
+(connector
+	(text "bullet0_collision" (rect 491 496 567 508)(font "Arial" ))
+	(pt 512 512)
+	(pt 456 512)
 )
