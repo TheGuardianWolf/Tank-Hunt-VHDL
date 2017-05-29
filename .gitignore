@@ -37,6 +37,7 @@ timing/
 testbench/
 *_sim/
 undefined/
+output_files/
 
 # Logs
 logs
