@@ -212,6 +212,27 @@ applicable agreement for further details.
 		(text "rom_mux_output_blue" (rect 185 59 275 71)(font "Arial" ))
 		(line (pt 296 64)(pt 280 64)(line_width 1))
 	)
+	(port
+		(pt 296 80)
+		(output)
+		(text "bullet_r" (rect 0 0 28 12)(font "Arial" ))
+		(text "bullet_r" (rect 247 75 275 87)(font "Arial" ))
+		(line (pt 296 80)(pt 280 80)(line_width 1))
+	)
+	(port
+		(pt 296 96)
+		(output)
+		(text "bullet_g" (rect 0 0 29 12)(font "Arial" ))
+		(text "bullet_g" (rect 246 91 275 103)(font "Arial" ))
+		(line (pt 296 96)(pt 280 96)(line_width 1))
+	)
+	(port
+		(pt 296 112)
+		(output)
+		(text "bullet_b" (rect 0 0 29 12)(font "Arial" ))
+		(text "bullet_b" (rect 246 107 275 119)(font "Arial" ))
+		(line (pt 296 112)(pt 280 112)(line_width 1))
+	)
 	(drawing
 		(rectangle (rect 16 16 280 416)(line_width 1))
 	)
