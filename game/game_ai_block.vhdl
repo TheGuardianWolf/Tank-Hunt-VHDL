@@ -120,6 +120,8 @@ architecture behavior of game_ai_block is
     signal mux_ai_x_dir: std_logic := '0';
     signal sig_ai_x: std_logic_vector(9 downto 0) := (others => '0');
     signal is_ai_x_max: std_logic := '0';
+    signal is_ai_x_max_gt: std_logic := '0';
+    signal is_ai_x_min_gt: std_logic := '0';
     signal is_ai_x_min: std_logic := '0';
 
     signal sig_ai_y: std_logic_vector(9 downto 0) := (others => '0');
@@ -140,7 +142,7 @@ begin
     -- Signal to reset ai components
     reset_ai <= (pregame) or (next_level) or (not spawned);
     -- Signal to reset the spawn counter
-    reset_spawn <= (pregame) or (next_level) or (bullet_collision);
+    reset_spawn <= (pregame) or (next_level);
     -- Signal to enable the spawn timer
     enable_spawn <= (midgame) and (not spawned);
     -- Signal to start next tank in chain
@@ -173,10 +175,10 @@ begin
 
     -- Multiplexer to set AI's X movement speed based on level input
     with current_level select ai_x_speed <=
-        std_logic_vector(to_unsigned(1,10)) when "00",
-        std_logic_vector(to_unsigned(1,10)) when "01",
-        std_logic_vector(to_unsigned(2,10)) when "10",
-        std_logic_vector(to_unsigned(3,10)) when "11",
+        std_logic_vector(to_unsigned(2,10)) when "00",
+        std_logic_vector(to_unsigned(2,10)) when "01",
+        std_logic_vector(to_unsigned(3,10)) when "10",
+        std_logic_vector(to_unsigned(4,10)) when "11",
         (others => '0') when others;
 
     -- Use either an adder or subtractor based on the direction the AI tank is going
@@ -244,14 +246,14 @@ begin
     -- Detect collision with bullet
     bullet_collide: collision_detect_u 
     generic map(
-        10, 64, 64
-    );
+        10, 64, 8
+    )
     port map(
         clk_50M,
         sig_ai_x,
         sig_ai_y,
         bullet_x,
-        bullet_y
+        bullet_y,
         sig_bullet_collision
     );
 
@@ -270,13 +272,13 @@ begin
     player_collide: collision_detect_u 
     generic map(
         10, 64, 64
-    );
+    )
     port map(
         clk_50M,
         sig_ai_x,
         sig_ai_y,
         player_x,
-        player_y
+        player_y,
         sig_player_collision
     );
 

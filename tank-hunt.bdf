@@ -870,9 +870,9 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 1312 264 1568 616)
+	(rect 1312 264 1568 648)
 	(text "output" (rect 5 0 40 14)(font "Arial" (font_size 8)))
-	(text "inst1" (rect 8 336 31 348)(font "Arial" ))
+	(text "inst4" (rect 8 368 31 380)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -998,6 +998,20 @@ applicable agreement for further details.
 		(text "bullet_show" (rect 0 0 69 14)(font "Arial" (font_size 8)))
 		(text "bullet_show" (rect 21 299 90 313)(font "Arial" (font_size 8)))
 		(line (pt 0 304)(pt 16 304))
+	)
+	(port
+		(pt 0 320)
+		(input)
+		(text "ai1_x[9..0]" (rect 0 0 59 14)(font "Arial" (font_size 8)))
+		(text "ai1_x[9..0]" (rect 21 315 80 329)(font "Arial" (font_size 8)))
+		(line (pt 0 320)(pt 16 320)(line_width 3))
+	)
+	(port
+		(pt 0 336)
+		(input)
+		(text "ai1_y[9..0]" (rect 0 0 59 14)(font "Arial" (font_size 8)))
+		(text "ai1_y[9..0]" (rect 21 331 80 345)(font "Arial" (font_size 8)))
+		(line (pt 0 336)(pt 16 336)(line_width 3))
 	)
 	(port
 		(pt 256 32)
@@ -1126,13 +1140,8 @@ applicable agreement for further details.
 		(line (pt 256 304)(pt 240 304))
 	)
 	(drawing
-		(rectangle (rect 16 16 240 336))
+		(rectangle (rect 16 16 240 368))
 	)
-)
-(connector
-	(text "clk_div[19]" (rect 775 288 829 300)(font "Arial" ))
-	(pt 824 304)
-	(pt 760 304)
 )
 (connector
 	(text "clk_s" (rect 768 304 793 316)(font "Arial" ))
@@ -1355,12 +1364,6 @@ applicable agreement for further details.
 	(pt 1080 528)
 )
 (connector
-	(text "ai_x1[9..0]" (rect 1042 528 1093 540)(font "Arial" ))
-	(pt 1032 544)
-	(pt 1080 544)
-	(bus)
-)
-(connector
 	(text "ai_y1[9..0]" (rect 1042 544 1095 556)(font "Arial" ))
 	(pt 1032 560)
 	(pt 1080 560)
@@ -1530,18 +1533,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "ai_x0[9..0]" (rect 1059 480 1110 492)(font "Arial" ))
-	(pt 1032 496)
-	(pt 1080 496)
-	(bus)
-)
-(connector
-	(text "ai_x0[9..0]" (rect 1256 392 1307 404)(font "Arial" ))
-	(pt 1312 408)
-	(pt 1256 408)
-	(bus)
-)
-(connector
 	(text "bullet_x[9..0]" (rect 1046 608 1109 620)(font "Arial" ))
 	(pt 1032 624)
 	(pt 1088 624)
@@ -1576,14 +1567,49 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "seven_seg_in[9..0]" (rect 1056 624 1150 636)(font "Arial" ))
+	(text "ai_y1[9..0]" (rect 1292 584 1345 596)(font "Arial" ))
+	(pt 1312 600)
+	(pt 1256 600)
+	(bus)
+)
+(connector
+	(text "bullet_y[9..0]" (rect 1271 536 1335 548)(font "Arial" ))
+	(pt 1312 552)
+	(pt 1256 552)
+	(bus)
+)
+(connector
+	(text "bullet_y[9..0]" (rect 1056 624 1120 636)(font "Arial" ))
 	(pt 1032 640)
 	(pt 1088 640)
 	(bus)
 )
 (connector
-	(text "seven_seg_in[9..0]" (rect 1271 536 1365 548)(font "Arial" ))
-	(pt 1312 552)
-	(pt 1256 552)
+	(text "ai1_x[9..0]" (rect 1042 528 1093 540)(font "Arial" ))
+	(pt 1032 544)
+	(pt 1080 544)
 	(bus)
+)
+(connector
+	(text "ai1_x[9..0]" (rect 1274 568 1325 580)(font "Arial" ))
+	(pt 1312 584)
+	(pt 1256 584)
+	(bus)
+)
+(connector
+	(text "seven_seg_in[9..0]" (rect 1059 480 1153 492)(font "Arial" ))
+	(pt 1032 496)
+	(pt 1080 496)
+	(bus)
+)
+(connector
+	(text "seven_seg_in[9..0]" (rect 1256 392 1350 404)(font "Arial" ))
+	(pt 1312 408)
+	(pt 1256 408)
+	(bus)
+)
+(connector
+	(text "clk_div[18]" (rect 775 288 829 300)(font "Arial" ))
+	(pt 824 304)
+	(pt 760 304)
 )

@@ -309,6 +309,38 @@ applicable agreement for further details.
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
 )
 (pin
+	(input)
+	(rect -72 576 96 592)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "ai1_x[9..0]" (rect 5 0 56 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
+	(input)
+	(rect -72 592 96 608)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "ai1_y[9..0]" (rect 5 0 58 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
 	(output)
 	(rect 848 320 1024 336)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
@@ -851,9 +883,9 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 200 200 496 600)
+	(rect 200 200 496 632)
 	(text "char_rom" (rect 5 0 51 12)(font "Arial" ))
-	(text "inst" (rect 8 384 25 396)(font "Arial" ))
+	(text "inst" (rect 8 416 25 428)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -1009,6 +1041,20 @@ applicable agreement for further details.
 		(line (pt 0 368)(pt 16 368))
 	)
 	(port
+		(pt 0 384)
+		(input)
+		(text "ai1_hor[9..0]" (rect 0 0 61 12)(font "Arial" ))
+		(text "ai1_hor[9..0]" (rect 21 379 82 391)(font "Arial" ))
+		(line (pt 0 384)(pt 16 384)(line_width 3))
+	)
+	(port
+		(pt 0 400)
+		(input)
+		(text "ai1_vert[9..0]" (rect 0 0 66 12)(font "Arial" ))
+		(text "ai1_vert[9..0]" (rect 21 395 87 407)(font "Arial" ))
+		(line (pt 0 400)(pt 16 400)(line_width 3))
+	)
+	(port
 		(pt 296 32)
 		(output)
 		(text "rom_mux_output_red" (rect 0 0 103 12)(font "Arial" ))
@@ -1030,7 +1076,7 @@ applicable agreement for further details.
 		(line (pt 296 64)(pt 280 64))
 	)
 	(drawing
-		(rectangle (rect 16 16 280 384))
+		(rectangle (rect 16 16 280 416))
 	)
 )
 (connector
@@ -1299,4 +1345,14 @@ applicable agreement for further details.
 (connector
 	(pt 96 568)
 	(pt 200 568)
+)
+(connector
+	(pt 96 584)
+	(pt 200 584)
+	(bus)
+)
+(connector
+	(pt 96 600)
+	(pt 200 600)
+	(bus)
 )

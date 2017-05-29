@@ -20,9 +20,9 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.2"))
 (symbol
-	(rect 16 16 272 368)
+	(rect 16 16 272 400)
 	(text "output" (rect 5 0 40 14)(font "Arial" (font_size 8)))
-	(text "inst" (rect 8 336 25 348)(font "Arial" ))
+	(text "inst" (rect 8 368 25 380)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -148,6 +148,20 @@ applicable agreement for further details.
 		(text "bullet_show" (rect 0 0 69 14)(font "Arial" (font_size 8)))
 		(text "bullet_show" (rect 21 299 90 313)(font "Arial" (font_size 8)))
 		(line (pt 0 304)(pt 16 304))
+	)
+	(port
+		(pt 0 320)
+		(input)
+		(text "ai1_x[9..0]" (rect 0 0 59 14)(font "Arial" (font_size 8)))
+		(text "ai1_x[9..0]" (rect 21 315 80 329)(font "Arial" (font_size 8)))
+		(line (pt 0 320)(pt 16 320)(line_width 3))
+	)
+	(port
+		(pt 0 336)
+		(input)
+		(text "ai1_y[9..0]" (rect 0 0 59 14)(font "Arial" (font_size 8)))
+		(text "ai1_y[9..0]" (rect 21 331 80 345)(font "Arial" (font_size 8)))
+		(line (pt 0 336)(pt 16 336)(line_width 3))
 	)
 	(port
 		(pt 256 32)
@@ -276,6 +290,6 @@ applicable agreement for further details.
 		(line (pt 256 304)(pt 240 304))
 	)
 	(drawing
-		(rectangle (rect 16 16 240 336))
+		(rectangle (rect 16 16 240 368))
 	)
 )

@@ -52,6 +52,7 @@ architecture behavior of game_bullet is
 	 signal bullet_x, bullet_y : std_logic_vector(9 downto 0);
 	 signal collide_temp : std_logic;
 	 signal show : std_logic;
+	 signal alive : std_logic;
 	 signal y_pos_mux_out : std_logic_vector(9 downto 0) := "0110011000";
 	 signal y_pos_mux_in : std_logic_vector(9 downto 0) := "0110011000";
 	 signal comp_max_eq, max_collide, comp_tank_left_gt, comp_tank_left_eq, tank_left_collide, comp_tank_right_lt,
@@ -66,9 +67,9 @@ begin
         10
     ) port map(
         clk_50M,
-        collide_temp,
-        midgame,
-        std_logic_vector(unsigned(player_x)+24),
+        '0',
+        midgame and (not show),
+        std_logic_vector(unsigned(player_x)+32),
         bullet_x
     );
 	 
@@ -81,6 +82,16 @@ begin
         midgame,
         y_pos_mux_out,
         bullet_y
+    );
+	 
+    b_m: register_d generic map(
+        1
+    ) port map(
+        clk_50M,
+        collide_temp,
+        m_l,
+        D(0) => m_l,
+        Q(0) => alive
     );
 	 
 	 comp_max: comparator_u generic map(
@@ -133,21 +144,24 @@ begin
         comp_tank_left_gt
     );
 	 
+	 
+	 y_pos_mux_in <= std_logic_vector((unsigned(bullet_y) - 2)) when (midgame = '1' );
+	--  else "0110011000" when others;
+	 
+	 
 	 with show select y_pos_mux_out <=
 		"0110011000" when '0',
-		y_pos_mux_in when '1',
-		"0000000000" when others;
-
-	 y_pos_mux_in <= std_logic_vector((unsigned(bullet_y) - 1)) when midgame = '1' 
-						  else "0110011000" when midgame = '0';
-	 
+		y_pos_mux_in when '1';
+		
 	 max_collide <= comp_max_eq;
 	 tank_top_collide <= comp_tank_top_eq or comp_tank_top_gt;
 	 tank_bot_collide <= comp_tank_bot_eq or comp_tank_bot_lt;
 	 tank_left_collide <= comp_tank_left_eq or comp_tank_left_gt;
 	 tank_right_collide <= comp_tank_right_eq or comp_tank_right_lt;
-	 collide_temp <= max_collide or ((tank_bot_collide and tank_top_collide) and tank_left_collide) or ((tank_bot_collide and tank_top_collide) or tank_right_collide);
-	 show <= '1' when ((midgame ='1' or game_paused = '1')) else '0';
+	 collide_temp <= max_collide or (tank_bot_collide and tank_top_collide and tank_left_collide and tank_right_collide);
+	 
+	 show <= '1' when ((midgame ='1' or game_paused = '1') and alive = '1') else 
+				'0' when (collide_temp = '1');
 					
 -- show <= '0' when rising_edge(collide_temp);			 
 
