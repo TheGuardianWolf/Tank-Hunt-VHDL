@@ -144,7 +144,7 @@ begin
     -- Signal to reset ai components
     ai_reset <= (pregame) or (next_level) or (not spawned);
     -- Signal to reset the spawn counter
-    reset_spawn <= (pregame) or (next_level) or (out_bullet_collision and spawned);
+    reset_spawn <= (pregame) or (next_level) or (out_bullet_collision);
     -- Signal to enable the spawn timer
     enable_spawn <= (midgame) and (not spawned) and (enable);
     -- Signal to reset the delayed enable
@@ -305,6 +305,8 @@ begin
     );
 
     -- Clocked signal for player collision detection output
+    mux_sig_player_collide <= '0' when ai_reset='1' else
+                                sig_player_collision;
     sig_player_collide: register_d generic map(
         1
     ) port map(
