@@ -268,7 +268,7 @@ begin
         1
     ) port map(
         clk_50M,
-        reset_ai,
+        pregame,
         enable,
         D(0) => sig_bullet_collision,
         Q(0) => out_bullet_collision
@@ -294,7 +294,7 @@ begin
         1
     ) port map(
         clk_50M,
-        reset_ai,
+        pregame,
         enable,
         D(0) => sig_player_collision,
         Q(0) => out_player_collision
