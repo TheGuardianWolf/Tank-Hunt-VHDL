@@ -138,6 +138,8 @@ architecture behavior of game_ai_block is
     signal out_player_collision: std_logic := '0';
     signal sig_bullet_collision: std_logic := '0';
     signal sig_player_collision: std_logic := '0';
+
+    signal mux_sig_bullet_collide: std_logic := '0';
 	 
     signal random_number: std_logic_vector(15 downto 0) := (others => '0');
 begin
@@ -285,10 +287,13 @@ begin
         clk_50M,
         pregame,
         enable,
-        D(0) => sig_bullet_collision,
+        D(0) => mux_sig_bullet_collision,
         Q(0) => out_bullet_collision
     );
     bullet_collision <= out_bullet_collision;
+
+    mux_sig_bullet_collide <= '0' when ai_reset='1' else
+                                sig_bullet_collision;
 
     -- Detect collision with player
     player_collide: collision_detect_u 
@@ -305,8 +310,6 @@ begin
     );
 
     -- Clocked signal for player collision detection output
-    mux_sig_player_collide <= '0' when ai_reset='1' else
-                                sig_player_collision;
     sig_player_collide: register_d generic map(
         1
     ) port map(
