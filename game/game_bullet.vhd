@@ -79,7 +79,7 @@ begin
         bullet_y
     );
 
-    mux_b_y <= std_logic_vector(to_unsigned(408, 10)) when (bullet_show='0') else
+    mux_b_y <= std_logic_vector(to_unsigned(408, 10)) when (bullet_fired='0') else
                 std_logic_vector(unsigned(bullet_y) - 1);
 
     b_limit: comparator_u generic map(
