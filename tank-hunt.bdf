@@ -1367,12 +1367,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "total_kills[7..0]" (rect 1295 472 1366 484)(font "Arial" ))
-	(pt 1256 488)
-	(pt 1312 488)
-	(bus)
-)
-(connector
 	(text "current_level[1..0]" (rect 1285 488 1374 500)(font "Arial" ))
 	(pt 1256 504)
 	(pt 1312 504)
@@ -1408,11 +1402,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "ai0_hidden" (rect 1273 408 1324 420)(font "Arial" ))
-	(pt 1256 424)
-	(pt 1312 424)
-)
-(connector
 	(text "ai1_y[9..0]" (rect 1292 584 1345 596)(font "Arial" ))
 	(pt 1312 600)
 	(pt 1256 600)
@@ -1428,12 +1417,6 @@ applicable agreement for further details.
 	(text "seven_seg_in[15..0]" (rect 1239 280 1339 292)(font "Arial" ))
 	(pt 1224 296)
 	(pt 1312 296)
-	(bus)
-)
-(connector
-	(text "seven_seg_in[9..0]" (rect 1256 392 1350 404)(font "Arial" ))
-	(pt 1312 408)
-	(pt 1256 408)
 	(bus)
 )
 (connector
@@ -1462,21 +1445,9 @@ applicable agreement for further details.
 	(pt 1120 336)
 )
 (connector
-	(text "seven_seg_in[14..12]" (rect 1072 576 1178 588)(font "Arial" ))
-	(pt 1072 592)
-	(pt 1128 592)
-	(bus)
-)
-(connector
 	(text "current_level[1..0]" (rect 1114 352 1203 364)(font "Arial" ))
 	(pt 1072 368)
 	(pt 1120 368)
-	(bus)
-)
-(connector
-	(text "total_kills[7..0]" (rect 1112 384 1183 396)(font "Arial" ))
-	(pt 1072 400)
-	(pt 1120 400)
 	(bus)
 )
 (connector
@@ -1559,17 +1530,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "ai0_hidden" (rect 1111 512 1162 524)(font "Arial" ))
-	(pt 1072 528)
-	(pt 1120 528)
-)
-(connector
-	(text "seven_seg_in[9..0]" (rect 1099 480 1193 492)(font "Arial" ))
-	(pt 1072 496)
-	(pt 1120 496)
-	(bus)
-)
-(connector
 	(text "clk_s" (rect 776 304 801 316)(font "Arial" ))
 	(pt 832 320)
 	(pt 768 320)
@@ -1625,4 +1585,38 @@ applicable agreement for further details.
 	(text "clk_div[15]" (rect 776 448 830 460)(font "Arial" ))
 	(pt 832 464)
 	(pt 768 464)
+)
+(connector
+	(text "ai0_x[9..0]" (rect 1099 480 1150 492)(font "Arial" ))
+	(pt 1072 496)
+	(pt 1120 496)
+	(bus)
+)
+(connector
+	(text "ai0_x[9..0]" (rect 1256 392 1307 404)(font "Arial" ))
+	(pt 1312 408)
+	(pt 1256 408)
+	(bus)
+)
+(connector
+	(text "seven_seg_in[7..0]" (rect 1112 384 1206 396)(font "Arial" ))
+	(pt 1072 400)
+	(pt 1120 400)
+	(bus)
+)
+(connector
+	(text "seven_seg_in[7..0]" (rect 1295 472 1389 484)(font "Arial" ))
+	(pt 1256 488)
+	(pt 1312 488)
+	(bus)
+)
+(connector
+	(text "seven_seg_in[12]" (rect 1111 512 1198 524)(font "Arial" ))
+	(pt 1072 528)
+	(pt 1120 528)
+)
+(connector
+	(text "seven_seg_in[12]" (rect 1273 408 1360 420)(font "Arial" ))
+	(pt 1256 424)
+	(pt 1312 424)
 )

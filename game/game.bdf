@@ -1458,10 +1458,6 @@ applicable agreement for further details.
 	(pt 968 456)
 )
 (connector
-	(pt 928 488)
-	(pt 1024 488)
-)
-(connector
 	(text "player_x[9..0]" (rect 739 616 807 628)(font "Arial" ))
 	(pt 712 632)
 	(pt 752 632)
@@ -1859,10 +1855,6 @@ applicable agreement for further details.
 	(pt 1272 144)
 )
 (connector
-	(pt 928 344)
-	(pt 928 488)
-)
-(connector
 	(text "clk_move[2..0]" (rect 944 64 1018 76)(font "Arial" ))
 	(pt 992 80)
 	(pt 936 80)
@@ -1910,4 +1902,12 @@ applicable agreement for further details.
 	(text "bullet1_collision" (rect 1390 192 1466 204)(font "Arial" ))
 	(pt 1408 208)
 	(pt 1368 208)
+)
+(connector
+	(pt 928 344)
+	(pt 928 488)
+)
+(connector
+	(pt 928 488)
+	(pt 1024 488)
 )
