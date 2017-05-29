@@ -99,6 +99,8 @@ architecture behavior of game_control_block is
     signal buffer_kills_reached: std_logic := '0';
 
     signal previous_kills: std_logic_vector(7 downto 0) := (others => '0');
+
+    signal collision_toggle: std_logic_vector := '0';
 begin
     reset_control <= pregame or next_level;
 
@@ -131,26 +133,27 @@ begin
     current_level <= level_count;
 
 
-    k_ff: T_FF port map(
-        bullet_collision,
-        '0',
-        kill_comp_a(0),
-        open
-    );
-    current_kills <= kill_comp_a;
-    -- mux_k_reg <= std_logic_vector(unsigned(kill_comp_a) + 1) when (bullet_collision = '1') else
-    --             kill_comp_a;
-    -- -- Counter to store current kills
-    -- k_reg: register_d generic map(
-    --     8
-    -- ) port map(
-    --     clk_50M,
-    --     reset_control,
-    --     midgame,
-    --     mux_k_reg,
-    --     kill_comp_a
+    -- k_ff: T_FF port map(
+    --     bullet_collision,
+    --     '0',
+    --     collision_toggle,
+    --     open
     -- );
     -- current_kills <= kill_comp_a;
+
+    mux_k_reg <= std_logic_vector(unsigned(kill_comp_a) + 1) when (bullet_collision = '1') else
+                kill_comp_a;
+    -- Counter to store current kills
+    k_reg: register_d generic map(
+        8
+    ) port map(
+        clk_50M,
+        reset_control,
+        midgame,
+        mux_k_reg,
+        kill_comp_a
+    );
+    current_kills <= kill_comp_a;
     -- k_count: counter generic map(
     --     8
     -- ) port map(
