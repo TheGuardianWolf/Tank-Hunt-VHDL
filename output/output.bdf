@@ -54,7 +54,7 @@ applicable agreement for further details.
 )
 (pin
 	(input)
-	(rect 0 -32 200 -16)
+	(rect -296 -160 -96 -144)
 	(text "INPUT" (rect 157 0 185 10)(font "Arial" (font_size 6)))
 	(text "seven_seg_in[15..0]" (rect 5 0 105 12)(font "Arial" ))
 	(pt 200 8)
@@ -1125,11 +1125,27 @@ applicable agreement for further details.
 		(rectangle (rect 16 16 280 448))
 	)
 )
-(connector
-	(text "7_in[15..0]" (rect 210 -40 261 -28)(font "Arial" ))
-	(pt 200 -24)
-	(pt 288 -24)
-	(bus)
+(symbol
+	(rect -8 -184 176 -104)
+	(text "bin_2_bcd_4" (rect 5 0 66 12)(font "Arial" ))
+	(text "inst1" (rect 8 64 31 76)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "binary[15..0]" (rect 0 0 62 12)(font "Arial" ))
+		(text "binary[15..0]" (rect 21 27 83 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 3))
+	)
+	(port
+		(pt 184 32)
+		(output)
+		(text "bcd[15..0]" (rect 0 0 49 12)(font "Arial" ))
+		(text "bcd[15..0]" (rect 122 27 171 39)(font "Arial" ))
+		(line (pt 184 32)(pt 168 32)(line_width 3))
+	)
+	(drawing
+		(rectangle (rect 16 16 168 64))
+	)
 )
 (connector
 	(text "7_in[15..12]" (rect 314 -280 371 -268)(font "Arial" ))
@@ -1409,4 +1425,15 @@ applicable agreement for further details.
 (connector
 	(pt -8 624)
 	(pt 88 624)
+)
+(connector
+	(text "7_in[15..0]" (rect 184 -168 235 -156)(font "Arial" ))
+	(pt 176 -152)
+	(pt 232 -152)
+	(bus)
+)
+(connector
+	(pt -96 -152)
+	(pt -8 -152)
+	(bus)
 )

@@ -272,7 +272,7 @@ begin
         clk_50M,
         pregame,
         enable,
-        D(0) => mux_sig_bullet_collision,
+        D(0) => mux_sig_bullet_collide,
         Q(0) => out_bullet_collision
     );
     bullet_collision <= out_bullet_collision;

@@ -582,7 +582,7 @@ BEGIN
 				rom_address <= "001100" & std_logic_vector(unsigned(vga_row(5 downto 3))-5);
 				rom_mux_output_red <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-5))));
 			ELSIF(("0101100" < vga_col(9 downto 3)) and (vga_col(9 downto 3) <= "0110100")) THEN 
-				rom_address <= "001101" & std_logic_vector(unsigned(vga_row(5 downto 3))-5);
+				rom_address <= "001111" & std_logic_vector(unsigned(vga_row(5 downto 3))-5);
 				rom_mux_output_red <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-5))));
 			ELSIF(("0110100" < vga_col(9 downto 3)) and (vga_col(9 downto 3) <= "0111100")) THEN 
 				rom_address <= "010011" & std_logic_vector(unsigned(vga_row(5 downto 3))-5);
