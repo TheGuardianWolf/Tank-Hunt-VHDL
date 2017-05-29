@@ -145,7 +145,7 @@ begin
     -- Signal to reset the spawn counter
     reset_spawn <= (pregame) or (next_level) or (out_bullet_collision);
     -- Signal to enable the spawn timer
-    enable_spawn <= (midgame) and (not spawned);
+    enable_spawn <= (midgame) and (not spawned) and (enable);
     -- Signal to start next tank in chain
     sig_delayed_enable <= spawn_next(1) or spawn_next(2);
 
