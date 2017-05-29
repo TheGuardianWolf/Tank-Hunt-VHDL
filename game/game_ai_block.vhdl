@@ -228,7 +228,8 @@ begin
     );
 
     -- Stores AI Y position
-    sig_ai_y_d <= std_logic_vector(unsigned(sig_ai_y) + 64) when ai_x_limit = '1' else
+    sig_ai_y_d <=   std_logic_vector(to_unsigned(32,10)) when enable_spawn = '1' else
+                    std_logic_vector(unsigned(sig_ai_y) + 64) when ai_x_limit = '1' else
                     sig_ai_y;
     
     reg_ai_y: register_d generic map(
@@ -321,7 +322,7 @@ begin
         open
     );
 
-    inv_reset_ai <= not reset_ai;
+    inv_reset_ai <= not (reset_ai='1');
 
     -- Clocked signal for showing the ai tank (i.e. after spawn)
     ai_s: register_d generic map(
