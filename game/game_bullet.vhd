@@ -52,7 +52,7 @@ architecture behavior of game_bullet is
      signal bullet_show: std_logic := '0';
      signal bullet_limit: std_logic := '0';
 
-     signal mux_b_x: std_logic_vector(9 downto 0) := (others => '0');
+     signal mux_b_x, mux_b_y: std_logic_vector(9 downto 0) := (others => '0');
 begin
     b_x: register_d generic map(
         10
@@ -64,7 +64,7 @@ begin
         bullet_x
     );
 
-    with mux_b_x select bullet_fired <= 
+    with bullet_fired select mux_b_x <= 
         std_logic_vector(unsigned(player_x) + 32) when '0',
         bullet_x when others;
 	 
@@ -80,7 +80,7 @@ begin
     );
 
     mux_b_y <= std_logic_vector(to_unsigned(408, 10)) when (bullet_show='0') else
-                std_logic_vector(unsigned(b_y) - 1);
+                std_logic_vector(unsigned(bullet_y) - 1);
 
     b_limit: comparator_u generic map(
         10
@@ -90,9 +90,9 @@ begin
         open,
         bullet_limit,
         open
-    )
+    );
 
-    bullet_fired <= '1' when (m_l = '1' or bullet_show = '1') else
+    bullet_fired <= '1' when ((m_l = '1') or (bullet_show = '1')) else
                     '0'; 
 
     b_show: register_d generic map(
