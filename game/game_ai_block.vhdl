@@ -4,7 +4,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-use ieee.std_logic_misc.all;
 
 entity game_ai_block is
     port(
@@ -121,8 +120,8 @@ architecture behavior of game_ai_block is
     signal rand_x_dir: std_logic := '0';
     signal mux_ai_x_dir: std_logic := '0';
     signal sig_ai_x: std_logic_vector(9 downto 0) := (others => '0');
-    signal is_ai_x_max: std_logic_vector(1 downto 0) := (others => '0');
-    signal is_ai_x_min: std_logic_vector(1 downto 0) := (others => '0');
+    signal is_ai_x_max: std_logic := '0';
+    signal is_ai_x_min: std_logic := '0';
 
     signal sig_ai_y: std_logic_vector(9 downto 0) := (others => '0');
     signal sig_ai_y_d: std_logic_vector(9 downto 0) := (others => '0');
@@ -175,13 +174,6 @@ begin
         sig_ai_x
     );
 
-    -- Multiplexer to set AI's X movement speed based on level input
-    -- with current_level select ai_x_speed <=
-    --     std_logic_vector(to_unsigned(1,10)) when "00",
-    --     std_logic_vector(to_unsigned(1,10)) when "01",
-    --     std_logic_vector(to_unsigned(2,10)) when "10",
-    --     std_logic_vector(to_unsigned(3,10)) when "11",
-    --     (others => '0') when others;
     with current_level select ai_move_clk <=
         clk_move(2) when "00",
         clk_move(2) when "01",
@@ -204,7 +196,7 @@ begin
         sig_ai_x,
         std_logic_vector(to_unsigned(574,10)), --639-64
         open,
-        is_ai_x_max(0),
+        is_ai_x_max,
         open
     );
 
@@ -216,12 +208,12 @@ begin
         sig_ai_x,
         std_logic_vector(to_unsigned(1,10)),
         open,
-        is_ai_x_min(1),
+        is_ai_x_min,
         open
     );
 
     -- Multiplexer to switch directions randomly or based on X limits
-    ai_x_limit <= or_reduce(is_ai_x_max) or or_reduce(is_ai_x_min);
+    ai_x_limit <= is_ai_x_max or is_ai_x_min;
     rand_x_dir <= random_number(6);
 
     mux_ai_x_dir <= rand_x_dir when reset_ai='1' else
@@ -357,8 +349,7 @@ begin
         1
     ) port map(
         clk_50M,
-        -- reset_ai,
-        '1',
+        reset_ai,
         sig_delayed_enable,
         D(0) => sig_delayed_enable,
         Q(0) => enable_next
