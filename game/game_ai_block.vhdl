@@ -237,7 +237,7 @@ begin
     )
     port map(
         ai_move_clk,
-        reset_ai,
+        '0',
         enable,
         sig_ai_y_d,
         sig_ai_y
@@ -322,7 +322,7 @@ begin
         open
     );
 
-    inv_reset_ai <= not (reset_ai='1');
+    inv_reset_ai <= '0' when (reset_ai='1') else '1';
 
     -- Clocked signal for showing the ai tank (i.e. after spawn)
     ai_s: register_d generic map(
