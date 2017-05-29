@@ -2,6 +2,7 @@
 
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 entity clk_s is
     port(
@@ -23,11 +24,11 @@ architecture behaviour of clk_s is
             C: out std_logic_vector(size-1 downto 0)
         );
     end component;
-    signal half_s: std_logic_vector(24 downto 0) := "1011111010111100001000000";
     signal clk_time_c: std_logic_vector(24 downto 0) := (others => '0');
     signal sig_clk_s: std_logic := '1';
+    signal half_s: std_logic_vector(24 downto 0) := (others => '0');
     begin
-    
+    half_s <= std_logic_vector(to_unsigned(25000000, 25));
     clk_time: counter 
     generic map (
         25

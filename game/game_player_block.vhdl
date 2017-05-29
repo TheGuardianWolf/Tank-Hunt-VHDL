@@ -13,8 +13,7 @@ entity game_player_block is
         m_x: in std_logic_vector(9 downto 0);
         midgame: in std_logic;
         player_x: out std_logic_vector(9 downto 0) := (others => '0');
-        player_y: out std_logic_vector(9 downto 0) := (others => '0');
-        enemy_collision: out std_logic := '0'
+        player_y: out std_logic_vector(9 downto 0) := (others => '0')
     );
 end entity;
 
