@@ -29,5 +29,10 @@ begin
     bottom_left <= '1' when unsigned(a_y) < (unsigned(b_Y) + to_unsigned(b_length, size)) else '0';
     bottom_right <= '1' when (unsigned(a_y) + to_unsigned(a_length, size)) > unsigned(b_y) else '0';
 
-    collision <= top_left and top_right and bottom_left and bottom_right;
+    process(clk_50M)
+    begin
+        if (rising_edge(clk)) then
+            collision <= top_left and top_right and bottom_left and bottom_right;
+        end if;
+    end process;
 end architecture;

@@ -263,6 +263,21 @@ begin
         sig_bullet_collision
     );
 
+    -- process(clk_50M)
+    -- begin
+    --   if rising_edge(clk_50M) then
+    --     CollisionState <= CollisionNext;
+    --   end if;
+    -- end process;
+
+    -- process(
+    --   sig_bullet_collision,
+    --   reset_ai
+    -- )
+    -- begin
+    --     case CollisionState is
+    -- end process;
+
     -- Clocked signal for bullet collision detection output
     sig_bullet_collide: register_d generic map(
         1
