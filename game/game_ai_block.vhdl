@@ -349,7 +349,7 @@ begin
         1
     ) port map(
         clk_50M,
-        next_level,
+        next_level or pregame,
         sig_delayed_enable,
         D(0) => sig_delayed_enable,
         Q(0) => enable_next
