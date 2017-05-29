@@ -68,7 +68,7 @@ begin
     ) port map(
         clk_50M,
         '0',
-        midgame and (not show),
+        midgame,
         std_logic_vector(unsigned(player_x)+32),
         bullet_x
     );
@@ -88,64 +88,64 @@ begin
         1
     ) port map(
         clk_50M,
-        collide_temp,
+        '0',
         m_l,
         D(0) => m_l,
         Q(0) => alive
     );
 	 
-	 comp_max: comparator_u generic map(
-        10
-    ) port map(
-        bullet_y,
-        "0000100000",
-        open,
-        comp_max_eq,
-        open
-    );
+--	 comp_max: comparator_u generic map(
+--        10
+--    ) port map(
+--        bullet_y,
+--        "0000100000",
+--        open,
+--        comp_max_eq,
+--        open
+--    );
+--	 
+--	 comp_top: comparator_u generic map(
+--        10
+--    ) port map(
+--        bullet_y,
+--        ai0_y,
+--        open,
+--        comp_tank_top_eq,
+--        comp_tank_top_gt
+--    );
+--	 
+--	 comp_bot: comparator_u generic map(
+--        10
+--    ) port map(
+--        bullet_y,
+--        std_logic_vector(unsigned(ai0_y)+64),
+--        comp_tank_bot_lt,
+--        comp_tank_bot_eq,
+--        open
+--    );
+--	 
+--	 comp_right: comparator_u generic map(
+--        10
+--    ) port map(
+--        bullet_x,
+--        std_logic_vector(unsigned(ai0_x)+64),
+--        comp_tank_right_lt,
+--        comp_tank_right_eq,
+--        open
+--    );
+--	 
+--	 comp_left: comparator_u generic map(
+--        10
+--    ) port map(
+--        bullet_x,
+--        ai0_x,
+--        open,
+--        comp_tank_left_eq,
+--        comp_tank_left_gt
+--    );
+--	 
 	 
-	 comp_top: comparator_u generic map(
-        10
-    ) port map(
-        bullet_y,
-        ai0_y,
-        open,
-        comp_tank_top_eq,
-        comp_tank_top_gt
-    );
-	 
-	 comp_bot: comparator_u generic map(
-        10
-    ) port map(
-        bullet_y,
-        std_logic_vector(unsigned(ai0_y)+64),
-        comp_tank_bot_lt,
-        comp_tank_bot_eq,
-        open
-    );
-	 
-	 comp_right: comparator_u generic map(
-        10
-    ) port map(
-        bullet_x,
-        std_logic_vector(unsigned(ai0_x)+64),
-        comp_tank_right_lt,
-        comp_tank_right_eq,
-        open
-    );
-	 
-	 comp_left: comparator_u generic map(
-        10
-    ) port map(
-        bullet_x,
-        ai0_x,
-        open,
-        comp_tank_left_eq,
-        comp_tank_left_gt
-    );
-	 
-	 
-	 y_pos_mux_in <= std_logic_vector((unsigned(bullet_y) - 2)) when (midgame = '1' );
+	 y_pos_mux_in <= std_logic_vector((unsigned(bullet_y) - 2)) when (midgame = '1');
 	--  else "0110011000" when others;
 	 
 	 
@@ -153,19 +153,17 @@ begin
 		"0110011000" when '0',
 		y_pos_mux_in when '1';
 		
-	 max_collide <= comp_max_eq;
-	 tank_top_collide <= comp_tank_top_eq or comp_tank_top_gt;
-	 tank_bot_collide <= comp_tank_bot_eq or comp_tank_bot_lt;
-	 tank_left_collide <= comp_tank_left_eq or comp_tank_left_gt;
-	 tank_right_collide <= comp_tank_right_eq or comp_tank_right_lt;
-	 collide_temp <= max_collide or (tank_bot_collide and tank_top_collide and tank_left_collide and tank_right_collide);
+--	 max_collide <= comp_max_eq;
+--	 tank_top_collide <= comp_tank_top_eq or comp_tank_top_gt;
+--	 tank_bot_collide <= comp_tank_bot_eq or comp_tank_bot_lt;
+--	 tank_left_collide <= comp_tank_left_eq or comp_tank_left_gt;
+--	 tank_right_collide <= comp_tank_right_eq or comp_tank_right_lt;
+--	 collide_temp <= max_collide or (tank_bot_collide and tank_top_collide and tank_left_collide and tank_right_collide);
 	 
 	 show <= '1' when ((midgame ='1' or game_paused = '1') and alive = '1') else 
-				'0' when (collide_temp = '1');
-					
--- show <= '0' when rising_edge(collide_temp);			 
+				'0' when (collide_temp = '1');			 
 
-	 collide <= collide_temp;
+--	 collide <= collide_temp;
 	 show_bullet <= show;
 	 y_out <= bullet_y;
 	 x_out <= bullet_x;

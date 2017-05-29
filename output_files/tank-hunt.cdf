@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP3C16F484) Path("C:/Users/lichk/Documents/GitHub/tank-hunt-vhdl/output_files/") File("tank-hunt.sof") MfrSpec(OpMask(1));
+		Device PartName(EP3C16F484) Path("C:/Users/user/Desktop/tank/tank-hunt-vhdl/output_files/") File("tank-hunt.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 
