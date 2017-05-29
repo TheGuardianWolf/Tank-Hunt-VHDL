@@ -4,6 +4,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use ieee.std_logic_misc.all;
 
 entity game_ai_block is
     port(
@@ -119,10 +120,8 @@ architecture behavior of game_ai_block is
     signal rand_x_dir: std_logic := '0';
     signal mux_ai_x_dir: std_logic := '0';
     signal sig_ai_x: std_logic_vector(9 downto 0) := (others => '0');
-    signal is_ai_x_max: std_logic := '0';
-    signal is_ai_x_max_gt: std_logic := '0';
-    signal is_ai_x_min_gt: std_logic := '0';
-    signal is_ai_x_min: std_logic := '0';
+    signal is_ai_x_max: std_logic_vector(1 downto 0) := (others => '0');
+    signal is_ai_x_min: std_logic_vector(1 downto 0) := (others => '0');
 
     signal sig_ai_y: std_logic_vector(9 downto 0) := (others => '0');
     signal sig_ai_y_d: std_logic_vector(9 downto 0) := (others => '0');
@@ -134,6 +133,8 @@ architecture behavior of game_ai_block is
     signal spawn_next: std_logic_vector(2 downto 0) := (others => '0');
     signal sig_delayed_enable: std_logic := '0';
 
+    signal out_bullet_collision: std_logic := '0';
+    signal out_player_collision: std_logic := '0';
     signal sig_bullet_collision: std_logic := '0';
     signal sig_player_collision: std_logic := '0';
 	 
@@ -142,7 +143,7 @@ begin
     -- Signal to reset ai components
     reset_ai <= (pregame) or (next_level) or (not spawned);
     -- Signal to reset the spawn counter
-    reset_spawn <= (pregame) or (next_level);
+    reset_spawn <= (pregame) or (next_level) or (out_bullet_collision);
     -- Signal to enable the spawn timer
     enable_spawn <= (midgame) and (not spawned);
     -- Signal to start next tank in chain
@@ -196,8 +197,8 @@ begin
         sig_ai_x,
         std_logic_vector(to_unsigned(574,10)), --639-64
         open,
-        is_ai_x_max,
-        open
+        is_ai_x_max(0),
+        is_ai_x_max(1)
     );
 
     -- Comparator to signal when ai reaches min X position
@@ -207,13 +208,13 @@ begin
     port map(
         sig_ai_x,
         std_logic_vector(to_unsigned(1,10)),
-        open,
-        is_ai_x_min,
+        is_ai_x_min(0),
+        is_ai_x_min(1),
         open
     );
 
     -- Multiplexer to switch directions randomly or based on X limits
-    ai_x_limit <= is_ai_x_max or is_ai_x_min;
+    ai_x_limit <= or_reduce(is_ai_x_max) or or_reduce(is_ai_x_min);
     rand_x_dir <= random_number(6);
 
     mux_ai_x_dir <= rand_x_dir when reset_ai='1' else
@@ -265,8 +266,9 @@ begin
         reset_ai,
         enable,
         D(0) => sig_bullet_collision,
-        Q(0) => bullet_collision
+        Q(0) => out_bullet_collision
     );
+    bullet_collision <= out_bullet_collision;
 
     -- Detect collision with player
     player_collide: collision_detect_u 
@@ -290,8 +292,9 @@ begin
         reset_ai,
         enable,
         D(0) => sig_player_collision,
-        Q(0) => player_collision
+        Q(0) => out_player_collision
     );
+    player_collision <= out_player_collision;
 
     -- Counter to track AI tank spawn time
     spawn: counter generic map(
