@@ -45,7 +45,7 @@ architecture test of test_game_control_block is
 begin
     t_pregame <= '1', '0' after 100 ps;
     t_midgame <= '1' after 100 ps;
-    t_bullet_collision <= '1' after 300 ps, '0' after 400 ps;
+    t_bullet_collision <= '1' after 300 ps, '0' after 400 ps, '1' after 700 ps, '0' after 800 ps;
 
     -- clock generation
     process
