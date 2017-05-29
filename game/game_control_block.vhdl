@@ -84,6 +84,8 @@ architecture behavior of game_control_block is
     signal time_comp_b: std_logic_vector(7 downto 0) := (others => '0');
     signal time_comp_r: std_logic_vector(2 downto 0) := (others => '0');
 
+    signal mux_k_reg: std_logic_vector(7 downto 0) := (others => '0'); 
+
     signal kill_comp_a: std_logic_vector(7 downto 0) := (others => '0');
     signal kill_comp_b: std_logic_vector(7 downto 0) := (others => '0');
     signal kill_comp_r: std_logic_vector(2 downto 0) := (others => '0');
@@ -128,17 +130,30 @@ begin
     );
     current_level <= level_count;
 
+
+    mux_k_reg <= std_logic_vector(unsigned(kill_comp_a) + 1) when (bullet_collision = '1') else
+                kill_comp_a;
     -- Counter to store current kills
-    k_count: counter generic map(
+    k_reg: register_d generic map(
         8
     ) port map(
         clk_50M,
         reset_control,
-        bullet_collision, -- Connect this to the impact detection signal from the bullet
-        (others => '1'),
+        midgame,
+        mux_k_reg,
         kill_comp_a
     );
     current_kills <= kill_comp_a;
+    -- k_count: counter generic map(
+    --     8
+    -- ) port map(
+    --     clk_50M,
+    --     reset_control,
+    --     bullet_collision, -- Connect this to the impact detection signal from the bullet
+    --     (others => '1'),
+    --     kill_comp_a
+    -- );
+    -- current_kills <= kill_comp_a;
 
     sig_kill_total <= std_logic_vector(unsigned(kill_comp_a) + unsigned(previous_kills));
 
