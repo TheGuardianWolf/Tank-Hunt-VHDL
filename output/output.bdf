@@ -357,6 +357,22 @@ applicable agreement for further details.
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
 )
 (pin
+	(input)
+	(rect -176 616 -8 632)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "win" (rect 5 0 20 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
 	(output)
 	(rect 848 320 1024 336)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
@@ -1078,6 +1094,13 @@ applicable agreement for further details.
 		(line (pt 0 416)(pt 16 416))
 	)
 	(port
+		(pt 0 432)
+		(input)
+		(text "win" (rect 0 0 15 12)(font "Arial" ))
+		(text "win" (rect 21 427 36 439)(font "Arial" ))
+		(line (pt 0 432)(pt 16 432))
+	)
+	(port
 		(pt 296 32)
 		(output)
 		(text "rom_mux_output_red" (rect 0 0 103 12)(font "Arial" ))
@@ -1382,4 +1405,8 @@ applicable agreement for further details.
 (connector
 	(pt -8 608)
 	(pt 88 608)
+)
+(connector
+	(pt -8 624)
+	(pt 88 624)
 )
