@@ -9,7 +9,7 @@ use ieee.std_logic_misc.all;
 entity game_ai_block is
     port(
         clk_50M: in std_logic;
-        clk_48: in std_logic;
+        clk_move: in std_logic_vector(2 downto 0);
         clk_s: in std_logic;
         pregame: in std_logic;
         midgame: in std_logic;
@@ -110,11 +110,12 @@ architecture behavior of game_ai_block is
     signal reset_spawn: std_logic := '0';
     signal inv_reset_ai: std_logic := '1';
 
+    signal ai_move_clk: std_logic := '0';
+
     signal ai_x_sel: std_logic := '1';
     signal mux_ai_x_a: std_logic_vector(9 downto 0) := (others => '0');
     signal mux_ai_x_b: std_logic_vector(9 downto 0) := (others => '0');
     signal mux_ai_x_r: std_logic_vector(9 downto 0) := (others => '0');
-    signal ai_x_speed: std_logic_vector(9 downto 0) := (others => '0');
 
     signal ai_x_limit: std_logic := '0';
     signal rand_x_dir: std_logic := '0';
@@ -167,7 +168,7 @@ begin
         10
     )
     port map(
-        clk_48,
+        ai_move_clk,
         '0',
         enable,
         mux_ai_x_r,
@@ -175,17 +176,23 @@ begin
     );
 
     -- Multiplexer to set AI's X movement speed based on level input
-    with current_level select ai_x_speed <=
-        std_logic_vector(to_unsigned(1,10)) when "00",
-        std_logic_vector(to_unsigned(1,10)) when "01",
-        std_logic_vector(to_unsigned(2,10)) when "10",
-        std_logic_vector(to_unsigned(3,10)) when "11",
-        (others => '0') when others;
+    -- with current_level select ai_x_speed <=
+    --     std_logic_vector(to_unsigned(1,10)) when "00",
+    --     std_logic_vector(to_unsigned(1,10)) when "01",
+    --     std_logic_vector(to_unsigned(2,10)) when "10",
+    --     std_logic_vector(to_unsigned(3,10)) when "11",
+    --     (others => '0') when others;
+    with current_level select ai_move_clk <=
+        clk_move(2) when "00",
+        clk_move(2) when "01",
+        clk_move(1) when "10",
+        clk_move(0) when "11",
+        '0' when others;
 
     -- Use either an adder or subtractor based on the direction the AI tank is going
     -- to calculate next x position
-    mux_ai_x_b <= std_logic_vector(unsigned(sig_ai_x) + unsigned(ai_x_speed)) when ai_x_sel='1' else
-                    std_logic_vector(unsigned(sig_ai_x) - unsigned(ai_x_speed));
+    mux_ai_x_b <= std_logic_vector(unsigned(sig_ai_x) + 1) when ai_x_sel='1' else
+                    std_logic_vector(unsigned(sig_ai_x) - 1);
     mux_ai_x_r <= mux_ai_x_a when reset_ai='1' else
                     mux_ai_x_b;
     
@@ -236,7 +243,7 @@ begin
         10
     )
     port map(
-        clk_48,
+        ai_move_clk,
         reset_ai,
         enable,
         sig_ai_y_d,
