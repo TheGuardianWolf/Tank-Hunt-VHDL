@@ -176,10 +176,10 @@ begin
 
     -- Multiplexer to set AI's X movement speed based on level input
     with current_level select ai_x_speed <=
-        std_logic_vector(to_unsigned(2,10)) when "00",
-        std_logic_vector(to_unsigned(2,10)) when "01",
-        std_logic_vector(to_unsigned(3,10)) when "10",
-        std_logic_vector(to_unsigned(4,10)) when "11",
+        std_logic_vector(to_unsigned(1,10)) when "00",
+        std_logic_vector(to_unsigned(1,10)) when "01",
+        std_logic_vector(to_unsigned(2,10)) when "10",
+        std_logic_vector(to_unsigned(3,10)) when "11",
         (others => '0') when others;
 
     -- Use either an adder or subtractor based on the direction the AI tank is going

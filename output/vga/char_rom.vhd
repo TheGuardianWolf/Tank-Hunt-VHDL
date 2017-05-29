@@ -106,7 +106,7 @@ BEGIN
 			IF (("0110011" <= vga_row(9 downto 3)) and (vga_row(9 downto 3) <= "0111011")) THEN
 				IF ((mouse_hor(9 downto 3) < vga_col(9 downto 3)) and (vga_col(9 downto 3) <= std_logic_vector(unsigned(mouse_hor(9 downto 3))+ 8))) THEN
 					--concatenate character address and font row address into a 9 bit address
-					rom_address <= "111111" & std_logic_vector(unsigned(vga_row(5 downto 3))-3);
+					rom_address <= "111101" & std_logic_vector(unsigned(vga_row(5 downto 3))-3);
 					--select of the mux for which column in the row the pixel data is chosen from
 					rom_mux_output_blue <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-(unsigned(mouse_hor(5 downto 3))+1)))));
 				END IF;	
@@ -130,8 +130,14 @@ BEGIN
 					--select of the mux for which column in the row the pixel data is chosen from
 					rom_mux_output_green <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(5 DOWNTO 3))-(unsigned(ai_hor(5 downto 3))+1)))));
 				ELSIF ((std_logic_vector(unsigned(bullet_y(9 downto 0))-0) <= vga_row(9 downto 0)) and (vga_row(9 downto 0) <= (std_logic_vector(unsigned(bullet_y(9 downto 0))+7)))) THEN
-				
-				
+					IF ((std_logic_vector(unsigned(bullet_x(9 downto 0))-4) <= vga_col(9 downto 0)) and (vga_col(9 downto 0) <= std_logic_vector(unsigned(bullet_x(9 downto 0))+ 4))) THEN
+						--concatenate character address and font row address into a 9 bit address
+						rom_address <= "111101" & std_logic_vector(unsigned(vga_row(2 downto 0))-(unsigned(bullet_y(2 downto 0))+ 0));
+						--select of the mux for which column in the row the pixel data is chosen from
+						rom_mux_output_green <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(2 DOWNTO 0))-(unsigned(bullet_x(2 downto 0))-3)))));
+						rom_mux_output_red <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(2 DOWNTO 0))-(unsigned(bullet_x(2 downto 0))-3)))));
+						rom_mux_output_blue <= rom_data (to_integer(unsigned(NOT std_logic_vector(unsigned(vga_col(2 DOWNTO 0))-(unsigned(bullet_x(2 downto 0))-3)))));
+					END IF;
 				END IF;
 				
 			--ai1 tank display
