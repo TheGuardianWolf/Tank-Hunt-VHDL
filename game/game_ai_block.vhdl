@@ -228,7 +228,7 @@ begin
     );
 
     -- Stores AI Y position
-    sig_ai_y_d <=   std_logic_vector(to_unsigned(32,10)) when enable_spawn = '1' else
+    sig_ai_y_d <=   std_logic_vector(to_unsigned(32,10)) when ((enable_spawn = '1') or (enable='0')) else
                     std_logic_vector(unsigned(sig_ai_y) + 64) when ai_x_limit = '1' else
                     sig_ai_y;
     
@@ -238,7 +238,7 @@ begin
     port map(
         ai_move_clk,
         '0',
-        enable,
+        '1',
         sig_ai_y_d,
         sig_ai_y
     );
