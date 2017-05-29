@@ -186,7 +186,7 @@ begin
         time_comp_r(2)
     );
     -- Timeout differs depending on the current level
-    time_comp_b <= std_logic_vector(to_unsigned(120,8)) when level_count="00" else 
+    time_comp_b <= std_logic_vector(to_unsigned(90,8)) when level_count="00" else 
                     std_logic_vector(to_unsigned(60,8));
     buffer_timeout <= time_comp_r(2) or time_comp_r(1);
 

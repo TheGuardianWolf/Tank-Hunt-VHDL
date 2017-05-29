@@ -20,9 +20,9 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 312 448)
+	(rect 16 16 312 480)
 	(text "char_rom" (rect 5 0 45 12)(font "Arial" ))
-	(text "inst" (rect 8 416 20 428)(font "Arial" ))
+	(text "inst" (rect 8 448 20 460)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -110,15 +110,15 @@ applicable agreement for further details.
 	(port
 		(pt 0 224)
 		(input)
-		(text "ai_hidden" (rect 0 0 36 12)(font "Arial" ))
-		(text "ai_hidden" (rect 21 219 57 231)(font "Arial" ))
+		(text "ai_show" (rect 0 0 31 12)(font "Arial" ))
+		(text "ai_show" (rect 21 219 52 231)(font "Arial" ))
 		(line (pt 0 224)(pt 16 224)(line_width 1))
 	)
 	(port
 		(pt 0 240)
 		(input)
-		(text "time_in[5..0]" (rect 0 0 48 12)(font "Arial" ))
-		(text "time_in[5..0]" (rect 21 235 69 247)(font "Arial" ))
+		(text "time_in[7..0]" (rect 0 0 48 12)(font "Arial" ))
+		(text "time_in[7..0]" (rect 21 235 69 247)(font "Arial" ))
 		(line (pt 0 240)(pt 16 240)(line_width 3))
 	)
 	(port
@@ -192,6 +192,13 @@ applicable agreement for further details.
 		(line (pt 0 400)(pt 16 400)(line_width 3))
 	)
 	(port
+		(pt 0 416)
+		(input)
+		(text "ai1_show" (rect 0 0 35 12)(font "Arial" ))
+		(text "ai1_show" (rect 21 411 56 423)(font "Arial" ))
+		(line (pt 0 416)(pt 16 416)(line_width 1))
+	)
+	(port
 		(pt 296 32)
 		(output)
 		(text "rom_mux_output_red" (rect 0 0 88 12)(font "Arial" ))
@@ -212,28 +219,7 @@ applicable agreement for further details.
 		(text "rom_mux_output_blue" (rect 185 59 275 71)(font "Arial" ))
 		(line (pt 296 64)(pt 280 64)(line_width 1))
 	)
-	(port
-		(pt 296 80)
-		(output)
-		(text "bullet_r" (rect 0 0 28 12)(font "Arial" ))
-		(text "bullet_r" (rect 247 75 275 87)(font "Arial" ))
-		(line (pt 296 80)(pt 280 80)(line_width 1))
-	)
-	(port
-		(pt 296 96)
-		(output)
-		(text "bullet_g" (rect 0 0 29 12)(font "Arial" ))
-		(text "bullet_g" (rect 246 91 275 103)(font "Arial" ))
-		(line (pt 296 96)(pt 280 96)(line_width 1))
-	)
-	(port
-		(pt 296 112)
-		(output)
-		(text "bullet_b" (rect 0 0 29 12)(font "Arial" ))
-		(text "bullet_b" (rect 246 107 275 119)(font "Arial" ))
-		(line (pt 296 112)(pt 280 112)(line_width 1))
-	)
 	(drawing
-		(rectangle (rect 16 16 280 416)(line_width 1))
+		(rectangle (rect 16 16 280 448)(line_width 1))
 	)
 )

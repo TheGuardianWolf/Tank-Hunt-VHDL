@@ -180,8 +180,8 @@ applicable agreement for further details.
 	(port
 		(pt 240 192)
 		(output)
-		(text "game_time[5..0]" (rect 0 0 88 14)(font "Arial" (font_size 8)))
-		(text "game_time[5..0]" (rect 131 187 219 201)(font "Arial" (font_size 8)))
+		(text "game_time[7..0]" (rect 0 0 88 14)(font "Arial" (font_size 8)))
+		(text "game_time[7..0]" (rect 131 187 219 201)(font "Arial" (font_size 8)))
 		(line (pt 240 192)(pt 224 192)(line_width 3))
 	)
 	(port
