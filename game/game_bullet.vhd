@@ -51,6 +51,7 @@ architecture behavior of game_bullet is
      signal bullet_fired: std_logic := '0';
      signal bullet_show: std_logic := '0';
      signal bullet_limit: std_logic := '0';
+     signal reset_bullet: std_logic := '0';
 
      signal mux_b_x, mux_b_y: std_logic_vector(9 downto 0) := (others => '0');
 begin
@@ -95,11 +96,12 @@ begin
     bullet_fired <= '1' when ((m_l = '1') or (bullet_show = '1')) else
                     '0'; 
 
+    reset_bullet <= bullet_collision or bullet_limit;
     b_show: register_d generic map(
         1
     ) port map(
         clk_50M,
-        bullet_collision or bullet_limit,
+        reset_bullet,
         midgame,
         D(0) => bullet_fired,
         Q(0) => bullet_show

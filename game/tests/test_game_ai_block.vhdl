@@ -9,20 +9,25 @@ architecture test of test_game_ai_block is
     component game_ai_block is
         port(
             clk_50M: in std_logic;
-            clk_48: in std_logic;
+            clk_move: in std_logic_vector(2 downto 0);
             clk_s: in std_logic;
             pregame: in std_logic;
             midgame: in std_logic;
             endgame: in std_logic;
-            enable: in std_logic;
+            enable: in std_logic := '0';
             current_level: in std_logic_vector(1 downto 0) := (others => '0');
             next_level: in std_logic;
-            collision: in std_logic;
             lfsr_seed: in std_logic_vector(15 downto 0);
+            bullet_x: in std_logic_vector(9 downto 0);
+            bullet_y: in std_logic_vector(9 downto 0);
+            player_x: in std_logic_vector(9 downto 0);
+            player_y: in std_logic_vector(9 downto 0);
             enable_next: out std_logic := '0';
             ai_x: out std_logic_vector(9 downto 0) := (others => '0');
             ai_y: out std_logic_vector(9 downto 0) := (others => '0');
-            ai_show: out std_logic := '0'
+            ai_show: out std_logic := '0';
+            bullet_collision: out std_logic := '0';
+            player_collision: out std_logic := '0'
         );
     end component;
 
@@ -34,7 +39,7 @@ architecture test of test_game_ai_block is
     end component;
 
     signal t_clk_50M: std_logic := '0';
-    signal t_clk_48: std_logic := '0';
+    signal t_clk_move: std_logic_vector(2 downto 0) := (others => '0');
     signal t_clk_s: std_logic := '0';
     signal seed: std_logic_vector(15 downto 0) := (others => '0');
     signal t_next_level: std_logic := '0';
@@ -64,9 +69,27 @@ begin
     process
     begin
         wait for 100 ps;
-        t_clk_48 <= '1';
+        t_clk_move(2) <= '1';
         wait for 100 ps;
-        t_clk_48 <= '0';
+        t_clk_move(2) <= '0';
+    end process;
+
+     -- clock generation
+    process
+    begin
+        wait for 125 ps;
+        t_clk_move(1) <= '1';
+        wait for 125 ps;
+        t_clk_move(1) <= '0';
+    end process;
+
+     -- clock generation
+    process
+    begin
+        wait for 150 ps;
+        t_clk_move(0) <= '1';
+        wait for 150 ps;
+        t_clk_move(0) <= '0';
     end process;
 
     -- clock generation
@@ -86,7 +109,7 @@ begin
 
     g_ai0: game_ai_block port map(
         t_clk_50M,
-        t_clk_48,
+        t_clk_move,
         t_clk_s,
         t_pregame,
         t_midgame,
@@ -94,9 +117,14 @@ begin
         t_midgame,
         t_current_level,
         t_next_level,
-        t_collision,
         seed,
+        (others => '0'),
+        (others => '1'),
+        (others => '0'),
+        (others => '1'),
         t_delayed_enable,
+        open,
+        open,
         open,
         open,
         open
@@ -104,7 +132,7 @@ begin
 
     g_ai1: game_ai_block port map(
         t_clk_50M,
-        t_clk_48,
+        t_clk_move,
         t_clk_s,
         t_pregame,
         t_midgame,
@@ -112,8 +140,13 @@ begin
         t_delayed_enable,
         t_current_level,
         t_next_level,
-        t_collision,
         seed,
+        (others => '0'),
+        (others => '1'),
+        (others => '0'),
+        (others => '1'),
+        open,
+        open,
         open,
         open,
         open,
