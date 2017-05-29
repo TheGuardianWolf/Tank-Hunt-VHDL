@@ -144,7 +144,7 @@ begin
     -- Signal to reset ai components
     reset_ai <= (pregame) or (next_level) or (not spawned);
     -- Signal to reset the spawn counter
-    reset_spawn <= (pregame) or (next_level) or (out_bullet_collision);
+    reset_spawn <= (pregame) or (next_level) or (out_bullet_collision and spawned);
     -- Signal to enable the spawn timer
     enable_spawn <= (midgame) and (not spawned) and (enable);
     -- Signal to reset the delayed enable
@@ -263,35 +263,17 @@ begin
         sig_bullet_collision
     );
 
-    assert_bullet_collision: process(clk_50M, sig_bullet_collision, ai_reset)
-        variable asserted: std_logic := '0';
-    begin
-        if ((sig_bullet_collision = '1') and (ai_reset = '0')) then
-            out_bullet_collision <= '1';
-        elsif (rising_edge(clk_50M)) then
-            out_bullet_collision <= '0';
-            if (out_bullet_collision = '1') then
-                if (asserted = '1') then
-                    asserted := '0';
-                else
-                    out_bullet_collision <= '1';
-                    asserted := '1';
-                end if;
-            end if;
-        end if;
-    end process;
-
     -- Clocked signal for bullet collision detection output
-    -- sig_bullet_collide: register_d generic map(
-    --     1
-    -- ) port map(
-    --     clk_50M,
-    --     pregame,
-    --     enable,
-    --     D(0) => sig_bullet_collision,
-    --     Q(0) => out_bullet_collision
-    -- );
-    -- bullet_collision <= out_bullet_collision;
+    sig_bullet_collide: register_d generic map(
+        1
+    ) port map(
+        clk_50M,
+        pregame,
+        enable,
+        D(0) => sig_bullet_collision,
+        Q(0) => out_bullet_collision
+    );
+    bullet_collision <= out_bullet_collision;
 
     -- Detect collision with player
     player_collide: collision_detect_u 
