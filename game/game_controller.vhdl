@@ -56,7 +56,8 @@ architecture behaviour of game_controller is
       kills_reached,
       timeout,
       game_pause,
-      max_level
+      max_level,
+      player_collision
     )
     begin
       case CurrentState is
@@ -132,7 +133,8 @@ architecture behaviour of game_controller is
         kills_reached,
         timeout,
         game_pause,
-        max_level
+        max_level,
+        player_collision
     )
     begin
       -- Default outputs:

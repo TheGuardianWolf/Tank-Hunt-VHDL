@@ -99,7 +99,7 @@ begin
         1
     ) port map(
         clk_50M,
-        bullet_collision,
+        bullet_collision or bullet_limit,
         midgame,
         D(0) => bullet_fired,
         Q(0) => bullet_show
