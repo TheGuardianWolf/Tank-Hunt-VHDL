@@ -77,6 +77,7 @@ architecture behavior of game_control_block is
         );
     end component;
 
+    signal reset_control: std_logic := '0';
     signal level_count: std_logic_vector(1 downto 0) := (others => '0');
     
     signal time_comp_a: std_logic_vector(7 downto 0) := (others => '0');
@@ -87,6 +88,8 @@ architecture behavior of game_control_block is
     signal kill_comp_b: std_logic_vector(7 downto 0) := (others => '0');
     signal kill_comp_r: std_logic_vector(2 downto 0) := (others => '0');
 
+    signal sig_kill_total: std_logic_vector(7 downto 0) := (others => '0');
+
     signal sel_time_limit: std_logic := '0';
     signal sel_kill_thresh: std_logic_vector(1 downto 0) := (others => '0');
 
@@ -95,14 +98,16 @@ architecture behavior of game_control_block is
 
     signal previous_kills: std_logic_vector(7 downto 0) := (others => '0');
 begin
+    reset_control <= pregame or next_level;
+
     -- Main timer to count seconds from the seconds clock input
     timer: counter 
     generic map (
-        6
+        8
     )    
     port map(
         clk_s,
-        pregame or next_level,
+        reset_control,
         midgame,
         (others => '1'),
         time_comp_a
@@ -128,12 +133,14 @@ begin
         8
     ) port map(
         clk_50M,
-        pregame or next_level,
+        reset_control,
         bullet_collision, -- Connect this to the impact detection signal from the bullet
         (others => '1'),
         kill_comp_a
     );
     current_kills <= kill_comp_a;
+
+    sig_kill_total <= std_logic_vector(unsigned(kill_comp_a) + unsigned(previous_kills));
 
     -- Register to store previous kill count
     k_previous: register_d generic map(
@@ -142,7 +149,7 @@ begin
         clk_50M,
         pregame,
         next_level,
-        std_logic_vector(unsigned(kill_comp_a) + unsigned(previous_kills)),
+        sig_kill_total,
         previous_kills
     );
 
@@ -153,7 +160,7 @@ begin
         clk_50M,
         pregame,
         midgame,
-        std_logic_vector(unsigned(kill_comp_a) + unsigned(previous_kills)),
+        sig_kill_total,
         total_kills
     );
 
@@ -195,10 +202,11 @@ begin
     );
     -- Kill threshold increases based on current level
     with level_count select kill_comp_b <=
-        (others => '1') when "00", -- Set to max for training
-        std_logic_vector(to_unsigned(10,7)) when "01",
-        std_logic_vector(to_unsigned(15,7)) when "10",
-        std_logic_vector(to_unsigned(20,7)) when "11";
+        std_logic_vector(to_unsigned(10,8)) when "01",
+        std_logic_vector(to_unsigned(15,8)) when "10",
+        std_logic_vector(to_unsigned(20,8)) when "11",
+        (others => '1') when others; -- Set to max for training
+        
     buffer_kills_reached <= kill_comp_r(2) or kill_comp_r(1);
 
     -- Register stores game mode independant from sw0 input
