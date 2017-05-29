@@ -21,7 +21,7 @@ entity game_control_block is
         max_level: out std_logic := '0';
         timeout: out std_logic := '0';
         kills_reached: out std_logic := '0';
-        game_time: out std_logic_vector(5 downto 0) := (others => '0');
+        game_time: out std_logic_vector(7 downto 0) := (others => '0');
         current_level: out std_logic_vector(1 downto 0) := (others => '0');
         current_kills: out std_logic_vector(7 downto 0) := (others => '0');
         total_kills: out std_logic_vector(7 downto 0) := (others => '0')
@@ -79,8 +79,8 @@ architecture behavior of game_control_block is
 
     signal level_count: std_logic_vector(1 downto 0) := (others => '0');
     
-    signal time_comp_a: std_logic_vector(5 downto 0) := (others => '0');
-    signal time_comp_b: std_logic_vector(5 downto 0) := (others => '0');
+    signal time_comp_a: std_logic_vector(7 downto 0) := (others => '0');
+    signal time_comp_b: std_logic_vector(7 downto 0) := (others => '0');
     signal time_comp_r: std_logic_vector(2 downto 0) := (others => '0');
 
     signal kill_comp_a: std_logic_vector(7 downto 0) := (others => '0');
@@ -170,7 +170,7 @@ begin
     
     -- Comparator to generate timeout signal
     time_comp: comparator_u generic map(
-        6
+        8
     ) port map(
         time_comp_a,
         time_comp_b,
@@ -179,7 +179,8 @@ begin
         time_comp_r(2)
     );
     -- Timeout differs depending on the current level
-    time_comp_b <= "111100" when level_count="00" else "011110";
+    time_comp_b <= std_logic_vector(to_unsigned(120,8)) when level_count="00" else 
+                    std_logic_vector(to_unsigned(60,8));
     buffer_timeout <= time_comp_r(2) or time_comp_r(1);
 
     -- Comparator to check if kill threshold is reached
@@ -195,9 +196,9 @@ begin
     -- Kill threshold increases based on current level
     with level_count select kill_comp_b <=
         (others => '1') when "00", -- Set to max for training
-        "00000101" when "01",
-        "00001100" when "10",
-        "00010100" when "11";
+        std_logic_vector(to_unsigned(10,7)) when "01",
+        std_logic_vector(to_unsigned(15,7)) when "10",
+        std_logic_vector(to_unsigned(20,7)) when "11";
     buffer_kills_reached <= kill_comp_r(2) or kill_comp_r(1);
 
     -- Register stores game mode independant from sw0 input
