@@ -1635,17 +1635,12 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "game_won" (rect 1107 400 1158 412)(font "Arial" ))
-	(pt 1072 416)
-	(pt 1120 416)
-)
-(connector
 	(text "game_won" (rect 1264 616 1315 628)(font "Arial" ))
 	(pt 1312 632)
 	(pt 1256 632)
 )
 (connector
-	(text "win" (rect 1107 400 1122 412)(font "Arial" ))
+	(text "game_won" (rect 1107 400 1158 412)(font "Arial" ))
 	(pt 1072 416)
 	(pt 1120 416)
 )
