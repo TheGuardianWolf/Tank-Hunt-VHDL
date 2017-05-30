@@ -85,6 +85,7 @@ architecture behavior of game_control_block is
     signal time_comp_r: std_logic_vector(2 downto 0) := (others => '0');
 
     signal mux_k_reg: std_logic_vector(7 downto 0) := (others => '0'); 
+    signal mux_k_total: std_logic_vector(7 downto 0) := (others => '0'); 
 
     signal kill_comp_a: std_logic_vector(7 downto 0) := (others => '0');
     signal kill_comp_b: std_logic_vector(7 downto 0) := (others => '0');
@@ -146,6 +147,8 @@ begin
     );
     current_kills <= kill_comp_a;
 
+    mux_k_total <= std_logic_vector(unsigned(sig_total_kills) + 1) when (bullet_collision = '1') else
+                sig_total_kills;
     -- Register to store total kill count
     k_total: register_d generic map(
         8
@@ -154,8 +157,9 @@ begin
         pregame,
         midgame,
         mux_k_reg,
-        total_kills
+        sig_kill_total
     );
+    total_kills <= sig_kill_total;
 
     -- Comparator to generate max level signal
     max_level_comp: comparator_u generic map(
