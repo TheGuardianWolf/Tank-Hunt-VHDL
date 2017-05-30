@@ -85,6 +85,7 @@ architecture behavior of game_control_block is
     signal time_comp_r: std_logic_vector(2 downto 0) := (others => '0');
 
     signal mux_k_reg: std_logic_vector(7 downto 0) := (others => '0'); 
+    signal mux_k_total: std_logic_vector(7 downto 0) := (others => '0'); 
 
     signal kill_comp_a: std_logic_vector(7 downto 0) := (others => '0');
     signal kill_comp_b: std_logic_vector(7 downto 0) := (others => '0');
@@ -97,8 +98,6 @@ architecture behavior of game_control_block is
 
     signal buffer_timeout: std_logic := '0';
     signal buffer_kills_reached: std_logic := '0';
-
-    signal previous_kills: std_logic_vector(7 downto 0) := (others => '0');
 
     signal collision_toggle: std_logic := '0';
 begin
@@ -132,18 +131,9 @@ begin
     );
     current_level <= level_count;
 
-
-    -- k_ff: T_FF port map(
-    --     bullet_collision,
-    --     '0',
-    --     collision_toggle,
-    --     open
-    -- );
-    -- current_kills <= kill_comp_a;
-
     mux_k_reg <= std_logic_vector(unsigned(kill_comp_a) + 1) when (bullet_collision = '1') else
                 kill_comp_a;
-    -- Counter to store current kills
+    -- Register to store current kills
     k_reg: register_d generic map(
         8
     ) port map(
@@ -154,30 +144,9 @@ begin
         kill_comp_a
     );
     current_kills <= kill_comp_a;
-    -- k_count: counter generic map(
-    --     8
-    -- ) port map(
-    --     clk_50M,
-    --     reset_control,
-    --     bullet_collision, -- Connect this to the impact detection signal from the bullet
-    --     (others => '1'),
-    --     kill_comp_a
-    -- );
-    -- current_kills <= kill_comp_a;
 
-    sig_kill_total <= std_logic_vector(unsigned(kill_comp_a) + unsigned(previous_kills));
-
-    -- Register to store previous kill count
-    k_previous: register_d generic map(
-        8
-    ) port map(
-        clk_50M,
-        pregame,
-        next_level,
-        sig_kill_total,
-        previous_kills
-    );
-
+    mux_k_total <= std_logic_vector(unsigned(sig_kill_total) + 1) when (bullet_collision = '1') else
+                sig_kill_total;
     -- Register to store total kill count
     k_total: register_d generic map(
         8
@@ -185,9 +154,10 @@ begin
         clk_50M,
         pregame,
         midgame,
-        sig_kill_total,
-        total_kills
+        mux_k_total,
+        sig_kill_total
     );
+    total_kills <= sig_kill_total;
 
     -- Comparator to generate max level signal
     max_level_comp: comparator_u generic map(

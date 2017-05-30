@@ -199,7 +199,7 @@ begin
     )
     port map(
         sig_ai_x,
-        std_logic_vector(to_unsigned(574,10)), --639-64
+        std_logic_vector(to_unsigned(575,10)), --639-64
         open,
         is_ai_x_max,
         open
@@ -211,7 +211,7 @@ begin
     )
     port map(
         sig_ai_x,
-        std_logic_vector(to_unsigned(1,10)),
+        std_logic_vector(to_unsigned(0,10)),
         open,
         is_ai_x_min,
         open

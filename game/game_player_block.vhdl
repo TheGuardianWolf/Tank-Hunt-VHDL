@@ -56,26 +56,4 @@ begin
     );
 
     player_y <= "0110101111";
-
-    -- -- Bullet X position
-    -- b_x: register_d generic map(
-    --     10
-    -- ) port map(
-    --     clk_50M,
-    --     '0',
-    --     open,
-    --     open,
-    --     open
-    -- );
-
-    -- -- Bullet Y position
-    -- b_y: register_d generic map(
-    --     10
-    -- ) port map(
-    --     clk_50M,
-    --     '0',
-    --     open,
-    --     open,
-    --     open
-    -- );
 end architecture;
