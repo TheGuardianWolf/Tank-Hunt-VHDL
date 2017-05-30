@@ -132,18 +132,9 @@ begin
     );
     current_level <= level_count;
 
-
-    -- k_ff: T_FF port map(
-    --     bullet_collision,
-    --     '0',
-    --     collision_toggle,
-    --     open
-    -- );
-    -- current_kills <= kill_comp_a;
-
     mux_k_reg <= std_logic_vector(unsigned(kill_comp_a) + 1) when (bullet_collision = '1') else
                 kill_comp_a;
-    -- Counter to store current kills
+    -- Register to store current kills
     k_reg: register_d generic map(
         8
     ) port map(
@@ -154,29 +145,6 @@ begin
         kill_comp_a
     );
     current_kills <= kill_comp_a;
-    -- k_count: counter generic map(
-    --     8
-    -- ) port map(
-    --     clk_50M,
-    --     reset_control,
-    --     bullet_collision, -- Connect this to the impact detection signal from the bullet
-    --     (others => '1'),
-    --     kill_comp_a
-    -- );
-    -- current_kills <= kill_comp_a;
-
-    sig_kill_total <= std_logic_vector(unsigned(kill_comp_a) + unsigned(previous_kills));
-
-    -- Register to store previous kill count
-    k_previous: register_d generic map(
-        8
-    ) port map(
-        clk_50M,
-        pregame,
-        next_level,
-        sig_kill_total,
-        previous_kills
-    );
 
     -- Register to store total kill count
     k_total: register_d generic map(
@@ -185,7 +153,7 @@ begin
         clk_50M,
         pregame,
         midgame,
-        sig_kill_total,
+        mux_k_reg,
         total_kills
     );
 

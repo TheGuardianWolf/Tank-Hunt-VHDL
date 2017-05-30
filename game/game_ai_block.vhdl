@@ -330,7 +330,7 @@ begin
         open
     );
 
-    inv_ai_reset <= '0' when (ai_reset='1') else '1';
+    inv_ai_reset <= '0' when (ai_reset='1' and enable='1') else '1';
 
     -- Clocked signal for showing the ai tank (i.e. after spawn)
     ai_s: register_d generic map(
