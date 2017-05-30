@@ -1644,3 +1644,8 @@ applicable agreement for further details.
 	(pt 1312 632)
 	(pt 1256 632)
 )
+(connector
+	(text "win" (rect 1107 400 1122 412)(font "Arial" ))
+	(pt 1072 416)
+	(pt 1120 416)
+)
